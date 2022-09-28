@@ -10,9 +10,14 @@ namespace Model
 		public void Init()
 		{
 			if (!photonConnectRoom.IsConnect)
-			{
-				Debug.Log("no connect");
-			}
+				photonConnectRoom.ConnectToServer();
+			else
+				InitPlayer();
+		}
+
+		public void InitPlayer()
+		{
+			
 		}
 	}
 }

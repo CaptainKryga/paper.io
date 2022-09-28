@@ -15,8 +15,6 @@ namespace Model.Photon
             Singleton = this;
         }
 
-        public Action OnConnectedToMaster_Action;
-
         public override void OnConnected()
         {
             Debug.Log("PHOTON: OnConnected");
@@ -95,7 +93,6 @@ namespace Model.Photon
         public override void  OnConnectedToMaster()
         {
             Debug.Log("PHOTON: OnConnectedToMaster");
-            OnConnectedToMaster_Action?.Invoke();
         }
 
         public override void  OnFriendListUpdate(List<FriendInfo> friendList)
