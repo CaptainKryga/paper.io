@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.captainkryga.console": {
+      "version": "https://github.com/CaptainKryga/unity-package-console.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "10cd17ddb9f36af2a6768c5ecaad557a50ebe6aa"
+    },
     "com.unity.2d.animation": {
       "version": "7.0.7",
       "depth": 1,
