@@ -12,5 +12,10 @@ namespace Controller
 		{
 			mController.Init();
 		}
+
+		public void ConsoleCommand(string command)
+		{
+			
+		}
 	}
 }
