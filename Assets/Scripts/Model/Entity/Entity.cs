@@ -23,18 +23,12 @@ namespace Model.Entity
 				moveSpeed * Time.deltaTime);
 			
 			if (Mathf.Abs(Input.GetAxisRaw("Horizontal")) == 1f)
-			{
 				newVec = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, 0f);
-			}
 			else if (Mathf.Abs(Input.GetAxisRaw("Vertical")) == 1f)
-			{
 				newVec = new Vector3(0f, Input.GetAxisRaw("Vertical"), 0f);
-			}
 			
 			if (Physics2D.OverlapCircle(movePoint.position + newVec, .2f, layerCollider))
-			{
 				Debug.Log("GAME OVER");
-			}
 			
 			if (movePoint.position == transform.position)
 			{
