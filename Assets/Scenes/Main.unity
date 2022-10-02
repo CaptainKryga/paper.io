@@ -3411,9 +3411,8 @@ GameObject:
   - component: {fileID: 2071437794}
   - component: {fileID: 2071437796}
   - component: {fileID: 2071437795}
-  - component: {fileID: 2071437799}
   - component: {fileID: 2071437798}
-  - component: {fileID: 2071437797}
+  - component: {fileID: 2071437800}
   m_Layer: 6
   m_Name: "\u0421olliders"
   m_TagString: Untagged
@@ -4151,30 +4150,6 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!66 &2071437797
-CompositeCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2071437793}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_GeometryType: 1
-  m_GenerationType: 0
-  m_EdgeRadius: 0
-  m_ColliderPaths:
-  - m_Collider: {fileID: 2071437799}
-    m_ColliderPaths: []
-  m_CompositePaths:
-    m_Paths: []
-  m_VertexDistance: 0.0005
-  m_OffsetDistance: 0.00005
 --- !u!50 &2071437798
 Rigidbody2D:
   serializedVersion: 4
@@ -4196,8 +4171,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!19719996 &2071437799
-TilemapCollider2D:
+--- !u!68 &2071437800
+EdgeCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -4208,7 +4183,16 @@ TilemapCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 1
+  m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_MaximumTileChangeCount: 1000
-  m_ExtrusionFactor: 0.00001
+  m_EdgeRadius: 0.96
+  m_Points:
+  - {x: 9.896368, y: -5.950828}
+  - {x: -9.037635, y: -5.944966}
+  - {x: -9.038896, y: 7.0040064}
+  - {x: 9.955383, y: 6.983409}
+  - {x: 10.032582, y: -5.983409}
+  m_AdjacentStartPoint: {x: 0, y: 0}
+  m_AdjacentEndPoint: {x: 0, y: 0}
+  m_UseAdjacentStartPoint: 0
+  m_UseAdjacentEndPoint: 0
