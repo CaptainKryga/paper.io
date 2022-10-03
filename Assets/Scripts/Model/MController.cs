@@ -1,5 +1,6 @@
 using Model.Entity;
 using Model.Photon;
+using Model.TileMap;
 using UnityEngine;
 using View;
 
@@ -12,6 +13,9 @@ namespace Model
 
 		[SerializeField] private Player player;
 
+		[SerializeField] private Ghost ghost;
+		[SerializeField] private Capture capture;
+		
 		//connect to server and init player
 		public void Init()
 		{
@@ -36,6 +40,11 @@ namespace Model
 		{
 			photonConnectRoom.DestroyPlayer(player.gameObject);
 			vController.GameOver();
+		}
+
+		public void UpdatePosition(Vector3Int pos)
+		{
+			ghost.UpdateTile(pos);
 		}
 	}
 }

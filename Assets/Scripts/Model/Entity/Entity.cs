@@ -34,6 +34,7 @@ namespace Model.Entity
 			
 			color = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
 			sprite.color = color;
+			Debug.Log("1 ");
 		}
 
 		private void Update()
@@ -54,6 +55,7 @@ namespace Model.Entity
 			
 			if (movePoint.position == transform.position)
 			{
+				mController.UpdatePosition(Vector3Int.FloorToInt(transform.position));
 				movePoint.position += newVec;
 			}
 		}
