@@ -54,6 +54,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   sprite: {fileID: 8880404511554222504}
+  pView: {fileID: 2161720603530157385}
 --- !u!114 &2161720603530157385
 MonoBehaviour:
   m_ObjectHideFlags: 0
