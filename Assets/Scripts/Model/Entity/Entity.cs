@@ -14,26 +14,23 @@ namespace Model.Entity
 		private Vector3 newVec;
 		private Vector3 save;
 
-		private MController mController;
+		private EntityController entityController;
 		private Color color;
 
 		[SerializeField] private SpriteRenderer sprite;
 		[SerializeField] private PhotonView pView;
 
-		public void Init(MController mController)
+		public void Init(EntityController entityController)
 		{
-			//random position????
-			//snap
-			transform.position += new Vector3(.5f, .5f, 0);
-
 			movePoint.parent = null;
-			this.mController = mController;
+			this.entityController = entityController;
 
-			//random????
-			newVec = Vector3.right;
-			
+			//rnd vec
+			// newVec = GetRandomStartVector();
+			//rnd color
 			color = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
 			sprite.color = color;
+			entityController.UpdateStart(Vector3Int.FloorToInt(transform.position), color);
 			Debug.Log("1 ");
 		}
 
@@ -51,13 +48,19 @@ namespace Model.Entity
 				newVec = new Vector3(0f, Input.GetAxisRaw("Vertical"), 0f);
 
 			if (Physics2D.OverlapCircle(movePoint.position + newVec, .2f, layerCollider))
-				mController.GameOver();
+				entityController.GameOver();
 			
 			if (movePoint.position == transform.position)
 			{
-				mController.UpdatePosition(Vector3Int.FloorToInt(transform.position));
+				entityController.UpdatePosition(Vector3Int.FloorToInt(transform.position));
 				movePoint.position += newVec;
 			}
+		}
+
+		private Vector3 GetRandomStartVector()
+		{
+			int rnd = Random.Range(0, 4);
+			return rnd == 0 ? Vector3.right : rnd == 1 ? Vector3.left : rnd == 2 ? Vector3.up : Vector3.down;
 		}
 
 		private void OnDestroy()

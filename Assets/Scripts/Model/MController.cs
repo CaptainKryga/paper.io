@@ -11,11 +11,8 @@ namespace Model
 		[SerializeField] private PhotonConnectRoom photonConnectRoom;
 		[SerializeField] private VController vController;
 
-		[SerializeField] private Player player;
+		[SerializeField] private EntityInstance entityInstance;
 
-		[SerializeField] private Ghost ghost;
-		[SerializeField] private Capture capture;
-		
 		//connect to server and init player
 		public void Init()
 		{
@@ -32,19 +29,12 @@ namespace Model
 		//restart game after death or win
 		public void Restart()
 		{
-			player = photonConnectRoom.CreatePlayer();
-			player.Init(this);
+			entityInstance.Restart();
 		}
 
 		public void GameOver()
 		{
-			photonConnectRoom.DestroyPlayer(player.gameObject);
 			vController.GameOver();
-		}
-
-		public void UpdatePosition(Vector3Int pos)
-		{
-			ghost.UpdateTile(pos);
 		}
 	}
 }
