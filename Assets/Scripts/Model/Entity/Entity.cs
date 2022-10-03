@@ -20,18 +20,15 @@ namespace Model.Entity
 		[SerializeField] private SpriteRenderer sprite;
 		[SerializeField] private PhotonView pView;
 
+		public Color Color { get => color; }
+		
 		public void Init(EntityController entityController)
 		{
 			movePoint.parent = null;
 			this.entityController = entityController;
 
-			//rnd vec
-			// newVec = GetRandomStartVector();
-			//rnd color
 			color = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
 			sprite.color = color;
-			entityController.UpdateStart(Vector3Int.FloorToInt(transform.position), color);
-			Debug.Log("1 ");
 		}
 
 		private void Update()
@@ -50,7 +47,7 @@ namespace Model.Entity
 			if (Physics2D.OverlapCircle(movePoint.position + newVec, .2f, layerCollider))
 				entityController.GameOver();
 			
-			if (movePoint.position == transform.position)
+			if (movePoint.position == transform.position && newVec != Vector3.zero)
 			{
 				entityController.UpdatePosition(Vector3Int.FloorToInt(transform.position));
 				movePoint.position += newVec;

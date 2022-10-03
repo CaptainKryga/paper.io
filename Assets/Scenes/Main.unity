@@ -2548,7 +2548,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1189043966
 Transform:
   m_ObjectHideFlags: 0
@@ -5515,9 +5515,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da16dcb741c954a47ab5e42c83cad86d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ghost: {fileID: 75757693}
+  tilemap: {fileID: 75757693}
   tile: {fileID: 11400000, guid: 07bf1958d1ab24167bb4f917049dc0e2, type: 2}
-  color: {r: 0, g: 0, b: 0, a: 0}
+  capture: {fileID: 1189043968}
 --- !u!114 &1952528003
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5530,6 +5530,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4904102ff95fc4b27949586c97fd0ce3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tilemap: {fileID: 1189043968}
+  tile: {fileID: 11400000, guid: 07bf1958d1ab24167bb4f917049dc0e2, type: 2}
 --- !u!1 &2005673082
 GameObject:
   m_ObjectHideFlags: 0

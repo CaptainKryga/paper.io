@@ -17,16 +17,17 @@ namespace Model
 		{
 			this.player = player;
 			player.Init(this);
+
+			Color colorGhost = player.Color * new Color(1f, 1f, 1f, .5f);
+			Color colorCapture = player.Color * new Color(1f, 1f, 1f, .9f);
+			
+			ghost.Init(colorGhost, colorCapture);
+			capture.Init(Vector3Int.FloorToInt(player.transform.position), colorCapture);
 		}
 		
 		public void UpdatePosition(Vector3Int pos)
 		{
-			ghost.UpdateTile(pos);
-		}
-
-		public void UpdateStart(Vector3Int pos, Color color)
-		{
-			ghost.UpdateStart(pos, color);
+			capture.UpdateCapture(ghost.UpdateTile(pos));
 		}
 
 		public void GameOver()
