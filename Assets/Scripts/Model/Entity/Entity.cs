@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -25,7 +24,6 @@ namespace Model.Entity
 			//snap
 			transform.position += new Vector3(.5f, .5f, 0);
 
-			Debug.Log("player start position: " + transform.position);
 			movePoint.parent = null;
 			this.mController = mController;
 
@@ -52,8 +50,6 @@ namespace Model.Entity
 			if (movePoint.position == transform.position)
 			{
 				movePoint.position += newVec;
-				Debug.Log("m: " + movePoint.position);
-				Debug.Log("vec: " + newVec);
 			}
 		}
 
