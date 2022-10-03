@@ -18,6 +18,9 @@ namespace Model.Entity
 		{
 			movePoint.parent = null;
 			this.mController = mController;
+			
+			//random????
+			newVec = Vector3.right;
 		}
 
 		private void Update()
@@ -37,6 +40,8 @@ namespace Model.Entity
 			{
 				movePoint.position += newVec;
 			}
+			
+			Debug.Log(movePoint.position == transform.position);
 		}
 	}
 }
