@@ -11,10 +11,13 @@ namespace Model.Entity
 
 		private Vector3 newVec;
 		private Vector3 save;
-		
-		private void Start()
+
+		private MController mController;
+
+		public void Init(MController mController)
 		{
 			movePoint.parent = null;
+			this.mController = mController;
 		}
 
 		private void Update()
@@ -26,9 +29,9 @@ namespace Model.Entity
 				newVec = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, 0f);
 			else if (Mathf.Abs(Input.GetAxisRaw("Vertical")) == 1f)
 				newVec = new Vector3(0f, Input.GetAxisRaw("Vertical"), 0f);
-			
+
 			if (Physics2D.OverlapCircle(movePoint.position + newVec, .2f, layerCollider))
-				Debug.Log("GAME OVER");
+				mController.GameOver();
 			
 			if (movePoint.position == transform.position)
 			{

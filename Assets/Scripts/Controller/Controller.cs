@@ -17,5 +17,10 @@ namespace Controller
 		{
 			
 		}
+
+		public void Restart()
+		{
+			mController.Restart();
+		}
 	}
 }
