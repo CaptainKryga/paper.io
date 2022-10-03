@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Model.Entity
 {
@@ -13,14 +15,25 @@ namespace Model.Entity
 		private Vector3 save;
 
 		private MController mController;
+		private Color color;
+
+		[SerializeField] private SpriteRenderer sprite;
 
 		public void Init(MController mController)
 		{
+			//random position????
+			//snap
+			transform.position += new Vector3(.5f, .5f, 0);
+
+			Debug.Log("player start position: " + transform.position);
 			movePoint.parent = null;
 			this.mController = mController;
-			
+
 			//random????
 			newVec = Vector3.right;
+			
+			color = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
+			sprite.color = color;
 		}
 
 		private void Update()
@@ -39,9 +52,14 @@ namespace Model.Entity
 			if (movePoint.position == transform.position)
 			{
 				movePoint.position += newVec;
+				Debug.Log("m: " + movePoint.position);
+				Debug.Log("vec: " + newVec);
 			}
-			
-			Debug.Log(movePoint.position == transform.position);
+		}
+
+		private void OnDestroy()
+		{
+			Destroy(movePoint.gameObject);
 		}
 	}
 }
