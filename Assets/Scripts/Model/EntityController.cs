@@ -22,7 +22,7 @@ namespace Model
 			Color colorCapture = player.Color * new Color(1f, 1f, 1f, .9f);
 			
 			ghost.Init(colorGhost, colorCapture);
-			capture.Init(Vector3Int.FloorToInt(player.transform.position), colorCapture);
+			capture.Init(Vector3Int.FloorToInt(player.transform.position), colorGhost, colorCapture);
 		}
 		
 		public void UpdatePosition(Vector3Int pos)

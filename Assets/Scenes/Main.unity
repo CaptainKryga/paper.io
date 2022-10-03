@@ -5515,9 +5515,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da16dcb741c954a47ab5e42c83cad86d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tilemap: {fileID: 75757693}
-  tile: {fileID: 11400000, guid: 07bf1958d1ab24167bb4f917049dc0e2, type: 2}
   capture: {fileID: 1189043968}
+  ghost: {fileID: 75757693}
+  tile: {fileID: 11400000, guid: 07bf1958d1ab24167bb4f917049dc0e2, type: 2}
 --- !u!114 &1952528003
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5530,7 +5530,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4904102ff95fc4b27949586c97fd0ce3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tilemap: {fileID: 1189043968}
+  capture: {fileID: 1189043968}
+  ghost: {fileID: 75757693}
   tile: {fileID: 11400000, guid: 07bf1958d1ab24167bb4f917049dc0e2, type: 2}
 --- !u!1 &2005673082
 GameObject:

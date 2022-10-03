@@ -6,7 +6,6 @@ namespace Model.TileMap
 {
 	public class Ghost : PTilemap
 	{
-		[SerializeField] private Tilemap capture;
 		private Color colorCapture;
 
 		private bool isCapture;
@@ -31,18 +30,18 @@ namespace Model.TileMap
 					list.Clear();
 					return temp;
 				}
-				tilemap.SetTile(pos, tile);
-				tilemap.SetTileFlags(pos, TileFlags.None);
-				tilemap.SetColor(pos, color);
+				ghost.SetTile(pos, tile);
+				ghost.SetTileFlags(pos, TileFlags.None);
+				ghost.SetColor(pos, colorGhost);
 			}
 
 			return null;
 		}
 
-		public void Init(Color ghost, Color capture)
+		public void Init(Color colorGhost, Color colorCapture)
 		{
-			color = ghost;
-			colorCapture = capture;
+			this.colorGhost = colorGhost;
+			this.colorCapture = colorCapture;
 		}
 	}
 }
