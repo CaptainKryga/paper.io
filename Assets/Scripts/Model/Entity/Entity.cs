@@ -1,3 +1,4 @@
+using Photon.Pun;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -17,6 +18,7 @@ namespace Model.Entity
 		private Color color;
 
 		[SerializeField] private SpriteRenderer sprite;
+		[SerializeField] private PhotonView pView;
 
 		public void Init(MController mController)
 		{
@@ -36,6 +38,9 @@ namespace Model.Entity
 
 		private void Update()
 		{
+			if (!pView.IsMine)
+				return;
+			
 			transform.position = Vector3.MoveTowards(transform.position, movePoint.position,
 				moveSpeed * Time.deltaTime);
 			
