@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Tilemaps;
 
 namespace Test
@@ -36,6 +37,21 @@ namespace Test
 			if (PlayerPrefs.GetInt("size") <= 0)
 				CreateDatabase();
 			OnClick_Load();
+		}
+
+		private void Update()
+		{
+			if (Input.GetKeyDown(KeyCode.Mouse0) && !EventSystem.current.IsPointerOverGameObject())
+			{
+				Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+				Vector3Int point = tilemap.WorldToCell(mouseWorldPos);
+				
+				if (point.x >= size || point.x < 0 || point.y >= size || point.y < 0)
+					return;
+				
+				
+				UpdateLeminCell(map[point.x][point.y], point);
+			}
 		}
 
 		public void OnClick_SetClear()
@@ -128,6 +144,15 @@ namespace Test
 		{
 			cell.img.color = cActual;
 			cell.type = GetTypeFromColor(cActual);
+		}
+		
+		public void UpdateLeminCell(LeminCell cell, Vector3Int vec)
+		{
+			// cell.img.color = cActual;
+			cell.type = GetTypeFromColor(cActual);
+			
+			tilemap.SetTileFlags(vec, TileFlags.None);
+			tilemap.SetColor(vec, cActual);
 		}
 
 		public void UpdateLeminCell(LeminCell cell, Color color)
@@ -229,15 +254,17 @@ namespace Test
 				map[y] = new LeminCell[size];
 				for (int x = 0; x < map[y].Length; x++)
 				{
-					map[y][x] = Instantiate(prefab, parent).GetComponent<LeminCell>();
-					map[y][x].GetComponent<RectTransform>().position = startPosition +
-																		new Vector3Int(y * width + y * step,
-																			x * width + x * step, 0);
+					// map[y][x] = Instantiate(prefab, parent).GetComponent<LeminCell>();
+					// map[y][x].GetComponent<RectTransform>().position = startPosition +
+																		// new Vector3Int(y * width + y * step,
+																			// x * width + x * step, 0);
+					
+					map[y][x] = new LeminCell();
 					map[y][x].Init(this, new Vector2(y, x));
 
 					ECaptured type = (ECaptured) PlayerPrefs.GetInt("test:" + y + "|" + x);
 					map[y][x].type = type;
-					map[y][x].img.color = GetColorFromType(type);
+					// map[y][x].img.color = GetColorFromType(type);
 					
 					tilemap.SetTile(new Vector3Int(y, x), GetTileBaseFromType(type));
 				}
