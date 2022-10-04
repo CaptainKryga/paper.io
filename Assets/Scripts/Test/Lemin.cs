@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 namespace Test
 {
@@ -15,6 +16,9 @@ namespace Test
 		[SerializeField] private Vector3Int startPosition = new Vector3Int(100, 100, 0);
 
 		[SerializeField] private Color cClear, cCapture, cGhost, cActual, cStart, cEnd;
+
+		[SerializeField] private Tilemap tilemap;
+		[SerializeField] private TileBase tbClear, tbCapture, tbGhost, tbActual, tbStart, tbEnd;
 
 		public enum ECaptured
 		{
@@ -158,6 +162,32 @@ namespace Test
 			return cClear;
 		}
 
+		private ECaptured GetTypeFromTileBase(TileBase tb)
+		{
+			if (tb == tbCapture)
+				return ECaptured.capture;
+			else if (tb == tbGhost)
+				return ECaptured.ghost;
+			else if (tb == tbStart)
+				return ECaptured.start;
+			else if (tb == tbEnd)
+				return ECaptured.end;
+			return ECaptured.clear;
+		}
+		
+		private TileBase GetTileBaseFromType(ECaptured type)
+		{
+			if (type == ECaptured.capture)
+				return tbCapture;
+			else if (type == ECaptured.ghost)
+				return tbGhost;
+			else if (type == ECaptured.start)
+				return tbStart;
+			else if (type == ECaptured.end)
+				return tbEnd;
+			return tbClear;
+		}
+
 		private void CreateDatabase()
 		{
 			PlayerPrefs.SetInt("size", size);
@@ -191,10 +221,12 @@ namespace Test
 
 		public void OnClick_Load()
 		{
-			map = new LeminCell[PlayerPrefs.GetInt("size")][];
+			int size = PlayerPrefs.GetInt("size");
+			map = new LeminCell[size][];
+			tilemap.size = new Vector3Int(size, size);
 			for (int y = 0; y < map.Length; y++)
 			{
-				map[y] = new LeminCell[PlayerPrefs.GetInt("size")];
+				map[y] = new LeminCell[size];
 				for (int x = 0; x < map[y].Length; x++)
 				{
 					map[y][x] = Instantiate(prefab, parent).GetComponent<LeminCell>();
@@ -206,6 +238,8 @@ namespace Test
 					ECaptured type = (ECaptured) PlayerPrefs.GetInt("test:" + y + "|" + x);
 					map[y][x].type = type;
 					map[y][x].img.color = GetColorFromType(type);
+					
+					tilemap.SetTile(new Vector3Int(y, x), GetTileBaseFromType(type));
 				}
 			}
 
