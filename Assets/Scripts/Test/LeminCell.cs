@@ -7,7 +7,6 @@ namespace Test
 	public class LeminCell : MonoBehaviour
 	{
 		private Lemin lemin;
-		private Vector2 pos;
 
 		public TMP_Text text;
 		public Lemin.ECaptured type;
@@ -16,7 +15,6 @@ namespace Test
 		public void Init(Lemin lemin, Vector2 pos)
 		{
 			this.lemin = lemin;
-			this.pos = pos;
 		}
 
 		public void OnClick_Press()

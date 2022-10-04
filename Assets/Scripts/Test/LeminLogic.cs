@@ -9,10 +9,10 @@ namespace Test
 		private LeminCell[][] map;
 		private Lemin lemin;
 		private Color cCapture;
+		
 		//path => player path on map
 		//path[0] => start
 		//path[^1] => end
-
 		public Vector3Int[] GetCapturedCells(Vector3Int[] path, LeminCell[][] map, Lemin lemin, Color cCapture)
 		{
 			this.map = map;
@@ -23,7 +23,6 @@ namespace Test
 			
 			List<Vector3Int> recursiveStartEnd = new List<Vector3Int>();
 			RecursiveFindStartEnd(path[0], recursiveStartEnd);
-
 
 			int i = 0;
 			
@@ -47,38 +46,6 @@ namespace Test
 			//return all new item's from captured
 			return new Vector3Int[1];
 		}
-		// public Vector3Int[] GetResult(LeminCell[][] map, Lemin lemin, Color cCapture)
-		// {
-		// 	this.map = map;
-		// 	this.lemin = lemin;
-		// 	this.cCapture = cCapture;
-		// 	
-		// 	//find all ghost element's
-		// 	List<Vector2Int> temp = new List<Vector2Int>();
-		//
-		// 	int i = 0;
-		// 	// for (int x = 0; x < map.Length; x++)
-		// 	// {
-		// 	// 	for (int y = 0; y < map.Length; y++)
-		// 	// 	{
-		// 	// 		if (map[x][y].type is Lemin.ECaptured.ghost or Lemin.ECaptured.start or Lemin.ECaptured.end)
-		// 	// 		{
-		// 	// 			temp.Add(new Vector2Int(x, y));
-		// 	// 			map[x][y].text.text = i.ToString();
-		// 	// 			// UpdateLeminCell(map[x][y], Color.yellow);
-		// 	// 			i++;
-		// 	//
-		// 	// 			if (map[x][y].type == Lemin.ECaptured.start)
-		// 	// 			{
-		// 	// 				isExit = false;
-		// 	// 				RecursiveFindStartEnd(new Vector2Int(x, y), recursiveStartEnd);
-		// 	// 			}
-		// 	// 		}
-		// 	// 	}
-		// 	// }
-		//
-		// 	
-		// }
 
 		private List<LeminSub> FindPairsPathCells(List<Vector3Int> temp)
 		{
