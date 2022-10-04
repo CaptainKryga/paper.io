@@ -1,25 +1,27 @@
-using Test;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LeminCell : MonoBehaviour
+namespace Test
 {
-	private Lemin lemin;
-	private Vector2 pos;
-
-	public TMP_Text text;
-	public Lemin.ECaptured type;
-	public Image img;
-
-	public void Init(Lemin lemin, Vector2 pos)
+	public class LeminCell : MonoBehaviour
 	{
-		this.lemin = lemin;
-		this.pos = pos;
-	}
+		private Lemin lemin;
+		private Vector2 pos;
 
-	public void OnClick_Press()
-	{
-		lemin.UpdateLeminCell(this);
+		public TMP_Text text;
+		public Lemin.ECaptured type;
+		public Image img;
+
+		public void Init(Lemin lemin, Vector2 pos)
+		{
+			this.lemin = lemin;
+			this.pos = pos;
+		}
+
+		public void OnClick_Press()
+		{
+			lemin.UpdateLeminCell(this);
+		}
 	}
 }
