@@ -916,6 +916,7 @@ GameObject:
   m_Component:
   - component: {fileID: 472028513}
   - component: {fileID: 472028512}
+  - component: {fileID: 472028514}
   m_Layer: 0
   m_Name: Scripts
   m_TagString: Untagged
@@ -935,6 +936,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e40476ac1da084fe0b22d25206e2f750, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  leminLogic: {fileID: 472028514}
   parent: {fileID: 1727138079}
   prefab: {fileID: 7321768173878533216, guid: 40d65cb5e88b54c06834059014f99caa, type: 3}
   size: 10
@@ -962,6 +964,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &472028514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 472028511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01f2bdd4970fa402cb67355e38443013, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &720731322
 GameObject:
   m_ObjectHideFlags: 0
