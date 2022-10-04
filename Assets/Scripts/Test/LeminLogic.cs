@@ -9,6 +9,9 @@ namespace Test
 		private LeminCell[][] map;
 		private Lemin lemin;
 		private Color cCapture;
+		//path => player path on map
+		//path[0] => start
+		//path[^1] => end
 		public Vector3Int[] GetResult(LeminCell[][] map, Lemin lemin, Color cCapture)
 		{
 			this.map = map;
@@ -51,84 +54,77 @@ namespace Test
 			if (temp.Count <= 0)
 				return new Vector3Int[1];
 
-			//find pair element's from custom lemin
-			Vector2Int[] captured = temp.ToArray();
+			//fpc
+			List<LeminSub> tempX = FindPairsPathCells(temp);
 
+			//tempY?????
+			CapturedCells(tempX);
+
+			//return all new item's from captured
+			return new Vector3Int[1];
+		}
+
+		private List<LeminSub> FindPairsPathCells(List<Vector2Int> temp)
+		{
 			List<LeminSub> tempX = new List<LeminSub>();
-			List<LeminSub> tempY = new List<LeminSub>();
-
-			List<Vector2Int> temp2 = captured.ToList();
-
-			//get all once level cell's
-			//get min max
-			int min = temp2[0].y, max = min;
-			for (int x = 0; x < temp2.Count; x++)
-			{
-				if (temp2[x].y > max) max = temp2[x].y;
-				if (temp2[x].y < min) min = temp2[x].y;
-			}
-
-			//find level item's
-			// List<Vector2Int> list = new List<Vector2Int>();
-			temp2 = temp2.OrderBy(l => l.x).ToList();
-			temp2 = temp2.OrderBy(l => l.y).ToList();
-			Debug.Log("count: " + temp2.Count);
-			temp2 = temp2.Distinct().ToList();
-			Debug.Log("count: " + temp2.Count);
-			for (int x = 0; x < temp2.Count; x++)
-			{
-				Debug.Log("sort: " + temp2[x]);
-			}
-
+			
+			//sort items from level Y
+			temp = temp.OrderBy(l => l.x).ToList();
+			temp = temp.OrderBy(l => l.y).ToList();
+			temp = temp.Distinct().ToList();
+			
 			//pair's
-			for (int y = 0; y < temp2.Count;)
+			for (int y = 0; y < temp.Count;)
 			{
-				if (y + 1 >= temp2.Count)
+				if (y + 1 >= temp.Count)
 					break;
 
 				//check capture or not
-				if (map[temp2[y].x][temp2[y].y].type == Lemin.ECaptured.capture &&
-					temp2[y] + Vector2Int.right == temp2[y + 1])
+				if (map[temp[y].x][temp[y].y].type == Lemin.ECaptured.capture &&
+					temp[y] + Vector2Int.right == temp[y + 1])
 				{
 					// UpdateLeminCell(map[temp2[y].x][temp2[y].y], Color.yellow);
-					map[temp2[y].x][temp2[y].y].text.text = "capt\n" + temp2[y].y;
+					map[temp[y].x][temp[y].y].text.text = "capt\n" + temp[y].y;
 					y++;
 					continue;
 				}
 
 				//bad var *---\n
-				if (temp2[y].y != temp2[y + 1].y)
+				if (temp[y].y != temp[y + 1].y)
 				{
 					// UpdateLeminCell(map[temp2[y].x][temp2[y].y], Color.yellow);
-					map[temp2[y].x][temp2[y].y].text.text = "step\n" + temp2[y].y;
+					map[temp[y].x][temp[y].y].text.text = "step\n" + temp[y].y;
 					y++;
 					continue;
 				}
 
 				//nice var *----i
-				if (temp2[y] + Vector2Int.right != temp2[y + 1])
+				if (temp[y] + Vector2Int.right != temp[y + 1])
 				{
-					tempX.Add(new LeminSub() {min = temp2[y], max = temp2[y + 1]});
+					tempX.Add(new LeminSub() {min = temp[y], max = temp[y + 1]});
 					// UpdateLeminCell(map[temp2[y].x][temp2[y].y], Color.red);
-					map[temp2[y].x][temp2[y].y].text.text = "min\n" + temp2[y].y;
+					map[temp[y].x][temp[y].y].text.text = "min\n" + temp[y].y;
 					// UpdateLeminCell(map[temp2[y + 1].x][temp2[y + 1].y], Color.grey);
-					map[temp2[y + 1].x][temp2[y + 1].y].text.text = "max\n" + temp2[y].y;
+					map[temp[y + 1].x][temp[y + 1].y].text.text = "max\n" + temp[y].y;
 					y += 2;
 				}
 				//bad var *i?????
-				else if (temp2[y] + Vector2Int.right == temp2[y + 1])
+				else if (temp[y] + Vector2Int.right == temp[y + 1])
 				{
 					// UpdateLeminCell(map[temp2[y].x][temp2[y].y], Color.yellow);
-					map[temp2[y].x][temp2[y].y].text.text = "2\n" + temp2[y].y;
+					map[temp[y].x][temp[y].y].text.text = "2\n" + temp[y].y;
 					// UpdateLeminCell(map[temp2[y + 1].x][temp2[y + 1].y], Color.yellow);
-					map[temp2[y + 1].x][temp2[y + 1].y].text.text = "2\n" + temp2[y + 1].y;
+					map[temp[y + 1].x][temp[y + 1].y].text.text = "2\n" + temp[y + 1].y;
 					y += 2;
 				}
 			}
 
-			// return;
+			return tempX;
+		}
 
-			//find new captured cell's from width search(custom lemin)
+		//find new captured cell's from width search(custom lemin)
+		private void CapturedCells(List<LeminSub> tempX)
+		{
 			deep = 0;
 			for (int x = 0; x < tempX.Count; x++)
 			{
@@ -141,10 +137,6 @@ namespace Test
 					}
 				}
 			}
-
-			//check not pair's element's
-			//
-			return new Vector3Int[1];
 		}
 
 		private bool isExit;
