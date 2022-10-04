@@ -1,16 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
-using Model.TileMap;
 using Test;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class LeminCell : MonoBehaviour
 {
-	public Lemin lemin;
-	public Vector2 pos;
-	public Lemin.ECaptured type;
+	private Lemin lemin;
+	private Vector2 pos;
 
+	public TMP_Text text;
+	public Lemin.ECaptured type;
 	public Image img;
 
 	public void Init(Lemin lemin, Vector2 pos)
@@ -21,6 +20,6 @@ public class LeminCell : MonoBehaviour
 
 	public void OnClick_Press()
 	{
-		lemin.UpdateLeminImg(this);
+		lemin.UpdateLeminCell(this);
 	}
 }

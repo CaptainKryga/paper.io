@@ -939,10 +939,10 @@ MonoBehaviour:
   step: 5
   width: 100
   startPosition: {x: 100, y: 100, z: 0}
-  clear: {r: 1, g: 1, b: 1, a: 1}
-  capture: {r: 0.0068655084, g: 0.5754717, b: 0, a: 1}
-  ghost: {r: 0, g: 0.6466632, b: 1, a: 0.6666667}
-  actual: {r: 1, g: 1, b: 1, a: 1}
+  cClear: {r: 1, g: 1, b: 1, a: 1}
+  cCapture: {r: 0.022828398, g: 0.5377358, b: 0.05685205, a: 1}
+  cGhost: {r: 0.17021184, g: 0.47646824, b: 0.8018868, a: 1}
+  cActual: {r: 1, g: 1, b: 1, a: 1}
 --- !u!4 &472028513
 Transform:
   m_ObjectHideFlags: 0
