@@ -6,6 +6,7 @@ namespace Model
 {
 	public class EntityInstance : MonoBehaviour
 	{
+		[SerializeField] private MController mController;
 		[SerializeField] private PhotonConnectRoom photonConnectRoom;
 
 		[SerializeField] private EntityController entityController;
@@ -22,6 +23,7 @@ namespace Model
 		public void GameOver(Player player)
 		{
 			photonConnectRoom.DestroyPlayer(player.gameObject);
+			mController.GameOver();
 		}
 	}
 }
