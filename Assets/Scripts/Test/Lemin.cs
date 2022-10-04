@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Test
@@ -63,12 +61,52 @@ namespace Test
 
 		public void OnClick_Result()
 		{
-			Vector3Int[] arr = leminLogic.GetResult(map, this, cCapture);
+			Vector3Int[] arr = leminLogic.GetCapturedCells(GetPath(), map, this, cCapture);
 			// for (int x = 0; x < map.Length; x++)
 			// {
 				// UpdateLeminCell(map[arr[x].x][arr[x].y], cCapture);
 			// }
+		}
+
+		private Vector3Int[] GetPath()
+		{
+			List<Vector3Int> temp = new List<Vector3Int>();
+			temp.Add(GetStart());
 			
+			for (int x = 0, i = 1; x < map.Length; x++)
+			{
+				for (int y = 0; y < map.Length; y++)
+				{
+					if (map[x][y].type is Lemin.ECaptured.ghost or Lemin.ECaptured.start or Lemin.ECaptured.end)
+					{
+						temp.Add(new Vector3Int(x, y));
+						map[x][y].text.text = i.ToString();
+						// UpdateLeminCell(map[x][y], Color.yellow);
+						i++;
+					}
+				}
+			}
+
+			return temp.ToArray();
+		}
+
+		private Vector3Int GetStart()
+		{
+			for (int x = 0; x < map.Length; x++)
+			{
+				for (int y = 0; y < map.Length; y++)
+				{
+					if (map[x][y].type == Lemin.ECaptured.start)
+					{
+						map[x][y].text.text = 1.ToString();
+						// UpdateLeminCell(map[x][y], Color.yellow);
+						return new Vector3Int(x, y);
+					}
+				}
+			}
+
+			Debug.LogError("Problem start position on path lemin");
+			return Vector3Int.zero;
 		}
 
 		public void OnClick_SetAll()
