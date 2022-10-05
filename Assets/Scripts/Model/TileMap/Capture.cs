@@ -1,6 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Test;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -8,155 +6,72 @@ namespace Model.TileMap
 {
 	public class Capture : PTilemap
 	{
-		public void UpdateCapture(Vector3Int[] arr)
+		[SerializeField] private TilemapInstance tilemapInstance;
+
+		[SerializeField] private LeminLogic leminLogic;
+
+		[SerializeField] private GameObject prefabDebug;
+		[SerializeField] private Transform parentDebug;
+
+		private int[][] test;
+
+		private LeminCell[][] cells;
+
+		public void UpdateCapture(Vector3Int[] path)
 		{
-			if (arr == null)
+			if (path == null)
 				return;
-
-			//крайние точки по x and y
-			Vector2Int min = (Vector2Int) arr[0];
-			Vector2Int max = min;
 			
-			for (int x = 0; x < arr.Length; x++)
+			
+			for (int x = 0; x < cells.Length; x++)
 			{
-				if (arr[x].x > max.x) max.x = arr[x].x;
-				if (arr[x].y > max.y) max.y = arr[x].y;
-				if (arr[x].x < min.x) min.x = arr[x].x;
-				if (arr[x].y < min.y) min.y = arr[x].y;
-			}
-			Debug.Log("arr: " + arr.Length + " |" + max + " | " + min);
-
-			List<Vector3Int> temp = new List<Vector3Int>();
-			for (int x = 0; x < Math.Abs(max.x - min.x); x++)
-			{
-				for (int y = 0; y < Math.Abs(max.y - min.y); y++)
+				for (int y = 0; y < cells.Length; y++)
 				{
-					IsCapture(temp, arr,new Vector3Int(min.x + x, min.y + y));
+					cells[x][y].Debug = cells[x][y].type == Lemin.ECaptured.clear ? "-" :
+						cells[x][y].type.ToString().Substring(0, 2);
 				}
 			}
 
-			Debug.Log("temp: " + temp.Count);
-
-			for (int x = 0; x < arr.Length; x++)
+			Vector3Int[] captured = leminLogic.GetCapturedCells(path, cells);
+			
+			for (int x = 0; x < path.Length; x++)
 			{
-				capture.SetTile(arr[x], tile);
-				capture.SetTileFlags(arr[x], TileFlags.None);
-				capture.SetColor(arr[x], colorCapture);
-				ghost.SetTile(arr[x], null);
+				capture.SetTile(path[x], tile);
+				capture.SetTileFlags(path[x], TileFlags.None);
+				capture.SetColor(path[x], colorCapture);
+				cells[path[x].x][path[x].y].type = Lemin.ECaptured.capture;
 			}
 			
-			temp = CheckFromTree(temp);
-			
-			for (int x = 0; x < temp.Count; x++)
+			for (int x = 0; x < captured.Length; x++)
 			{
-				capture.SetTile(temp[x], tile);
-				capture.SetTileFlags(temp[x], TileFlags.None);
-				capture.SetColor(temp[x], colorCapture);
+				capture.SetTile(captured[x], tile);
+				capture.SetTileFlags(captured[x], TileFlags.None);
+				capture.SetColor(captured[x], colorCapture);
+				cells[captured[x].x][captured[x].y].type = Lemin.ECaptured.capture;
 			}
 			
-
-			// for (int x = 0; x < arr.Length; x++)
-			// {
-			// tilemap.SetTile(arr[x], tile);
-			// tilemap.SetTileFlags(arr[x], TileFlags.None);
-			// tilemap.SetColor(arr[x], color * new Color(1f,1f,1f, .24f));
-			// }
 		}
 
 		public void Init(Vector3Int pos, Color colorGhost, Color colorCapture)
 		{
 			this.colorCapture = colorCapture;
 			this.colorGhost = colorGhost;
-			
+
+			this.cells = tilemapInstance.GetCells;
+
+			InitCell(pos);
+			InitCell(pos + Vector3Int.down * 1);
+			InitCell(pos + Vector3Int.down * 2);
+			InitCell(pos + Vector3Int.down * 3);
+		}
+
+		private void InitCell(Vector3Int pos)
+		{
 			capture.SetTile(pos, tile);
 			capture.SetTileFlags(pos, TileFlags.None);
 			capture.SetColor(pos, this.colorCapture);
-		}
-		
-		private void IsCapture(List<Vector3Int> save, Vector3Int[] arr, Vector3Int pos)
-		{
-			if (ghost.GetColor(pos) != colorCapture && !arr.Contains(pos))
-				save.Add(pos);
+			cells[pos.x][pos.y].type = Lemin.ECaptured.capture;
 		}
 
-		private List<Vector3Int> CheckFromTree(List<Vector3Int> list)
-		{
-			for (int x = 0; x < list.Count; x++)
-			{
-				if (CheckSides(list, list[x]))
-				{
-					DeleteSides(list, list[x]);
-					
-					x = 0;
-				}
-			}
-			
-			return list;
-		}
-
-		private bool CheckSides(List<Vector3Int> list, Vector3Int pos)
-		{
-			if (CheckSide(pos, list, pos + Vector3Int.up) ||
-				CheckSide(pos, list, pos - Vector3Int.up) ||
-				CheckSide(pos, list, pos + Vector3Int.right) ||
-				CheckSide(pos, list, pos - Vector3Int.right))
-				return true;
-			return false;
-		}
-
-		private bool CheckSide(Vector3Int pos2, List<Vector3Int> list, Vector3Int pos)
-		{
-			if (!list.Contains(pos))
-			{
-				if (capture.GetColor(pos) != colorCapture &&
-					ghost.GetColor(pos) != colorGhost)
-				{
-					Debug.Log("CheckSide: " + pos2 + "|" + pos + capture.GetColor(pos) + "|" + colorCapture);
-					Debug.Log("CheckSide: " + pos2 + "|" + pos + ghost.GetColor(pos) + "|" + colorGhost);
-					return true;
-				}
-			}
-			return false;
-		}
-
-		private void DeleteSides(List<Vector3Int> list, Vector3Int pos)
-		{
-			List<Vector3Int> del = new List<Vector3Int>();
-			List<Vector3Int> save = new List<Vector3Int>();
-
-			del.Add(pos);
-			while (true)
-			{
-				for (int x = 0; x < del.Count; x++)
-				{
-					if (list.Contains(del[x] + Vector3Int.up))
-						save.Add(del[x] + Vector3Int.up);
-					if (list.Contains(del[x] - Vector3Int.up))
-						save.Add(del[x] - Vector3Int.up);
-					if (list.Contains(del[x] + Vector3Int.right))
-						save.Add(del[x] + Vector3Int.right);
-					if (list.Contains(del[x] - Vector3Int.right))
-						save.Add(del[x] - Vector3Int.right);
-				}
-
-				for (int x = 0; x < del.Count; x++)
-				{
-					list.Remove(del[x]);
-				}
-				del.Clear();
-				del = save;
-				save = new List<Vector3Int>();
-				
-				if (del.Count == 0)
-					break;
-			}
-		}
-	}
-
-	public class Tree
-	{
-		public Vector3Int pos;
-		public Tree north, south, west, east;
-		public bool isFail;
 	}
 }

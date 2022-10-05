@@ -11,6 +11,7 @@ namespace Model
 		[SerializeField] private PhotonConnectRoom photonConnectRoom;
 		[SerializeField] private VController vController;
 
+		[SerializeField] private TilemapInstance tilemapInstance;
 		[SerializeField] private EntityInstance entityInstance;
 
 		//connect to server and init player
@@ -23,6 +24,7 @@ namespace Model
 		}
 		public void InitPlayer()
 		{
+			tilemapInstance.InitTileMap();
 			vController.InitPlayer();
 		}
 

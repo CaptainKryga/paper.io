@@ -15,7 +15,7 @@ namespace Model
 		public void Restart()
 		{
 			//setPosition
-			Vector3 startPosition = new Vector3(.5f, .5f, 0);
+			Vector3 startPosition = new Vector3(10.5f, 10.5f, 0);
 
 			entityController.Restart(photonConnectRoom.CreatePlayer(startPosition));
 		}
