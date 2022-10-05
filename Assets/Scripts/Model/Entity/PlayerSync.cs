@@ -7,6 +7,7 @@ namespace Model.Entity
 {
     public class PlayerSync : Entity, IPunObservable
     {
+        private TileDataBase tileDataBase;
         [SerializeField] private TMP_Text textPlayerName;
         private string nickName;
         private int localId;
@@ -16,6 +17,7 @@ namespace Model.Entity
             set
             {
                 nickName = value;
+                textPlayerName.text = nickName;
             }
         }
         
@@ -24,15 +26,17 @@ namespace Model.Entity
             set
             {
                 localId = value;
+                spriteRenderer.sprite = tileDataBase.sprites[localId];
             }
         }
 
         public void UpdatePlayer(TileDataBase tileDataBase, string playerName, int playerId)
         {
             nickName = playerName;
-            textPlayerName.text = playerName;
+            textPlayerName.text = nickName;
             
             localId = playerId;
+            this.tileDataBase = tileDataBase;
             spriteRenderer.sprite = tileDataBase.sprites[localId];
         }
 
