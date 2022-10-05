@@ -29,9 +29,21 @@ namespace Model
 		}
 
 		//restart game after death or win
-		public void Restart()
+		public void Restart(string playerName, int playerId)
 		{
+			if (playerName == "" || playerId < 1 || playerId > 15)
+			{
+				vController.ReceiveStartBattle(false);
+				return;
+			}
+			else
+			{
+				
+			}
+			
 			entityInstance.Restart();
+			//if all it's okey true
+			vController.ReceiveStartBattle(true);
 		}
 
 		public void GameOver()

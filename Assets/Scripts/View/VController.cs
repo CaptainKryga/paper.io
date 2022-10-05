@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace View
 {
@@ -9,6 +10,12 @@ namespace View
 
 		[SerializeField] private GameObject panelPlayerInit;
 		[SerializeField] private GameObject panelGameOver;
+
+		[SerializeField] private Button btnStartBattle;
+		[SerializeField] private InputField inputFieldPlayerName;
+
+		private string playerName;
+		private int playerId;
 
 		private void Start()
 		{
@@ -26,16 +33,38 @@ namespace View
 			panelPlayerInit.SetActive(true);
 		}
 
-		public void OnClick_StartBattle()
-		{
-			panelPlayerInit.SetActive(false);
-			panelGameOver.SetActive(false);
-			controller.Restart();
-		}
-
 		public void GameOver()
 		{
 			panelGameOver.SetActive(true);
+		}
+
+		public void OnClick_StartBattle()
+		{
+			controller.Restart(playerName, playerId);
+		}
+
+		public void ReceiveStartBattle(bool isFlag)
+		{
+			if (isFlag)
+			{
+				panelPlayerInit.SetActive(false);
+				panelGameOver.SetActive(false);
+			}
+			else
+			{
+				///////////////////////////////////////////////////////////////
+				Debug.Log("Message BOX");
+			}
+		}
+
+		public void OnClick_SetPlayerFlag(int id)
+		{
+			playerId = id;
+		}
+
+		public void OnInputField_SetName()
+		{
+			playerName = inputFieldPlayerName.text;
 		}
 	}
 }
