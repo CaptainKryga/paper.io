@@ -6,23 +6,35 @@ namespace Test
 {
 	public class LeminLogic : MonoBehaviour
 	{
-		private LeminCell[][] map;
+		private LeminCell[][] cells;
 		
 		//path => player path on map
 		//path[0] => start
 		//path[^1] => end
-		
+
 		//map => tilemap LeminCells
-		public Vector3Int[] GetCapturedCells(Vector3Int[] path, LeminCell[][] map)
+		public Vector3Int[] GetCapturedCells(Vector3Int[] path, LeminCell[][] cells)
 		{
-			this.map = map;
+			this.cells = cells;
 			
 			List<Vector3Int> temp = path.ToList();
-			
-			List<Vector3Int> recursiveStartEnd = new List<Vector3Int>();
-			RecursiveFindStartEnd(path[0], recursiveStartEnd);
+			Debug.Log(temp.Count);
 
-			temp.AddRange(recursiveStartEnd);
+			if (path[0] != path[^1])
+			{
+				deep = 0;
+				List<Vector3Int> recursiveStartEnd = GetListFromTree(FindWidthStarA(path[0], null));
+				Debug.Log("DEEEEEEEP:" + deep);
+				Debug.Log("rec: " + recursiveStartEnd.Count);
+				temp.AddRange(recursiveStartEnd);
+				Debug.Log("temp: " + temp.Count);
+			}
+	
+			//TEMP
+			for (int x = 0; x < temp.Count; x++)
+			{
+				cells[temp[x].x][temp[x].y].Debug = "t1";
+			}
 			
 			//if ghost element's <= 0 return
 			if (temp.Count <= 0)
@@ -33,6 +45,14 @@ namespace Test
 
 			//find pair's from path cell's
 			List<LeminSub> tempX = FindPairsPathCells(temp);
+
+			//TEMP X
+			// for (int x = 0; x < tempX.Count; x++)
+			// {
+			// 	cells[tempX[x].min.x][tempX[x].min.y].Debug = "min";
+			// 	cells[tempX[x].max.x][tempX[x].max.y].Debug = "max";
+			// }
+			
 
 			//tempY?????
 			//return all new item's from captured
@@ -55,7 +75,7 @@ namespace Test
 					break;
 
 				//check capture or not
-				if (map[temp[y].x][temp[y].y].type == Lemin.ECaptured.capture &&
+				if (cells[temp[y].x][temp[y].y].type == Lemin.ECaptured.capture &&
 					temp[y] + Vector3Int.right == temp[y + 1])
 				{
 					y++;
@@ -90,15 +110,16 @@ namespace Test
 		{
 			List<Vector3Int> captured = new List<Vector3Int>();
 			List<Vector3Int> temp = new List<Vector3Int>();
-			deep = 0;
 			for (int x = 0; x < tempX.Count; x++)
 			{
 				for (int x2 = 1; x2 < tempX[x].max.x - tempX[x].min.x; x2++)
 				{
 					Vector3Int vec = tempX[x].min + Vector3Int.right * x2;
-					if (map[vec.x][vec.y].type == Lemin.ECaptured.clear && !captured.Contains(vec))
+					if (cells[vec.x][vec.y].type == Lemin.ECaptured.clear && !captured.Contains(vec))
 					{
+						deep = 0;
 						RecursiveFindEmptySlots(temp, vec);
+						Debug.Log("DEEEEEEEP:" + deep);
 						captured.AddRange(temp);
 						temp.Clear();
 					}
@@ -109,67 +130,103 @@ namespace Test
 		}
 
 		private bool isExit;
-		private void RecursiveFindStartEnd(Vector3Int start, List<Vector3Int> list)
+
+		private Tree FindWidthStarA(Vector3Int start, Tree parent)
 		{
-			list.Add(start);
-			if (!isExit && map[start.x][start.y].type == Lemin.ECaptured.end)
+			List<Tree> queue = new List<Tree>();
+			List<Vector3Int> visited = new List<Vector3Int>();
+			queue.Add(new Tree(start, null));
+
+			int i = 0;
+			while (queue.Count > 0)
 			{
-				isExit = true;
-				return;
+				for (int x = 0; x < queue.Count; x++)
+				{
+					if (CheckCell(queue, visited, queue[x], Vector3Int.right))
+						return queue[^1];
+
+					if (CheckCell(queue, visited, queue[x], Vector3Int.left))
+						return queue[^1];
+
+					if (CheckCell(queue, visited, queue[x], Vector3Int.up))
+						return queue[^1];
+
+					if (CheckCell(queue, visited, queue[x], Vector3Int.down))
+						return queue[^1];
+
+					queue.Remove(queue[x]);
+				}
 			}
 
-			if (start.x + 1 < map.Length && !isExit && !list.Contains(start + Vector3Int.right) &&
-				map[start.x + 1][start.y].type is Lemin.ECaptured.capture or Lemin.ECaptured.end)
-			{
-				RecursiveFindStartEnd(start + Vector3Int.right, list);
-			}
-
-			if (start.x - 1 >= 0 && !isExit && !list.Contains(start - Vector3Int.right) &&
-				map[start.x - 1][start.y].type is Lemin.ECaptured.capture or Lemin.ECaptured.end)
-			{
-				RecursiveFindStartEnd(start - Vector3Int.right, list);
-			}
-
-			if (start.y + 1 < map.Length && !isExit && !list.Contains(start + Vector3Int.up) &&
-				map[start.x][start.y + 1].type is Lemin.ECaptured.capture or Lemin.ECaptured.end)
-			{
-				RecursiveFindStartEnd(start + Vector3Int.up, list);
-			}
-
-			if (start.y - 1 >= 0 && !isExit && !list.Contains(start - Vector3Int.up) &&
-				map[start.x][start.y - 1].type is Lemin.ECaptured.capture or Lemin.ECaptured.end)
-			{
-				RecursiveFindStartEnd(start - Vector3Int.up, list);
-			}
-
-			if (!isExit)
-				list.Remove(start);
+			return null;
 		}
+
+		private bool CheckCell(List<Tree> queue, List<Vector3Int> visited, Tree parent, Vector3Int vector)
+		{
+			Vector3Int vec = parent.pos + vector;
+			if (vec.x >= cells.Length || vec.x < 0 ||
+				vec.y >= cells.Length || vec.y < 0 ||
+				visited.Contains(vec))
+			{
+				return false;
+			}
+			
+			if (cells[vec.x][vec.y].type == Lemin.ECaptured.end)
+			{
+				Tree newTree = new Tree(vec, parent);
+				queue.Add(newTree);
+				return true;
+			}
+			
+			if (cells[vec.x][vec.y].type == Lemin.ECaptured.capture)
+			{
+				Tree newTree = new Tree(vec, parent);
+				queue.Add(newTree);
+				visited.Add(newTree.pos);
+			}
+
+			return false;
+		}
+
+		private List<Vector3Int> GetListFromTree(Tree tree)
+		{
+			List<Vector3Int> list = new List<Vector3Int>();
+
+			while (tree != null)
+			{
+				list.Add(tree.pos);
+				tree = tree.parent;
+			}
+
+			return list;
+		}
+
 
 		private int deep;
 		private void RecursiveFindEmptySlots(List<Vector3Int> captured, Vector3Int pos)
 		{
+			deep++;
 			captured.Add(pos);
 			if (!captured.Contains(pos + Vector3Int.right) &&
-				map[pos.x + 1][pos.y].type == Lemin.ECaptured.clear)
+				cells[pos.x + 1][pos.y].type == Lemin.ECaptured.clear)
 			{
 				RecursiveFindEmptySlots(captured, pos + Vector3Int.right);
 			}
 
 			if (!captured.Contains(pos - Vector3Int.right) &&
-				map[pos.x - 1][pos.y].type == Lemin.ECaptured.clear)
+				cells[pos.x - 1][pos.y].type == Lemin.ECaptured.clear)
 			{
 				RecursiveFindEmptySlots(captured, pos - Vector3Int.right);
 			}
 
 			if (!captured.Contains(pos + Vector3Int.up) &&
-				map[pos.x][pos.y + 1].type == Lemin.ECaptured.clear)
+				cells[pos.x][pos.y + 1].type == Lemin.ECaptured.clear)
 			{
 				RecursiveFindEmptySlots(captured, pos + Vector3Int.up);
 			}
 
 			if (!captured.Contains(pos - Vector3Int.up) &&
-				map[pos.x][pos.y - 1].type == Lemin.ECaptured.clear)
+				cells[pos.x][pos.y - 1].type == Lemin.ECaptured.clear)
 			{
 				RecursiveFindEmptySlots(captured, pos - Vector3Int.up);
 			}
@@ -180,6 +237,18 @@ namespace Test
 	{
 		public Vector3Int max;
 		public Vector3Int min;
+	}
+
+	public class Tree
+	{
+		public Tree parent;
+		public Vector3Int pos;
+
+		public Tree(Vector3Int pos, Tree parent)
+		{
+			this.pos = pos;
+			this.parent = parent;
+		}
 	}
 }
 

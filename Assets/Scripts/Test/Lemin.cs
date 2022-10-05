@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Tilemaps;
@@ -10,13 +11,13 @@ namespace Test
 		[SerializeField] private LeminLogic leminLogic;
 		
 		[SerializeField] private Transform parent;
-		[SerializeField] private GameObject prefab;
+		[SerializeField] private TMP_Text prefabDebug;
 
 		[SerializeField] private int size = 10;
 		[SerializeField] private int step = 5, width = 100;
 		[SerializeField] private Vector3Int startPosition = new Vector3Int(100, 100, 0);
 
-		[SerializeField] private Color cClear, cCapture, cGhost, cActual, cStart, cEnd;
+		// [SerializeField] private Color cClear, cCapture, cGhost, cActual, cStart, cEnd;
 
 		[SerializeField] private Tilemap tilemap;
 		[SerializeField] private TileBase tbClear, tbCapture, tbGhost, tbActual, tbStart, tbEnd;
@@ -31,7 +32,7 @@ namespace Test
 			collider
 		}
 
-		private LeminCell[][] map;
+		private LeminCell[][] cells;
 
 		private void Start()
 		{
@@ -50,59 +51,69 @@ namespace Test
 				if (point.x >= size || point.x < 0 || point.y >= size || point.y < 0)
 					return;
 				
-				
-				UpdateLeminCell(map[point.x][point.y], point);
+				UpdateLeminCell(point);
 			}
 		}
 
 		public void OnClick_SetClear()
 		{
-			cActual = cClear;
+			tbActual = tbClear;
 		}
 
 		public void OnClick_SetCapture()
 		{
-			cActual = cCapture;
+			tbActual = tbCapture;
 		}
 
 		public void OnClick_SetGhost()
 		{
-			cActual = cGhost;
+			tbActual = tbGhost;
 		}
 
 		public void OnClick_SetStart()
 		{
-			cActual = cStart;
+			tbActual = tbStart;
 		}
 
 		public void OnClick_SetEnd()
 		{
-			cActual = cEnd;
+			tbActual = tbEnd;
 		}
 
 		public void OnClick_Result()
 		{
-			Vector3Int[] arr = leminLogic.GetCapturedCells(GetPath(), map);
+			Vector3Int[] path = GetPath();
+			Vector3Int[] arr = leminLogic.GetCapturedCells(path, cells);
+			for (int x = 0; x < path.Length; x++)
+			{
+				UpdateLeminCell(path[x], tbCapture);
+				// cells[path[x].x][path[x].y].debug.text = "c";
+			}
 			for (int x = 0; x < arr.Length; x++)
 			{
-				UpdateLeminCell(arr[x], Color.black);
+				UpdateLeminCell(arr[x], tbCapture);
+				// cells[arr[x].x][arr[x].y].debug.text = "c";
 			}
 		}
 
 		private Vector3Int[] GetPath()
 		{
 			List<Vector3Int> temp = new List<Vector3Int>();
-			temp.Add(GetStart());
+			// temp.Add(GetStart());
 			
-			for (int x = 0, i = 1; x < map.Length; x++)
+			for (int x = 0, i = 1; x < cells.Length; x++)
 			{
-				for (int y = 0; y < map.Length; y++)
+				for (int y = 0; y < cells.Length; y++)
 				{
-					if (map[x][y].type is Lemin.ECaptured.ghost or Lemin.ECaptured.start or Lemin.ECaptured.end)
+					if (cells[x][y].type is Lemin.ECaptured.ghost or Lemin.ECaptured.end)
 					{
 						temp.Add(new Vector3Int(x, y));
-						// map[x][y].text.text = i.ToString();
-						// UpdateLeminCell(map[x][y], Color.yellow);
+						Debug.Log(new Vector3Int(x, y));
+						i++;
+					}
+					else if (cells[x][y].type is Lemin.ECaptured.start)
+					{
+						temp.Insert(0, new Vector3Int(x, y));
 						i++;
 					}
 				}
@@ -111,77 +122,27 @@ namespace Test
 			return temp.ToArray();
 		}
 
-		private Vector3Int GetStart()
-		{
-			for (int x = 0; x < map.Length; x++)
-			{
-				for (int y = 0; y < map.Length; y++)
-				{
-					if (map[x][y].type == Lemin.ECaptured.start)
-					{
-						// map[x][y].text.text = 1.ToString();
-						// UpdateLeminCell(map[x][y], Color.yellow);
-						return new Vector3Int(x, y);
-					}
-				}
-			}
-
-			Debug.LogError("Problem start position on path lemin");
-			return Vector3Int.zero;
-		}
-
 		public void OnClick_SetAll()
 		{
-			for (int y = 0; y < map.Length; y++)
+			for (int y = 0; y < cells.Length; y++)
 			{
-				for (int x = 0; x < map[y].Length; x++)
+				for (int x = 0; x < cells[y].Length; x++)
 				{
-					UpdateLeminCell(map[y][x]);
+					UpdateLeminCell(new Vector3Int(x, y));
 				}
 			}
 		}
 
-		public void UpdateLeminCell(LeminCell cell)
+		public void UpdateLeminCell(Vector3Int vec)
 		{
-			// cell.img.color = cActual;
-			cell.type = GetTypeFromColor(cActual);
+			cells[vec.x][vec.y].type = GetTypeFromTileBase(tbActual);
+			tilemap.SetTile(vec, tbActual);
 		}
 		
-		public void UpdateLeminCell(LeminCell cell, Vector3Int vec)
+		public void UpdateLeminCell(Vector3Int vec, TileBase tb)
 		{
-			// cell.img.color = cActual;
-			cell.type = GetTypeFromColor(cActual);
-			
-			tilemap.SetTileFlags(vec, TileFlags.None);
-			tilemap.SetColor(vec, cActual);
-		}
-
-		public void UpdateLeminCell(LeminCell cell, Color color)
-		{
-			// cell.img.color = color;
-			cell.type = GetTypeFromColor(color);
-		}
-
-		public void UpdateLeminCell(Vector3Int vec, Color color)
-		{
-			// cell.img.color = color;
-			map[vec.x][vec.y].type = GetTypeFromColor(color);
-			
-			tilemap.SetTileFlags(vec, TileFlags.None);
-			tilemap.SetColor(vec, cActual);
-		}
-
-		private ECaptured GetTypeFromColor(Color color)
-		{
-			if (color == cCapture)
-				return ECaptured.capture;
-			else if (color == cGhost)
-				return ECaptured.ghost;
-			else if (color == cStart)
-				return ECaptured.start;
-			else if (color == cEnd)
-				return ECaptured.end;
-			return ECaptured.clear;
+			cells[vec.x][vec.y].type = GetTypeFromTileBase(tb);
+			tilemap.SetTile(vec, tb);
 		}
 
 		private ECaptured GetTypeFromTileBase(TileBase tb)
@@ -215,12 +176,12 @@ namespace Test
 			PlayerPrefs.SetInt("size", size);
 
 			size = PlayerPrefs.GetInt("size");
-			map = new LeminCell[size][];
+			cells = new LeminCell[size][];
 			tilemap.size = new Vector3Int(size, size);
-			for (int y = 0; y < map.Length; y++)
+			for (int y = 0; y < cells.Length; y++)
 			{
-				map[y] = new LeminCell[size];
-				for (int x = 0; x < map[y].Length; x++)
+				cells[y] = new LeminCell[size];
+				for (int x = 0; x < cells[y].Length; x++)
 				{
 					PlayerPrefs.SetInt("test:" + y + "|" + x, (int) ECaptured.clear);
 					tilemap.SetTile(new Vector3Int(y, x), GetTileBaseFromType(ECaptured.clear));
@@ -233,11 +194,11 @@ namespace Test
 		public void OnClick_Save()
 		{
 			PlayerPrefs.SetInt("size", size);
-			for (int y = 0; y < map.Length; y++)
+			for (int y = 0; y < cells.Length; y++)
 			{
-				for (int x = 0; x < map[y].Length; x++)
+				for (int x = 0; x < cells[y].Length; x++)
 				{
-					PlayerPrefs.SetInt("test:" + y + "|" + x, (int) map[y][x].type);
+					PlayerPrefs.SetInt("test:" + y + "|" + x, (int) cells[y][x].type);
 				}
 			}
 
@@ -247,19 +208,20 @@ namespace Test
 		public void OnClick_Load()
 		{
 			size = PlayerPrefs.GetInt("size");
-			map = new LeminCell[size][];
+			cells = new LeminCell[size][];
 			tilemap.size = new Vector3Int(size, size);
-			for (int y = 0; y < map.Length; y++)
+			for (int x = 0; x < cells.Length; x++)
 			{
-				map[y] = new LeminCell[size];
-				for (int x = 0; x < map[y].Length; x++)
+				cells[x] = new LeminCell[size];
+				for (int y = 0; y < cells[x].Length; y++)
 				{
-					map[y][x] = new LeminCell();
+					cells[x][y] = new LeminCell(
+						Instantiate(prefabDebug, new Vector3(x + .5f, y + .5f), Quaternion.identity, parent));
 
-					ECaptured type = (ECaptured) PlayerPrefs.GetInt("test:" + y + "|" + x);
-					map[y][x].type = type;
+					ECaptured type = (ECaptured) PlayerPrefs.GetInt("test:" + x + "|" + y);
+					cells[x][y].type = type;
 					
-					tilemap.SetTile(new Vector3Int(y, x), GetTileBaseFromType(type));
+					tilemap.SetTile(new Vector3Int(x, y), GetTileBaseFromType(type));
 				}
 			}
 
