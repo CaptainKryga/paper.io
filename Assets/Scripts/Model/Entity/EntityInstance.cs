@@ -13,13 +13,19 @@ namespace Model
 		[SerializeField] private TileDataBase tileDataBase;
 
 		[SerializeField] private EntityController entityController;
-		[SerializeField] private PlayerMove playerMove;
+		[SerializeField] private PlayerMove player;
+
+		public void InitPlayer()
+		{
+			player.Init(entityController, photonConnectRoom.CreatePlayer("player"));
+		}
 		
 		//restart game after death or win
-		public void Restart(string playerName, int playerId)
+		public void Restart(Vector3Int position, string playerName, int playerId)
 		{
-			playerMove.Init(entityController, photonConnectRoom.CreatePlayer(playerName));
-			entityController.Restart(playerMove, tileDataBase, playerId);
+			photonConnectRoom.UpdatePlayer(playerName);
+			player.UpdatePlayer(playerName, playerId);
+			entityController.Restart(position, tileDataBase, playerId);
 		}
 
 		public void GameOver(PlayerMove player)

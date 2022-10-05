@@ -172,7 +172,6 @@ MonoBehaviour:
   entityInstance: {fileID: 31534522}
   ghost: {fileID: 1952528002}
   capture: {fileID: 1952528003}
-  player: {fileID: 0}
 --- !u!114 &31534522
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -189,7 +188,7 @@ MonoBehaviour:
   photonConnectRoom: {fileID: 2005673085}
   tileDataBase: {fileID: 11400000, guid: dd6387843ef7a4660851c052cf652111, type: 2}
   entityController: {fileID: 31534521}
-  playerMove: {fileID: 0}
+  player: {fileID: 1336357322}
 --- !u!1 &43851147
 GameObject:
   m_ObjectHideFlags: 0

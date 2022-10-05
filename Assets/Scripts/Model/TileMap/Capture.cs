@@ -61,9 +61,6 @@ namespace Model.TileMap
 			this.cells = tilemapInstance.GetCells;
 
 			InitCell(pos);
-			InitCell(pos + Vector3Int.down * 1);
-			InitCell(pos + Vector3Int.down * 2);
-			InitCell(pos + Vector3Int.down * 3);
 		}
 
 		private void InitCell(Vector3Int pos)

@@ -13,6 +13,11 @@ namespace Model.Entity
 			spriteRenderer.sprite = sprite;
 		}
 
+		public void UpdatePlayer(string playerName, int playerId)
+		{
+			
+		}
+
 		public void Rotate(Vector3 vector)
 		{
 

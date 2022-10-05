@@ -26,6 +26,7 @@ namespace Model
 		public void InitPlayer()
 		{
 			tilemapInstance.InitTileMap();
+			entityInstance.InitPlayer();
 			vController.InitPlayer();
 		}
 
@@ -39,7 +40,7 @@ namespace Model
 				return;
 			}
 			
-			entityInstance.Restart(playerName, playerId);
+			entityInstance.Restart(Vector3Int.zero, playerName, playerId);
 			//if all it's okey true
 			vController.ReceiveStartBattle(true);
 		}

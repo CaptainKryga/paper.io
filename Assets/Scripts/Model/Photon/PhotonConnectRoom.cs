@@ -1,8 +1,6 @@
 using Model.Entity;
-using Model.TileMap;
 using Photon.Pun;
 using Photon.Realtime;
-using Unity.Mathematics;
 using UnityEngine;
 
 namespace Model.Photon
@@ -38,6 +36,11 @@ namespace Model.Photon
             PhotonNetwork.LocalPlayer.NickName = playerName;
             return PhotonNetwork.Instantiate("PlayerSync", 
                 Vector3.down * 100, Quaternion.identity).GetComponent<PlayerSync>();
+        }
+
+        public void UpdatePlayer(string playerName)
+        {
+            PhotonNetwork.LocalPlayer.NickName = playerName;
         }
         
         public void DestroyPlayer(GameObject player)

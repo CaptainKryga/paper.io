@@ -11,15 +11,17 @@ namespace Model
 		[SerializeField] private Ghost ghost;
 		[SerializeField] private Capture capture;
 
-		[SerializeField] private PlayerMove player;
+		private PlayerMove _player;
 
-		public void Restart(PlayerMove player, TileDataBase tileDataBase, int playerId)
+		public void InitPlayer(PlayerMove playerMove)
 		{
-			this.player = player;
-
+			_player = playerMove;
+		}
+		
+		public void Restart(Vector3Int pos, TileDataBase tileDataBase, int playerId)
+		{
 			ghost.Init(tileDataBase.tiles[playerId], tileDataBase.koofGhost, tileDataBase.koofCapture);
-			capture.Init(Vector3Int.FloorToInt(player.transform.position), tileDataBase.tiles[playerId],
-				tileDataBase.koofGhost, tileDataBase.koofCapture);
+			capture.Init(pos, tileDataBase.tiles[playerId], tileDataBase.koofGhost, tileDataBase.koofCapture);
 		}
 		
 		public void UpdatePosition(Vector3Int pos)
@@ -29,7 +31,7 @@ namespace Model
 
 		public void GameOver()
 		{
-			entityInstance.GameOver(player);
+			entityInstance.GameOver(_player);
 		}
 	}
 }

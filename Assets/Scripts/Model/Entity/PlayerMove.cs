@@ -32,6 +32,11 @@ namespace Model.Entity
 			this.playerSync = playerSync;
 		}
 
+		public void UpdatePlayer(string playerName, int playerId)
+		{
+			playerRenderer.UpdatePlayer(playerName, playerId);
+		}
+
 		public void UpdateAccessMove(bool isMove)
 		{
 			this.isMove = isMove;
