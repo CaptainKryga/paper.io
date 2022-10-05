@@ -9,5 +9,7 @@ namespace Model.TileMap
 	{
 		public TileBase[] tiles;
 		public Sprite[] sprites;
+
+		public Color koofGhost, koofCapture;
 	}
 }

@@ -1,7 +1,6 @@
 using Model.Entity;
 using Model.Photon;
 using Model.TileMap;
-using Photon.Pun;
 using UnityEngine;
 
 namespace Model
@@ -14,22 +13,18 @@ namespace Model
 		[SerializeField] private TileDataBase tileDataBase;
 
 		[SerializeField] private EntityController entityController;
+		[SerializeField] private PlayerMove playerMove;
 		
 		//restart game after death or win
 		public void Restart(string playerName, int playerId)
 		{
-			//setPosition
-			Vector3 startPosition = new Vector3(10.5f, 10.5f, 0);
-
-			Debug.Log("playerId: " + playerId);
-			
-			entityController.Restart(photonConnectRoom.CreatePlayer(tileDataBase, playerName, playerId, startPosition),
-				tileDataBase.tiles[playerId], tileDataBase.sprites[playerId]);
+			playerMove.Init(entityController, photonConnectRoom.CreatePlayer(playerName));
+			entityController.Restart(playerMove, tileDataBase, playerId);
 		}
 
-		public void GameOver(PlayerSync playerSync)
+		public void GameOver(PlayerMove player)
 		{
-			photonConnectRoom.DestroyPlayer(playerSync.gameObject);
+			photonConnectRoom.DestroyPlayer(player.gameObject);
 			mController.GameOver();
 		}
 	}

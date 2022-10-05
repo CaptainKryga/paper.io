@@ -1,7 +1,6 @@
 using Model.Entity;
 using Model.TileMap;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 namespace Model
 {
@@ -12,18 +11,15 @@ namespace Model
 		[SerializeField] private Ghost ghost;
 		[SerializeField] private Capture capture;
 
-		[SerializeField] private PlayerSync playerSync;
+		[SerializeField] private PlayerMove player;
 
-		public void Restart(PlayerSync playerSync, TileBase tile, Sprite sprite)
+		public void Restart(PlayerMove player, TileDataBase tileDataBase, int playerId)
 		{
-			this.playerSync = playerSync;
-			playerSync.Init(this, sprite);
+			this.player = player;
 
-			Color colorGhost = playerSync.Color * new Color(1f, 1f, 1f, .5f);
-			Color colorCapture = playerSync.Color * new Color(1f, 1f, 1f, .9f);
-			
-			ghost.Init(tile, colorGhost, colorCapture);
-			capture.Init(Vector3Int.FloorToInt(playerSync.transform.position), tile, colorGhost, colorCapture);
+			ghost.Init(tileDataBase.tiles[playerId], tileDataBase.koofGhost, tileDataBase.koofCapture);
+			capture.Init(Vector3Int.FloorToInt(player.transform.position), tileDataBase.tiles[playerId],
+				tileDataBase.koofGhost, tileDataBase.koofCapture);
 		}
 		
 		public void UpdatePosition(Vector3Int pos)
@@ -33,7 +29,7 @@ namespace Model
 
 		public void GameOver()
 		{
-			entityInstance.GameOver(playerSync);
+			entityInstance.GameOver(player);
 		}
 	}
 }
