@@ -27,7 +27,8 @@ namespace Test
 			ghost,
 			capture,
 			start,
-			end
+			end,
+			collider
 		}
 
 		private LeminCell[][] map;
@@ -254,7 +255,6 @@ namespace Test
 				for (int x = 0; x < map[y].Length; x++)
 				{
 					map[y][x] = new LeminCell();
-					map[y][x].Init(this, new Vector2(y, x));
 
 					ECaptured type = (ECaptured) PlayerPrefs.GetInt("test:" + y + "|" + x);
 					map[y][x].type = type;
