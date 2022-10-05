@@ -52,8 +52,9 @@ namespace Model.TileMap
 			
 		}
 
-		public void Init(Vector3Int pos, Color colorGhost, Color colorCapture)
+		public void Init(Vector3Int pos, TileBase tile, Color colorGhost, Color colorCapture)
 		{
+			this.tile = tile;
 			this.colorCapture = colorCapture;
 			this.colorGhost = colorGhost;
 

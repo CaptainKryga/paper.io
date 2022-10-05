@@ -186,6 +186,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mController: {fileID: 1832581733}
   photonConnectRoom: {fileID: 2005673085}
+  tileDataBase: {fileID: 11400000, guid: dd6387843ef7a4660851c052cf652111, type: 2}
   entityController: {fileID: 31534521}
 --- !u!1 &43851147
 GameObject:
@@ -2662,8 +2663,8 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -4080,7 +4081,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Your nickname
+  m_text: nickname(min 3 charapter's)
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

@@ -51,8 +51,9 @@ namespace Model.TileMap
 			return null;
 		}
 
-		public void Init(Color colorGhost, Color colorCapture)
+		public void Init(TileBase tile, Color colorGhost, Color colorCapture)
 		{
+			this.tile = tile;
 			this.colorGhost = colorGhost;
 			this.colorCapture = colorCapture;
 			this.cells = tilemapInstance.GetCells;

@@ -17,18 +17,19 @@ namespace Model.Entity
 		private EntityController entityController;
 		private Color color;
 
-		[SerializeField] private SpriteRenderer sprite;
+		[SerializeField] private SpriteRenderer spriteRenderer;
 		[SerializeField] private PhotonView pView;
 
 		public Color Color { get => color; }
 		
-		public void Init(EntityController entityController)
+		public void Init(EntityController entityController, Sprite sprite)
 		{
 			movePoint.parent = null;
 			this.entityController = entityController;
 
-			color = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
-			sprite.color = color;
+			// color = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
+			// spriteRenderer.color = color;
+			spriteRenderer.sprite = sprite;
 		}
 
 		private void Update()

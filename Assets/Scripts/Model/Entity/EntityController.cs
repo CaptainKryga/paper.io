@@ -1,6 +1,7 @@
 using Model.Entity;
 using Model.TileMap;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 namespace Model
 {
@@ -13,16 +14,16 @@ namespace Model
 
 		[SerializeField] private Player player;
 
-		public void Restart(Player player)
+		public void Restart(Player player, TileBase tile, Sprite sprite)
 		{
 			this.player = player;
-			player.Init(this);
+			player.Init(this, sprite);
 
 			Color colorGhost = player.Color * new Color(1f, 1f, 1f, .5f);
 			Color colorCapture = player.Color * new Color(1f, 1f, 1f, .9f);
 			
-			ghost.Init(colorGhost, colorCapture);
-			capture.Init(Vector3Int.FloorToInt(player.transform.position), colorGhost, colorCapture);
+			ghost.Init(tile, colorGhost, colorCapture);
+			capture.Init(Vector3Int.FloorToInt(player.transform.position), tile, colorGhost, colorCapture);
 		}
 		
 		public void UpdatePosition(Vector3Int pos)

@@ -32,15 +32,11 @@ namespace Model
 		//restart game after death or win
 		public void Restart(string playerName, int playerId)
 		{
-			if (playerName == "" || playerId < 1 || playerId > 15)
+			if (playerName == null || playerName.Length < 3 || playerId < 1 || playerId > 15)
 			{
 				syncChangeFlag.SelectedPlayerFlag(playerId);
 				vController.ReceiveStartBattle(false);
 				return;
-			}
-			else
-			{
-				
 			}
 			
 			entityInstance.Restart(playerName, playerId);
