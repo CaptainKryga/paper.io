@@ -938,17 +938,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leminLogic: {fileID: 472028514}
   parent: {fileID: 1727138079}
-  prefab: {fileID: 7321768173878533216, guid: 40d65cb5e88b54c06834059014f99caa, type: 3}
+  prefabDebug: {fileID: 2024817092372776914, guid: 04110bf4a7afd4b1c8820a896d361fdc, type: 3}
   size: 10
   step: 5
   width: 100
   startPosition: {x: 100, y: 100, z: 0}
-  cClear: {r: 1, g: 1, b: 1, a: 1}
-  cCapture: {r: 0.022828398, g: 0.5377358, b: 0.05685205, a: 1}
-  cGhost: {r: 0.17021184, g: 0.47646824, b: 0.8018868, a: 1}
-  cActual: {r: 1, g: 1, b: 1, a: 1}
-  cStart: {r: 1, g: 0.6273585, b: 0.6273585, a: 1}
-  cEnd: {r: 1, g: 0.43867922, b: 0.43867922, a: 1}
   tilemap: {fileID: 912245886}
   tbClear: {fileID: 11400000, guid: 42479f49cad754118bfaba79ee1202e0, type: 2}
   tbCapture: {fileID: 11400000, guid: 3eacf21fe1cb74e668b6a3d0b6b3159e, type: 2}
