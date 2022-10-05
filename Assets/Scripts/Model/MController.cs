@@ -1,4 +1,3 @@
-using Model.Entity;
 using Model.Photon;
 using Model.TileMap;
 using UnityEngine;
@@ -13,6 +12,8 @@ namespace Model
 
 		[SerializeField] private TilemapInstance tilemapInstance;
 		[SerializeField] private EntityInstance entityInstance;
+
+		[SerializeField] private SyncChangeFlag syncChangeFlag;
 
 		//connect to server and init player
 		public void Init()
@@ -33,6 +34,7 @@ namespace Model
 		{
 			if (playerName == "" || playerId < 1 || playerId > 15)
 			{
+				syncChangeFlag.SelectedPlayerFlag(playerId);
 				vController.ReceiveStartBattle(false);
 				return;
 			}

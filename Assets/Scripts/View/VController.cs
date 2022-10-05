@@ -60,6 +60,7 @@ namespace View
 		public void OnClick_SetPlayerFlag(int id)
 		{
 			playerId = id;
+			controller.Restart("", playerId);
 		}
 
 		public void OnInputField_SetName()
