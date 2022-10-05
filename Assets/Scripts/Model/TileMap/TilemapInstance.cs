@@ -29,8 +29,9 @@ namespace Model.TileMap
 				cells[x] = new LeminCell[size];
 				for (int y = 0; y < cells[x].Length; y++)
 				{
-					cells[x][y] = new LeminCell(
-						Instantiate(prefabDebug, new Vector3(x + .5f, y + .5f), Quaternion.identity, parent));
+					cells[x][y] = new LeminCell();
+					// cells[x][y] = new LeminCell(
+						// Instantiate(prefabDebug, new Vector3(x + .5f, y + .5f), Quaternion.identity, parent));
 		 			cells[x][y].type = Lemin.ECaptured.clear;
 					back.SetTile(new Vector3Int(x, y), GetTileBaseFromType(cells[x][y].type));
 				}

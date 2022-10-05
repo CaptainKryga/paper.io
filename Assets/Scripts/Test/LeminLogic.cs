@@ -20,15 +20,12 @@ namespace Test
 			List<Vector3Int> temp = path.ToList();
 			Debug.Log(temp.Count);
 
-			if (path[0] != path[^1])
-			{
+			// if (path[0] != path[^1])
+			// {
 				deep = 0;
-				List<Vector3Int> recursiveStartEnd = GetListFromTree(FindWidthStarA(path[0], null));
-				Debug.Log("DEEEEEEEP:" + deep);
-				Debug.Log("rec: " + recursiveStartEnd.Count);
+				List<Vector3Int> recursiveStartEnd = GetListFromTree(FindWidthStarA(path[0], null, path.Length));
 				temp.AddRange(recursiveStartEnd);
-				Debug.Log("temp: " + temp.Count);
-			}
+			// }
 	
 			//TEMP
 			for (int x = 0; x < temp.Count; x++)
@@ -131,11 +128,23 @@ namespace Test
 
 		private bool isExit;
 
-		private Tree FindWidthStarA(Vector3Int start, Tree parent)
+		private Tree FindWidthStarA(Vector3Int start, Tree parent, int pathLength)
 		{
 			List<Tree> queue = new List<Tree>();
 			List<Vector3Int> visited = new List<Vector3Int>();
-			queue.Add(new Tree(start, null));
+			Tree tree = new Tree(start, null);
+			queue.Add(tree);
+
+			if (pathLength == 1)
+			{
+				queue.Clear();
+				
+				//firt step from fix bug one tap
+				if (CheckCellNotFinal(queue, visited, tree, Vector3Int.right)) { }
+				else if (CheckCellNotFinal(queue, visited, tree, Vector3Int.left)) { }
+				else if (CheckCellNotFinal(queue, visited, tree, Vector3Int.up)) { }
+				else if (CheckCellNotFinal(queue, visited, tree, Vector3Int.down)) { }
+			}
 
 			int i = 0;
 			while (queue.Count > 0)
@@ -161,12 +170,44 @@ namespace Test
 			return null;
 		}
 
+		private bool CheckCellNotFinal(List<Tree> queue, List<Vector3Int> visited, Tree parent, Vector3Int vector)
+		{
+			Vector3Int vec = parent.pos + vector;
+			if (vec.x >= cells.Length || vec.x < 0 ||
+				vec.y >= cells.Length || vec.y < 0)
+			{
+				return false;
+			}
+			
+			if (!visited.Contains(vec) && cells[vec.x][vec.y].type == Lemin.ECaptured.capture)
+			{
+				Tree newTree = new Tree(vec, parent);
+				if (parent.parent != null)
+					queue.Add(newTree);
+				visited.Add(newTree.pos);
+
+				if (parent.parent == null)
+				{
+					if (vector != Vector3Int.right)
+						CheckCellNotFinal(queue, visited, newTree, Vector3Int.right);
+					if (vector != Vector3Int.left)
+						CheckCellNotFinal(queue, visited, newTree, Vector3Int.left);
+					if (vector != Vector3Int.up)
+						CheckCellNotFinal(queue, visited, newTree, Vector3Int.up);
+					if (vector != Vector3Int.down)
+						CheckCellNotFinal(queue, visited, newTree, Vector3Int.down);
+				}
+				return true;
+			}
+
+			return false;
+		}
+		
 		private bool CheckCell(List<Tree> queue, List<Vector3Int> visited, Tree parent, Vector3Int vector)
 		{
 			Vector3Int vec = parent.pos + vector;
 			if (vec.x >= cells.Length || vec.x < 0 ||
-				vec.y >= cells.Length || vec.y < 0 ||
-				visited.Contains(vec))
+				vec.y >= cells.Length || vec.y < 0)
 			{
 				return false;
 			}
@@ -178,13 +219,13 @@ namespace Test
 				return true;
 			}
 			
-			if (cells[vec.x][vec.y].type == Lemin.ECaptured.capture)
+			if (!visited.Contains(vec) && cells[vec.x][vec.y].type == Lemin.ECaptured.capture)
 			{
 				Tree newTree = new Tree(vec, parent);
 				queue.Add(newTree);
 				visited.Add(newTree.pos);
 			}
-
+			
 			return false;
 		}
 
