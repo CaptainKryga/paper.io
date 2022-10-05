@@ -26,7 +26,8 @@ namespace Model.Entity
             set
             {
                 localId = value;
-                spriteRenderer.sprite = tileDataBase.sprites[localId];
+                if (tileDataBase)
+                    spriteRenderer.sprite = tileDataBase.sprites[localId];
             }
         }
 
