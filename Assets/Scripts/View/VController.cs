@@ -1,4 +1,3 @@
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,7 +9,6 @@ namespace View
 		[SerializeField] private Controller.Controller controller;
 
 		[SerializeField] private GameObject panelPlayerInit;
-		[SerializeField] private GameObject panelGameOver;
 
 		[SerializeField] private Button btnStartBattle;
 		[SerializeField] private TMP_InputField inputFieldPlayerName;
@@ -21,7 +19,6 @@ namespace View
 		private void Start()
 		{
 			panelPlayerInit.SetActive(false);
-			panelGameOver.SetActive(false);
 		}
 
 		public void ConsoleCommand(string command)
@@ -36,7 +33,7 @@ namespace View
 
 		public void GameOver()
 		{
-			panelGameOver.SetActive(true);
+			panelPlayerInit.SetActive(true);
 		}
 
 		public void OnClick_StartBattle()
@@ -49,7 +46,6 @@ namespace View
 			if (isFlag)
 			{
 				panelPlayerInit.SetActive(false);
-				panelGameOver.SetActive(false);
 			}
 			else
 			{
