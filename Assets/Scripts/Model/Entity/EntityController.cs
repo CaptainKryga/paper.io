@@ -12,18 +12,18 @@ namespace Model
 		[SerializeField] private Ghost ghost;
 		[SerializeField] private Capture capture;
 
-		[SerializeField] private Player player;
+		[SerializeField] private PlayerSync playerSync;
 
-		public void Restart(Player player, TileBase tile, Sprite sprite)
+		public void Restart(PlayerSync playerSync, TileBase tile, Sprite sprite)
 		{
-			this.player = player;
-			player.Init(this, sprite);
+			this.playerSync = playerSync;
+			playerSync.Init(this, sprite);
 
-			Color colorGhost = player.Color * new Color(1f, 1f, 1f, .5f);
-			Color colorCapture = player.Color * new Color(1f, 1f, 1f, .9f);
+			Color colorGhost = playerSync.Color * new Color(1f, 1f, 1f, .5f);
+			Color colorCapture = playerSync.Color * new Color(1f, 1f, 1f, .9f);
 			
 			ghost.Init(tile, colorGhost, colorCapture);
-			capture.Init(Vector3Int.FloorToInt(player.transform.position), tile, colorGhost, colorCapture);
+			capture.Init(Vector3Int.FloorToInt(playerSync.transform.position), tile, colorGhost, colorCapture);
 		}
 		
 		public void UpdatePosition(Vector3Int pos)
@@ -33,7 +33,7 @@ namespace Model
 
 		public void GameOver()
 		{
-			entityInstance.GameOver(player);
+			entityInstance.GameOver(playerSync);
 		}
 	}
 }

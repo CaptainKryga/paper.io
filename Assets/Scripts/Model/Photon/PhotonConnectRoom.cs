@@ -1,3 +1,4 @@
+using Model.TileMap;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
@@ -30,13 +31,14 @@ namespace Model.Photon
             mController.InitPlayer();
         }
 
-        public Model.Entity.Player CreatePlayer(string playerName, Vector3 startPos)
+        public Model.Entity.PlayerSync CreatePlayer(TileDataBase tileDataBase, 
+            string playerName, int playerId, Vector3 startPos)
         {
             PhotonNetwork.LocalPlayer.NickName = playerName;
-            Model.Entity.Player player = PhotonNetwork.Instantiate(
-                "Player", startPos, Quaternion.identity).GetComponent<Model.Entity.Player>();
-            player.InitPlayer(playerName);
-            return player;
+            Model.Entity.PlayerSync playerSync = PhotonNetwork.Instantiate(
+                "Player", startPos, Quaternion.identity).GetComponent<Model.Entity.PlayerSync>();
+            playerSync.UpdatePlayer(tileDataBase, playerName, playerId);
+            return playerSync;
         }
         
         public void DestroyPlayer(GameObject player)

@@ -23,13 +23,13 @@ namespace Model
 
 			Debug.Log("playerId: " + playerId);
 			
-			entityController.Restart(photonConnectRoom.CreatePlayer(playerName, startPosition),
+			entityController.Restart(photonConnectRoom.CreatePlayer(tileDataBase, playerName, playerId, startPosition),
 				tileDataBase.tiles[playerId], tileDataBase.sprites[playerId]);
 		}
 
-		public void GameOver(Player player)
+		public void GameOver(PlayerSync playerSync)
 		{
-			photonConnectRoom.DestroyPlayer(player.gameObject);
+			photonConnectRoom.DestroyPlayer(playerSync.gameObject);
 			mController.GameOver();
 		}
 	}

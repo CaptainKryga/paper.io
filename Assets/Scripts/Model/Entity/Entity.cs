@@ -17,7 +17,7 @@ namespace Model.Entity
 		private EntityController entityController;
 		private Color color;
 
-		[SerializeField] private SpriteRenderer spriteRenderer;
+		[SerializeField] protected SpriteRenderer spriteRenderer;
 		[SerializeField] private PhotonView pView;
 
 		public Color Color { get => color; }
