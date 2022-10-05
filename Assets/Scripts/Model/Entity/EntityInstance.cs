@@ -12,12 +12,12 @@ namespace Model
 		[SerializeField] private EntityController entityController;
 		
 		//restart game after death or win
-		public void Restart()
+		public void Restart(string playerName, int playerId)
 		{
 			//setPosition
 			Vector3 startPosition = new Vector3(10.5f, 10.5f, 0);
 
-			entityController.Restart(photonConnectRoom.CreatePlayer(startPosition));
+			entityController.Restart(photonConnectRoom.CreatePlayer(playerName, startPosition));
 		}
 
 		public void GameOver(Player player)

@@ -2897,8 +2897,8 @@ MonoBehaviour:
   controller: {fileID: 1731600646}
   panelPlayerInit: {fileID: 1770426906}
   panelGameOver: {fileID: 287464664}
-  btnStartBattle: {fileID: 0}
-  inputFieldPlayerName: {fileID: 0}
+  btnStartBattle: {fileID: 1083088259}
+  inputFieldPlayerName: {fileID: 43851149}
 --- !u!1 &997770200
 GameObject:
   m_ObjectHideFlags: 0

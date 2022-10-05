@@ -30,10 +30,13 @@ namespace Model.Photon
             mController.InitPlayer();
         }
 
-        public Model.Entity.Player CreatePlayer(Vector3 startPos)
+        public Model.Entity.Player CreatePlayer(string playerName, Vector3 startPos)
         {
-            return PhotonNetwork.Instantiate(
+            PhotonNetwork.LocalPlayer.NickName = playerName;
+            Model.Entity.Player player = PhotonNetwork.Instantiate(
                 "Player", startPos, Quaternion.identity).GetComponent<Model.Entity.Player>();
+            player.InitPlayer(playerName);
+            return player;
         }
         
         public void DestroyPlayer(GameObject player)

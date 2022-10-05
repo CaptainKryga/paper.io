@@ -43,7 +43,7 @@ namespace Model
 				
 			}
 			
-			entityInstance.Restart();
+			entityInstance.Restart(playerName, playerId);
 			//if all it's okey true
 			vController.ReceiveStartBattle(true);
 		}

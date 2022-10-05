@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,7 +13,7 @@ namespace View
 		[SerializeField] private GameObject panelGameOver;
 
 		[SerializeField] private Button btnStartBattle;
-		[SerializeField] private InputField inputFieldPlayerName;
+		[SerializeField] private TMP_InputField inputFieldPlayerName;
 
 		private string playerName;
 		private int playerId;
