@@ -1,18 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Test
 {
-	public class LeminCell : MonoBehaviour
+	public class LeminCell
 	{
 		private Lemin lemin;
 
-		public TMP_Text text;
+		// public TMP_Text text;
 		public Lemin.ECaptured type;
-		public Image img;
+		// public Image img;
 
 		public void Init(Lemin lemin, Vector2 pos)
 		{
