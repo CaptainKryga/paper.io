@@ -8,14 +8,12 @@ namespace Model.Entity
 		[SerializeField] protected SpriteRenderer spriteRenderer;
 		[SerializeField] private TileDataBase tileDataBase;
 
-		public void Init(Sprite sprite)
-		{
-			spriteRenderer.sprite = sprite;
-		}
-
 		public void UpdatePlayer(string playerName, int playerId)
 		{
-			
+			if (playerId > 0 && playerId < tileDataBase.sprites.Length)
+			{
+				spriteRenderer.sprite = tileDataBase.sprites[playerId];
+			}
 		}
 
 		public void Rotate(Vector3 vector)

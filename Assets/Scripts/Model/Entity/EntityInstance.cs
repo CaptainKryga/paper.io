@@ -15,9 +15,12 @@ namespace Model
 		[SerializeField] private EntityController entityController;
 		[SerializeField] private PlayerMove player;
 
+		public TileDataBase TileDataBase => tileDataBase;
+
 		public void InitPlayer()
 		{
 			player.Init(entityController, photonConnectRoom.CreatePlayer("player"));
+			entityController.InitPlayer(player);
 		}
 		
 		//restart game after death or win

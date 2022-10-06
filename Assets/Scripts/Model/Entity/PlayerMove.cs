@@ -22,7 +22,9 @@ namespace Model.Entity
 		private void Start()
 		{
 			body.transform.position = Vector3.up * 1000;
-			isMove = false;
+			
+			//test mode
+			isMove = true;
 		}
 
 		public void Init(EntityController entityController, PlayerSync playerSync)
@@ -35,18 +37,19 @@ namespace Model.Entity
 		public void UpdatePlayer(string playerName, int playerId)
 		{
 			playerRenderer.UpdatePlayer(playerName, playerId);
+			playerSync.UpdatePlayer(playerName, playerId);
 		}
 
 		public void UpdateAccessMove(bool isMove)
 		{
 			this.isMove = isMove;
 		}
-		
-		private Vector3 GetRandomStartVector()
-		{
-			int rnd = Random.Range(0, 4);
-			return rnd == 0 ? Vector3.right : rnd == 1 ? Vector3.left : rnd == 2 ? Vector3.up : Vector3.down;
-		}
+
+		// private Vector3 GetRandomStartVector()
+		// {
+		// 	int rnd = Random.Range(0, 4);
+		// 	return rnd == 0 ? Vector3.right : rnd == 1 ? Vector3.left : rnd == 2 ? Vector3.up : Vector3.down;
+		// }
 		
 		private void Update()
 		{
