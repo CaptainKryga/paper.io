@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d40562523064f81ad30b5377f8f58c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 1731600646}
+  readyController: {fileID: 1141858691}
   btnReady: {fileID: 1083088259}
   panelBlock: {fileID: 1242528256}
   timer: {fileID: 842115280}
