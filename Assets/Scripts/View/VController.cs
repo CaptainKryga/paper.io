@@ -1,5 +1,3 @@
-using ExitGames.Client.Photon.StructWrapping;
-using Photon.Pun;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
