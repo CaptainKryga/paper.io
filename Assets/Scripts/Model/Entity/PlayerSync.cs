@@ -36,7 +36,7 @@ namespace Model.Entity
             }
         }
         
-        private void Start()
+        private void Awake()
         {
             tileDataBase = FindObjectOfType<EntityInstance>().TileDataBase;
             if (photonView.IsMine)
