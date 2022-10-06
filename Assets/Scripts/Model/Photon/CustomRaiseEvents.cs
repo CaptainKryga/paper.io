@@ -130,10 +130,10 @@ namespace Model.Photon
 			{
 				object[] data = (object[])photonEvent.CustomData;
 				int actorId = (int) data[0];
-				Vector3Int pos = (Vector3Int) data[1];
+				Vector3 pos = (Vector3) data[1];
 				
 				if (PhotonNetwork.LocalPlayer.ActorNumber == actorId)
-					ReceiveStartBattle_Action?.Invoke(pos);
+					ReceiveStartBattle_Action?.Invoke(Vector3Int.FloorToInt(pos));
 			}
 			//last player on battle map
 			else if (eventCode == code_GameOverLastPlayer)
