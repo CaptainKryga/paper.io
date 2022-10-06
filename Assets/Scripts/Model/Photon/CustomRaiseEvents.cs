@@ -151,8 +151,7 @@ namespace Model.Photon
 				int actorId = (int) data[0];
 				bool isBattle = (bool) data[1];
 
-				if (PhotonNetwork.LocalPlayer.ActorNumber == actorId)
-					SendBattleUpdatePlayer_Action?.Invoke(actorId, isBattle);
+				SendBattleUpdatePlayer_Action?.Invoke(actorId, isBattle);
 			}
 			//update MC ready count player's
 			else if (eventCode == code_ReadyUpdatePlayer)
@@ -161,8 +160,7 @@ namespace Model.Photon
 				int actorId = (int) data[0];
 				bool isReady = (bool) data[1];
 				
-				if (PhotonNetwork.LocalPlayer.ActorNumber == actorId)
-					SendReadyUpdatePlayer_Action?.Invoke(actorId, isReady);
+				SendReadyUpdatePlayer_Action?.Invoke(actorId, isReady);
 			}
 			//update ready all player's
 			else if (eventCode == code_ReadyUpdatePlayer)
