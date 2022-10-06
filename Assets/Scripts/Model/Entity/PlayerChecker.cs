@@ -29,23 +29,14 @@ namespace Model.Entity
         {
             customRaiseEvents.UpdateTileMapGhost_Action += UpdateGhost;
             customRaiseEvents.UpdateTileMapCapture_Action += UpdateCapture;
-            customRaiseEvents.AttackPlayer_Action += PlayerDamage;
+            customRaiseEvents.AttackPlayer_Action += PlayerAttack;
         }
 
         public void EndBattle()
         {
             customRaiseEvents.UpdateTileMapGhost_Action -= UpdateGhost;
             customRaiseEvents.UpdateTileMapCapture_Action -= UpdateCapture;
-            customRaiseEvents.AttackPlayer_Action -= PlayerDamage;
-        }
-
-        public void CheckAttack(Transform point)
-        {
-            Vector3Int pos = Vector3Int.FloorToInt(point.position);
-            if (cells[pos.x][pos.y].type == Lemin.ECaptured.ghost)
-            {
-                customRaiseEvents.Request_AttackPlayer(tilemapInstance.GetTileId(pos));
-            }
+            customRaiseEvents.AttackPlayer_Action -= PlayerAttack;
         }
 
         private void UpdateGhost(Vector3Int vector, int playerId)
@@ -67,8 +58,23 @@ namespace Model.Entity
             }
         }
 
-        private void PlayerDamage(int playerId)
+        public void CheckAttack(Transform point)
         {
+            Vector3Int pos = Vector3Int.FloorToInt(point.position);
+            if (pos.x >= 0 && pos.y >= 0 && pos.x < cells.Length && pos.y < cells.Length &&
+                cells[pos.x][pos.y].type == Lemin.ECaptured.ghost)
+            {
+                int enemyId = tilemapInstance.GetTileId(pos);
+                Debug.Log(enemyId);
+                if (player.PlayerId != enemyId)
+                    customRaiseEvents.Request_AttackPlayer(enemyId);
+            }
+        }
+
+        private void PlayerAttack(int playerId)
+        {
+            Debug.Log(playerId);
+            
             if (player.PlayerId == playerId)
                 player.GameOver(false);
         }

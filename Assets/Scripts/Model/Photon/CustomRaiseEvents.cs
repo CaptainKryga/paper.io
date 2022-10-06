@@ -60,7 +60,7 @@ namespace Model.Photon
 
 		public void Request_GetDataGame()
 		{
-			RaiseEventOptions raiseEventOptions = new RaiseEventOptions {Receivers = ReceiverGroup.MasterClient };
+			RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.MasterClient };
 			PhotonNetwork.RaiseEvent(code_GetDataGame, 0, raiseEventOptions,
 				SendOptions.SendReliable);
 		}
@@ -68,7 +68,7 @@ namespace Model.Photon
 		public void Request_LocalFlagPlayer(int old, int now)
 		{
 			object[] content = { old, now };
-			RaiseEventOptions raiseEventOptions = new RaiseEventOptions {Receivers = ReceiverGroup.Others };
+			RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
 			PhotonNetwork.RaiseEvent(code_LocalUpdateFlagPlayer, content, raiseEventOptions,
 				SendOptions.SendReliable);
 		}
@@ -76,7 +76,7 @@ namespace Model.Photon
 		public void Request_StartBattle(int actorId, Vector3 position)
 		{
 			object[] content = { actorId, position };
-			RaiseEventOptions raiseEventOptions = new RaiseEventOptions {Receivers = ReceiverGroup.All };
+			RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
 			PhotonNetwork.RaiseEvent(send_StartBattle, content, raiseEventOptions,
 				SendOptions.SendReliable);
 		}
@@ -84,7 +84,7 @@ namespace Model.Photon
 		public void Request_GameOverLastPlayer(int actorId)
 		{
 			object[] content = { actorId, true };
-			RaiseEventOptions raiseEventOptions = new RaiseEventOptions {Receivers = ReceiverGroup.All };
+			RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
 			PhotonNetwork.RaiseEvent(code_GameOverLastPlayer, content, raiseEventOptions,
 				SendOptions.SendReliable);
 		}
@@ -92,7 +92,7 @@ namespace Model.Photon
 		public void Request_BattleUpdatePlayer(int actorId, bool isBattle)
 		{
 			object[] content = { actorId, isBattle };
-			RaiseEventOptions raiseEventOptions = new RaiseEventOptions {Receivers = ReceiverGroup.MasterClient };
+			RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.MasterClient };
 			PhotonNetwork.RaiseEvent(code_BattleUpdatePlayer, content, raiseEventOptions,
 				SendOptions.SendReliable);
 		}
@@ -100,7 +100,7 @@ namespace Model.Photon
 		public void Request_ReadyUpdatePlayer(int actorId, bool isReady)
 		{
 			object[] content = { actorId, isReady };
-			RaiseEventOptions raiseEventOptions = new RaiseEventOptions {Receivers = ReceiverGroup.MasterClient };
+			RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.MasterClient };
 			PhotonNetwork.RaiseEvent(code_ReadyUpdatePlayer, content, raiseEventOptions,
 				SendOptions.SendReliable);
 		}
@@ -108,14 +108,14 @@ namespace Model.Photon
 		public void Request_ReadyUpdateAllPlayers(bool isReady)
 		{
 			object[] content = { isReady };
-			RaiseEventOptions raiseEventOptions = new RaiseEventOptions {Receivers = ReceiverGroup.All };
+			RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
 			PhotonNetwork.RaiseEvent(code_ReadyUpdateAllPlayers, content, raiseEventOptions,
 				SendOptions.SendReliable);
 		}
 		
 		public void Request_EndBattle()
 		{
-			RaiseEventOptions raiseEventOptions = new RaiseEventOptions {Receivers = ReceiverGroup.All };
+			RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
 			PhotonNetwork.RaiseEvent(code_EndBattle, 0, raiseEventOptions,
 				SendOptions.SendReliable);
 		}
@@ -123,7 +123,7 @@ namespace Model.Photon
 		public void Request_UpdateTileMapGhost(Vector3Int vector, int playerId)
 		{
 			object[] content = { (Vector3)vector, playerId };
-			RaiseEventOptions raiseEventOptions = new RaiseEventOptions {Receivers = ReceiverGroup.Others };
+			RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
 			PhotonNetwork.RaiseEvent(code_UpdateTileMapGhost, content, raiseEventOptions,
 				SendOptions.SendReliable);
 		}
@@ -135,15 +135,15 @@ namespace Model.Photon
 				content[x] = (Vector3)vectors[x];
 			content[^1] = playerId;
 
-			RaiseEventOptions raiseEventOptions = new RaiseEventOptions {Receivers = ReceiverGroup.Others };
+			RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
 			PhotonNetwork.RaiseEvent(code_UpdateTileMapCapture, content, raiseEventOptions,
 				SendOptions.SendReliable);
 		}
 		
-		public void Request_AttackPlayer(int playerId)
+		public void Request_AttackPlayer(int enemyId)
 		{
-			object[] content = { playerId };
-			RaiseEventOptions raiseEventOptions = new RaiseEventOptions {Receivers = ReceiverGroup.Others };
+			object[] content = { enemyId };
+			RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
 			PhotonNetwork.RaiseEvent(code_AttackPlayer, content, raiseEventOptions,
 				SendOptions.SendReliable);
 		}
@@ -244,9 +244,9 @@ namespace Model.Photon
 			else if (eventCode == code_AttackPlayer)
 			{
 				object[] data = (object[])photonEvent.CustomData;
-				int playerId = (int) data[0];
+				int enemyId = (int) data[0];
 	
-				AttackPlayer_Action?.Invoke(playerId);
+				AttackPlayer_Action?.Invoke(enemyId);
 			}
 		}
 	}

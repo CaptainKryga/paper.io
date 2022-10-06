@@ -14,7 +14,7 @@ namespace Model.Entity
 
 		[SerializeField] private CustomRaiseEvents customRaiseEvents;
 		
-		private int playerId;
+		[SerializeField] private int playerId;
 		[SerializeField] private Transform body;
 		[SerializeField] private float moveSpeed = 5;
 		[SerializeField] private Transform movePoint;
