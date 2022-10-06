@@ -238,6 +238,7 @@ MonoBehaviour:
   tileDataBase: {fileID: 11400000, guid: dd6387843ef7a4660851c052cf652111, type: 2}
   entityController: {fileID: 31534521}
   player: {fileID: 1336357322}
+  playerChecker: {fileID: 1336357323}
 --- !u!1 &43851147
 GameObject:
   m_ObjectHideFlags: 0
@@ -5964,6 +5965,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tileDataBase: {fileID: 11400000, guid: dd6387843ef7a4660851c052cf652111, type: 2}
   back: {fileID: 1839126761}
+  local: {fileID: 1189043968}
+  remote: {fileID: 75757693}
   tbClear: {fileID: 11400000, guid: 42479f49cad754118bfaba79ee1202e0, type: 2}
   tbCapture: {fileID: 11400000, guid: 3eacf21fe1cb74e668b6a3d0b6b3159e, type: 2}
   tbGhost: {fileID: 11400000, guid: 984c40e9e1bfe412faf515c721d4e874, type: 2}
