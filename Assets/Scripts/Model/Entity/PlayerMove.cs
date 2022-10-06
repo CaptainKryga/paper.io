@@ -84,30 +84,37 @@ namespace Model.Entity
 
 		public void StartBattle(Vector3Int position)
 		{
-			Hashtable hash = new Hashtable();
-			hash.Add("isBattle", true);
-			hash.Add("isReady", false);
-			PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
-
 			movePoint.position = position;
 			body.position = movePoint.position;
 			
 			isMove = true;
 			
+			Hashtable hash = new Hashtable();
+			hash.Add("isBattle", true);
+			hash.Add("isReady", false);
+			PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
 			// customRaiseEvents.Send_BattleUpdatePlayer(PhotonNetwork.LocalPlayer.ActorNumber, false);
 		}
 		
 		private void GameOver()
 		{
-			Hashtable hash = new Hashtable();
-			hash.Add("isBattle", false);
-			PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
-
 			movePoint.position = Vector3.down * 100;
 			body.position = movePoint.position;
 			isMove = false;
 			entityController.GameOver();
+			
+			Hashtable hash = new Hashtable();
+			hash.Add("isBattle", false);
+			PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
+			customRaiseEvents.Request_BattleUpdatePlayer(PhotonNetwork.LocalPlayer.ActorNumber, false);
+		}
 
+		private void OnDestroy()
+		{
+			Hashtable hash = new Hashtable();
+			hash.Add("isBattle", false);
+			hash.Add("isReady", false);
+			PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
 			customRaiseEvents.Request_BattleUpdatePlayer(PhotonNetwork.LocalPlayer.ActorNumber, false);
 		}
 	}
