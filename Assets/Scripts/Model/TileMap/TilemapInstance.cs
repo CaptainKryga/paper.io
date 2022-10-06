@@ -9,7 +9,7 @@ namespace Model.TileMap
 	{
 		[SerializeField] private TileDataBase tileDataBase;
 		
-		[SerializeField] private Tilemap back;
+		[SerializeField] private Tilemap back, local, remote;
 		[SerializeField] private TileBase tbClear, tbCapture, tbGhost, tbCollider;
 
 		private LeminCell[][] cells;
@@ -45,13 +45,23 @@ namespace Model.TileMap
 				return tbCollider;
 			return tbClear;
 		}
-
-
+		
 		public int GetTileId(TileBase tile)
 		{
 			for (int x = 0; x < tileDataBase.tiles.Length; x++)
 			{
 				if (tileDataBase.tiles[x] == tile)
+					return x;
+			}
+
+			return 0;
+		}
+		
+		public int GetTileId(Vector3Int point)
+		{
+			for (int x = 0; x < tileDataBase.tiles.Length; x++)
+			{
+				if (tileDataBase.tiles[x] == remote.GetTile(point))
 					return x;
 			}
 

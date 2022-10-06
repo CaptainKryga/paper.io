@@ -30,7 +30,7 @@ namespace Model
 		public void InitPlayer()
 		{
 			tilemapInstance.InitTileMap();
-			entityInstance.InitPlayer();
+			entityInstance.InitPlayer(tilemapInstance);
 			vController.InitPlayer();
 		}
 

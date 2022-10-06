@@ -11,7 +11,16 @@ namespace Model.TileMap
 		
 		public TileBase[] tiles;
 		public Sprite[] sprites;
+		
+		public int GetTileId(TileBase tile)
+		{
+			for (int x = 0; x < tiles.Length; x++)
+			{
+				if (tiles[x] == tile)
+					return x;
+			}
 
-		public Color koofGhost, koofCapture;
+			return 0;
+		}
 	}
 }

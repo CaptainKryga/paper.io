@@ -16,6 +16,7 @@ namespace Model
 
 		[SerializeField] private EntityController entityController;
 		[SerializeField] private PlayerMove player;
+		[SerializeField] private PlayerChecker playerChecker;
 
 		public TileDataBase TileDataBase => tileDataBase;
 
@@ -29,9 +30,10 @@ namespace Model
 			customRaiseEvents.ReceiveStartBattle_Action -= StartBattle;
 		}
 
-		public void InitPlayer()
+		public void InitPlayer(TilemapInstance tilemapInstance)
 		{
 			player.Init(photonConnectRoom.CreatePlayer("player"), tileDataBase.sizeMap);
+			playerChecker.InitMap(tilemapInstance);
 			entityController.InitPlayer(player);
 		}
 		

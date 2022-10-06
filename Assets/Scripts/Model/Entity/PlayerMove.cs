@@ -54,7 +54,7 @@ namespace Model.Entity
 			movePoint.parent = null;
 			this.playerSync = playerSync;
 			playerSync.Init(body);
-			playerChecker.Init(body);
+			playerChecker.InitPlayer(body);
 
 			this.sizeMap = sizeMap;
 		}
@@ -92,6 +92,7 @@ namespace Model.Entity
 				entityController.UpdatePosition(Vector3Int.FloorToInt(body.transform.position));
 				movePoint.position += newVec;
 				playerRenderer.Rotate(newVec);
+				playerChecker.CheckAttack(movePoint);
 			}
 		}
 

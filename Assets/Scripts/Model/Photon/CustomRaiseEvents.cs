@@ -23,6 +23,7 @@ namespace Model.Photon
 		
 		public Action<Vector3Int, int> UpdateTileMapGhost_Action;
 		public Action<Vector3Int[], int> UpdateTileMapCapture_Action;
+		public Action<int> AttackPlayer_Action;
 
 		//menu 0 - 100
 		//send data from player
@@ -44,6 +45,8 @@ namespace Model.Photon
 		
 		private const byte code_UpdateTileMapGhost = 106;
 		private const byte code_UpdateTileMapCapture = 107;
+		
+		private const byte code_AttackPlayer = 108;
 
 		private void OnEnable()
 		{
@@ -134,6 +137,14 @@ namespace Model.Photon
 
 			RaiseEventOptions raiseEventOptions = new RaiseEventOptions {Receivers = ReceiverGroup.Others };
 			PhotonNetwork.RaiseEvent(code_UpdateTileMapCapture, content, raiseEventOptions,
+				SendOptions.SendReliable);
+		}
+		
+		public void Request_AttackPlayer(int playerId)
+		{
+			object[] content = { playerId };
+			RaiseEventOptions raiseEventOptions = new RaiseEventOptions {Receivers = ReceiverGroup.Others };
+			PhotonNetwork.RaiseEvent(code_AttackPlayer, content, raiseEventOptions,
 				SendOptions.SendReliable);
 		}
 
@@ -228,6 +239,14 @@ namespace Model.Photon
 				int playerId = (int) data[^1];
 	
 				UpdateTileMapCapture_Action?.Invoke(vectors, playerId);
+			}
+			//attack player
+			else if (eventCode == code_AttackPlayer)
+			{
+				object[] data = (object[])photonEvent.CustomData;
+				int playerId = (int) data[0];
+	
+				AttackPlayer_Action?.Invoke(playerId);
 			}
 		}
 	}

@@ -1,4 +1,6 @@
 ﻿using Model.Photon;
+using Model.TileMap;
+using Test;
 using UnityEngine;
 
 namespace Model.Entity
@@ -8,22 +10,42 @@ namespace Model.Entity
         [SerializeField] private CustomRaiseEvents customRaiseEvents;
         [SerializeField] private PlayerMove player;
         private Transform playerBody;
+        private LeminCell[][] cells;
 
-        public void Init(Transform body)
+        private TilemapInstance tilemapInstance;
+
+        public void InitPlayer(Transform body)
         {
             playerBody = body;
         }
-        
+
+        public void InitMap(TilemapInstance tilemapInstance)
+        {
+            this.tilemapInstance = tilemapInstance;
+            cells = tilemapInstance.GetCells;
+        }
+
         public void StartBattle()
         {
             customRaiseEvents.UpdateTileMapGhost_Action += UpdateGhost;
             customRaiseEvents.UpdateTileMapCapture_Action += UpdateCapture;
+            customRaiseEvents.AttackPlayer_Action += PlayerDamage;
         }
 
         public void EndBattle()
         {
             customRaiseEvents.UpdateTileMapGhost_Action -= UpdateGhost;
             customRaiseEvents.UpdateTileMapCapture_Action -= UpdateCapture;
+            customRaiseEvents.AttackPlayer_Action -= PlayerDamage;
+        }
+
+        public void CheckAttack(Transform point)
+        {
+            Vector3Int pos = Vector3Int.FloorToInt(point.position);
+            if (cells[pos.x][pos.y].type == Lemin.ECaptured.ghost)
+            {
+                customRaiseEvents.Request_AttackPlayer(tilemapInstance.GetTileId(pos));
+            }
         }
 
         private void UpdateGhost(Vector3Int vector, int playerId)
@@ -43,6 +65,12 @@ namespace Model.Entity
                     player.GameOver(false);
                 }
             }
+        }
+
+        private void PlayerDamage(int playerId)
+        {
+            if (player.PlayerId == playerId)
+                player.GameOver(false);
         }
     }
 }
