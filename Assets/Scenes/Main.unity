@@ -3336,6 +3336,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 8880404511103193143}
+  info: {fileID: 1653906647300141350}
   tileDataBase: {fileID: 11400000, guid: dd6387843ef7a4660851c052cf652111, type: 2}
 --- !u!114 &1336357322
 MonoBehaviour:
