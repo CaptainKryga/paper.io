@@ -128,12 +128,10 @@ namespace Model.Photon
 		public void Request_UpdateTileMapCapture(Vector3Int[] vectors, int playerId)
 		{
 			object[] content = new object[vectors.Length + 1];
-			content[0] = playerId;
-			for (int x = 1; x < vectors.Length; x++)
-			{
+			for (int x = 0; x < vectors.Length - 1; x++)
 				content[x] = (Vector3)vectors[x];
-			}
-			
+			content[^1] = playerId;
+
 			RaiseEventOptions raiseEventOptions = new RaiseEventOptions {Receivers = ReceiverGroup.Others };
 			PhotonNetwork.RaiseEvent(code_UpdateTileMapCapture, content, raiseEventOptions,
 				SendOptions.SendReliable);
@@ -224,14 +222,11 @@ namespace Model.Photon
 			else if (eventCode == code_UpdateTileMapCapture)
 			{
 				object[] data = (object[])photonEvent.CustomData;
-				int playerId = (int) data[0];
 				Vector3Int[] vectors = new Vector3Int[data.Length - 1];
-
-				for (int x = 1; x < data.Length; x++)
-				{
+				for (int x = 0; x < data.Length - 1; x++)
 					vectors[x] = Vector3Int.FloorToInt((Vector3)data[x]);
-				}
-				
+				int playerId = (int) data[^1];
+	
 				UpdateTileMapCapture_Action?.Invoke(vectors, playerId);
 			}
 		}
