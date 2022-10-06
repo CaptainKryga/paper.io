@@ -23,7 +23,7 @@ namespace Model
 			customRaiseEvents.SendReadyUpdatePlayer_Action += PlayerUpdateReady;
 			customRaiseEvents.ReadyUpdateAllPlayers_Action += ReadyUpdateAllPlayers;
 
-			customRaiseEvents.ReceiveGameOverLastPlayer_Action += GameOver;
+			customRaiseEvents.EndBattle_Action += GameOver;
 		}
 
 		private void OnDisable()
@@ -32,7 +32,7 @@ namespace Model
 			customRaiseEvents.SendReadyUpdatePlayer_Action -= PlayerUpdateReady;
 			customRaiseEvents.ReadyUpdateAllPlayers_Action -= ReadyUpdateAllPlayers;
 			
-			customRaiseEvents.ReceiveGameOverLastPlayer_Action -= GameOver;
+			customRaiseEvents.EndBattle_Action -= GameOver;
 		}
 
 		public void PlayerUpdateReady(int playerActor, bool isReady)
@@ -46,7 +46,7 @@ namespace Model
 					countPlayersReady++;
 				}
 			}
-			Debug.Log("countPlayersReady: " + countPlayersReady);
+			Debug.Log("countPlayersReady: " + countPlayersReady + "| battle ? " + isBattle);
 
 			if (isBattle)
 				return;
@@ -76,6 +76,8 @@ namespace Model
 					{
 						//gameover or win?
 						customRaiseEvents.Request_GameOverLastPlayer(player.ActorNumber);
+						//end game
+						customRaiseEvents.Request_EndBattle();
 					}
 				}
 
@@ -97,7 +99,7 @@ namespace Model
 			isBattle = true;
 		}
 
-		public void GameOver(bool isWin)
+		public void GameOver()
 		{
 			isBattle = false;
 		}

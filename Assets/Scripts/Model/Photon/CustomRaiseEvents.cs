@@ -19,6 +19,7 @@ namespace Model.Photon
 		public Action<int, bool> SendReadyUpdatePlayer_Action;
 		
 		public Action<bool> ReadyUpdateAllPlayers_Action;
+		public Action EndBattle_Action;
 		
 		//menu 0 - 100
 		//send data from player
@@ -36,6 +37,7 @@ namespace Model.Photon
 		private const byte code_BattleUpdatePlayer = 102;
 		private const byte code_ReadyUpdatePlayer = 103;
 		private const byte code_ReadyUpdateAllPlayers = 104;
+		private const byte code_EndBattle = 105;
 
 		private void OnEnable()
 		{
@@ -99,6 +101,13 @@ namespace Model.Photon
 			object[] content = { isReady };
 			RaiseEventOptions raiseEventOptions = new RaiseEventOptions {Receivers = ReceiverGroup.All };
 			PhotonNetwork.RaiseEvent(code_ReadyUpdateAllPlayers, content, raiseEventOptions,
+				SendOptions.SendReliable);
+		}
+		
+		public void Request_EndBattle()
+		{
+			RaiseEventOptions raiseEventOptions = new RaiseEventOptions {Receivers = ReceiverGroup.All };
+			PhotonNetwork.RaiseEvent(code_EndBattle, 0, raiseEventOptions,
 				SendOptions.SendReliable);
 		}
 
@@ -170,6 +179,11 @@ namespace Model.Photon
 				bool isReady = (bool) data[0];
 				
 				ReadyUpdateAllPlayers_Action?.Invoke(isReady);
+			}
+			//end battle
+			else if (eventCode == code_EndBattle)
+			{
+				EndBattle_Action?.Invoke();
 			}
 		}
 	}
