@@ -13,6 +13,7 @@ namespace Model.TileMap
 		[SerializeField] private TileBase tbClear, tbCapture, tbGhost, tbCollider;
 
 		private LeminCell[][] cells;
+		public Tilemap Remote => remote;
 		
 		public Tilemap GetTileMap => back;
 		public LeminCell[][] GetCells => cells;

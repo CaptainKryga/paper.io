@@ -62,7 +62,7 @@ namespace Model.Entity
         {
             Vector3Int pos = Vector3Int.FloorToInt(point.position);
             if (pos.x >= 0 && pos.y >= 0 && pos.x < cells.Length && pos.y < cells.Length &&
-                cells[pos.x][pos.y].type == Lemin.ECaptured.ghost)
+                tilemapInstance.Remote.GetColor(pos) == Color.yellow)
             {
                 int enemyId = tilemapInstance.GetTileId(pos);
                 Debug.Log(enemyId);

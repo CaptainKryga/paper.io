@@ -89,10 +89,10 @@ namespace Model.Entity
 			
 			if (movePoint.position == body.transform.position && newVec != Vector3.zero)
 			{
+				playerChecker.CheckAttack(movePoint);
 				entityController.UpdatePosition(Vector3Int.FloorToInt(body.transform.position));
 				movePoint.position += newVec;
 				playerRenderer.Rotate(newVec);
-				playerChecker.CheckAttack(movePoint);
 			}
 		}
 
@@ -100,6 +100,7 @@ namespace Model.Entity
 		{
 			movePoint.position = position + new Vector3(.5f, .5f);
 			body.position = movePoint.position;
+			newVec = Vector3.zero;
 
 			isMove = true;
 			// playerSync.IsMove = true;

@@ -8,8 +8,7 @@ namespace Model
     {
         [SerializeField] private Camera cam;
         [SerializeField] private PlayerMove player;
-        [SerializeField] private Transform body;
-        private bool isPlay;
+        private Transform body;
 
         private void Start()
         {
