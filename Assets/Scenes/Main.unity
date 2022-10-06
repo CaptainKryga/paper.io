@@ -3317,6 +3317,7 @@ GameObject:
   - component: {fileID: 1336357320}
   - component: {fileID: 1336357322}
   - component: {fileID: 1336357321}
+  - component: {fileID: 1336357323}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -3368,10 +3369,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entityController: {fileID: 31534521}
   playerRenderer: {fileID: 1336357321}
+  playerChecker: {fileID: 1336357323}
   customRaiseEvents: {fileID: 1166433588}
   body: {fileID: 8880404512193191544}
   moveSpeed: 5
   movePoint: {fileID: 8880404512098630697}
+--- !u!114 &1336357323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1336357319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 844dad93c2df4920b99ae03691481efe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  customRaiseEvents: {fileID: 1166433588}
+  player: {fileID: 1336357322}
 --- !u!1 &1339425095
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,23 +1,26 @@
-using Model.Photon;
+﻿using Model.Photon;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
-namespace Model.TileMap
+namespace Model.Entity
 {
-    public class Remote : MonoBehaviour
+    public class PlayerChecker : MonoBehaviour
     {
         [SerializeField] private CustomRaiseEvents customRaiseEvents;
-        [SerializeField] private TileDataBase tileDataBase;
+        [SerializeField] private PlayerMove player;
+        private Transform playerBody;
 
-        [SerializeField] private Tilemap remote;
-
-        private void OnEnable()
+        public void Init(Transform body)
+        {
+            playerBody = body;
+        }
+        
+        public void StartBattle()
         {
             customRaiseEvents.UpdateTileMapGhost_Action += UpdateGhost;
             customRaiseEvents.UpdateTileMapCapture_Action += UpdateCapture;
         }
 
-        private void OnDisable()
+        public void EndBattle()
         {
             customRaiseEvents.UpdateTileMapGhost_Action -= UpdateGhost;
             customRaiseEvents.UpdateTileMapCapture_Action -= UpdateCapture;
@@ -25,18 +28,20 @@ namespace Model.TileMap
 
         private void UpdateGhost(Vector3Int vector, int playerId)
         {
-            remote.SetTile(vector, tileDataBase.tiles[playerId]);
-            remote.SetTileFlags(vector, TileFlags.None);
-            remote.SetColor(vector, Color.yellow);
+            if (Vector3.Distance(vector, playerBody.position) < 1)
+            {
+                player.GameOver(false);
+            }
         }
 
         private void UpdateCapture(Vector3Int[] vectors, int playerId)
         {
             for (int x = 0; x < vectors.Length; x++)
             {
-                remote.SetTile(vectors[x], tileDataBase.tiles[playerId]);
-                remote.SetTileFlags(vectors[x], TileFlags.None);
-                remote.SetColor(vectors[x], Color.white);
+                if (Vector3.Distance(vectors[x], playerBody.position) < 1)
+                {
+                    player.GameOver(false);
+                }
             }
         }
     }

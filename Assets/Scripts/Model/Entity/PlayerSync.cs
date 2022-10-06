@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using Model.TileMap;
 using Photon.Pun;
 using TMPro;

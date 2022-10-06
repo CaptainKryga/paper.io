@@ -1,4 +1,3 @@
-using System;
 using ExitGames.Client.Photon;
 using Model.Photon;
 using Photon.Pun;
@@ -11,6 +10,7 @@ namespace Model.Entity
 		[SerializeField] private EntityController entityController;
 		[SerializeField] private PlayerRenderer playerRenderer;
 		private PlayerSync playerSync;
+		[SerializeField] private PlayerChecker playerChecker;
 
 		[SerializeField] private CustomRaiseEvents customRaiseEvents;
 		
@@ -54,6 +54,7 @@ namespace Model.Entity
 			movePoint.parent = null;
 			this.playerSync = playerSync;
 			playerSync.Init(body);
+			playerChecker.Init(body);
 
 			this.sizeMap = sizeMap;
 		}
@@ -107,9 +108,11 @@ namespace Model.Entity
 			hash.Add("isReady", false);
 			PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
 			// customRaiseEvents.Send_BattleUpdatePlayer(PhotonNetwork.LocalPlayer.ActorNumber, false);
+			
+			playerChecker.StartBattle();
 		}
 		
-		private void GameOver(bool isWin)
+		public void GameOver(bool isWin)
 		{
 			movePoint.position = Vector3.down * 100;
 			body.position = movePoint.position;
@@ -122,6 +125,8 @@ namespace Model.Entity
 			hash.Add("isBattle", false);
 			PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
 			customRaiseEvents.Request_BattleUpdatePlayer(PhotonNetwork.LocalPlayer.ActorNumber, false);
+			
+			playerChecker.EndBattle();
 		}
 
 		private void OnDestroy()
