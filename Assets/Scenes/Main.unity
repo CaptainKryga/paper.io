@@ -2521,8 +2521,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 1731600646}
   readyUI: {fileID: 12072619}
-  panelPlayerInit: {fileID: 1770426906}
+  panelPlayerInit: {fileID: 1770426908}
+  spriteWin: {fileID: 21300000, guid: 79e6ac58ac3f7ec4facad1865bd7f276, type: 3}
+  spriteDefeat: {fileID: 21300000, guid: 6edd0cb207907444c88ec60f86de96b7, type: 3}
   inputFieldPlayerName: {fileID: 43851149}
+  textWin: {fileID: 345735704}
 --- !u!1 &1083088257
 GameObject:
   m_ObjectHideFlags: 0

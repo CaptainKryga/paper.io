@@ -29,9 +29,9 @@ namespace Model
 			capture.UpdateCapture(ghost.UpdateTile(pos));
 		}
 
-		public void GameOver()
+		public void GameOver(bool isWin)
 		{
-			entityInstance.GameOver(_player);
+			entityInstance.GameOver(_player, isWin);
 		}
 	}
 }

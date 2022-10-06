@@ -47,10 +47,10 @@ namespace Model
 			entityController.StartBattle(position, tileDataBase, player.PlayerId);
 		}
 
-		public void GameOver(PlayerMove player)
+		public void GameOver(PlayerMove player, bool isWin)
 		{
-			photonConnectRoom.DestroyPlayer(player.gameObject);
-			mController.GameOver();
+			// photonConnectRoom.DestroyPlayer(player.gameObject);
+			mController.GameOver(isWin);
 		}
 	}
 }

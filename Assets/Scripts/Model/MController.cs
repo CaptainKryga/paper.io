@@ -64,9 +64,9 @@ namespace Model
 			// battleController.
 		}
 
-		public void GameOver()
+		public void GameOver(bool isWin)
 		{
-			vController.GameOver();
+			vController.GameOver(isWin);
 		}
 	}
 }

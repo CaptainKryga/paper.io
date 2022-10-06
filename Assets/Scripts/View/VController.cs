@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace View
 {
@@ -8,15 +9,19 @@ namespace View
 		[SerializeField] private Controller.Controller controller;
 		[SerializeField] private ReadyUI readyUI;
 
-		[SerializeField] private GameObject panelPlayerInit;
+		[SerializeField] private Image panelPlayerInit;
+		[SerializeField] private Sprite spriteWin, spriteDefeat;
+		
 		[SerializeField] private TMP_InputField inputFieldPlayerName;
+
+		[SerializeField] private TMP_Text textWin;
 
 		private string playerName;
 		private int playerId;
 
 		private void Start()
 		{
-			panelPlayerInit.SetActive(false);
+			panelPlayerInit.gameObject.SetActive(false);
 		}
 
 		public void ConsoleCommand(string command)
@@ -26,12 +31,15 @@ namespace View
 
 		public void InitPlayer()
 		{
-			panelPlayerInit.SetActive(true);
+			panelPlayerInit.gameObject.SetActive(true);
 		}
 
-		public void GameOver()
+		public void GameOver(bool isWin)
 		{
-			panelPlayerInit.SetActive(true);
+			panelPlayerInit.gameObject.SetActive(true);
+
+			panelPlayerInit.sprite = isWin ? spriteWin : spriteDefeat;
+			textWin.text = isWin ? "YOU WINNER" : "YOU DEFEAT";
 		}
 
 		public void OnClick_Ready()
@@ -48,7 +56,7 @@ namespace View
 		{
 			if (isFlag)
 			{
-				panelPlayerInit.SetActive(false);
+				panelPlayerInit.gameObject.SetActive(false);
 			}
 			else
 			{

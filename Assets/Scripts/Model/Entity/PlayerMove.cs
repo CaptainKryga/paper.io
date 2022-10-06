@@ -77,7 +77,7 @@ namespace Model.Entity
 				newVec = new Vector3(0f, Input.GetAxisRaw("Vertical"), 0f);
 
 			if (Physics2D.OverlapCircle(movePoint.position + newVec, .2f, layerCollider))
-				GameOver();
+				GameOver(false);
 			
 			if (movePoint.position == body.transform.position && newVec != Vector3.zero)
 			{
@@ -101,12 +101,14 @@ namespace Model.Entity
 			// customRaiseEvents.Send_BattleUpdatePlayer(PhotonNetwork.LocalPlayer.ActorNumber, false);
 		}
 		
-		private void GameOver()
+		private void GameOver(bool isWin)
 		{
 			movePoint.position = Vector3.down * 100;
 			body.position = movePoint.position;
+			
 			isMove = false;
-			entityController.GameOver();
+			
+			entityController.GameOver(isWin);
 			
 			Hashtable hash = new Hashtable();
 			hash.Add("isBattle", false);

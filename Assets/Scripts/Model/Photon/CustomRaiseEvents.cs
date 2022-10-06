@@ -13,7 +13,7 @@ namespace Model.Photon
 		public Action<int, int> ReceiveLocalUpdateFlagPlayer_Action;
 		
 		public Action<Vector3Int> ReceiveStartBattle_Action;
-		public Action ReceiveGameOverLastPlayer_Action;
+		public Action<bool> ReceiveGameOverLastPlayer_Action;
 		
 		public Action<int, bool> SendBattleUpdatePlayer_Action;
 		public Action<int, bool> SendReadyUpdatePlayer_Action;
@@ -72,7 +72,7 @@ namespace Model.Photon
 		
 		public void Request_GameOverLastPlayer(int actorId)
 		{
-			object[] content = { actorId };
+			object[] content = { actorId, true };
 			RaiseEventOptions raiseEventOptions = new RaiseEventOptions {Receivers = ReceiverGroup.All };
 			PhotonNetwork.RaiseEvent(code_GameOverLastPlayer, content, raiseEventOptions,
 				SendOptions.SendReliable);
@@ -140,9 +140,10 @@ namespace Model.Photon
 			{
 				object[] data = (object[])photonEvent.CustomData;
 				int actorId = (int) data[0];
+				bool isWin = (bool) data[1];
 				
 				if (PhotonNetwork.LocalPlayer.ActorNumber == actorId)
-					ReceiveGameOverLastPlayer_Action?.Invoke();
+					ReceiveGameOverLastPlayer_Action?.Invoke(isWin);
 			}
 			//update MC battle count player's
 			else if (eventCode == code_BattleUpdatePlayer)
