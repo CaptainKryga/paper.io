@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using Model.TileMap;
 using Photon.Pun;
 using TMPro;
@@ -16,6 +18,14 @@ namespace Model.Entity
 
         private string playerName;
         private int playerId;
+
+        private float lastTime;
+        // private bool isMove;
+
+        // public bool IsMove
+        // {
+        //     set => isMove = value;
+        // }
 
         private string PlayerName
         {
@@ -63,16 +73,48 @@ namespace Model.Entity
         {
             if (stream.IsWriting)
             {
-                stream.SendNext(parent.position);
                 stream.SendNext(PhotonNetwork.LocalPlayer.NickName);
                 stream.SendNext(playerId);
+                
+                // stream.SendNext(isMove);
+                // stream.SendNext(parent.position);
             }
             else if (stream.IsReading)
             {
-                transform.position = (Vector3)stream.ReceiveNext();
                 PlayerName = (string)stream.ReceiveNext();
                 PlayerId = (int)stream.ReceiveNext();
+                
+                // isMove = (bool)stream.ReceiveNext();
+                // queue.Add(new SyncPosition() 
+                // { 
+                    // nextPosition = (Vector3)stream.ReceiveNext(),
+                    // time = lastTime == 0 ? 0 : lastTime - Time.deltaTime 
+                // });
             }
         }
+
+        private void Update()
+        {
+            transform.position = parent.position;
+        }
+
+        // private List<SyncPosition> queue = new List<SyncPosition>();
+        // public void FixedUpdate()
+        // {
+        //     if (queue.Count >= 2)
+        //     {
+        //         if (transform.position == queue[0].nextPosition)
+        //             queue.Remove(queue[0]);
+        //         
+        //         transform.position = Vector3.MoveTowards(transform.position, 
+        //             queue[0].nextPosition, queue[0].time);
+        //     }
+        // }
     }
+
+    // public class SyncPosition
+    // {
+    //     public Vector3 nextPosition;
+    //     public float time;
+    // }
 }

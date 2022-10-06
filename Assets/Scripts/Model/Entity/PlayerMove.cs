@@ -92,8 +92,9 @@ namespace Model.Entity
 		{
 			movePoint.position = position;
 			body.position = movePoint.position;
-			
+
 			isMove = true;
+			// playerSync.IsMove = true;
 			
 			Hashtable hash = new Hashtable();
 			hash.Add("isBattle", true);
