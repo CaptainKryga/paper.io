@@ -653,6 +653,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   readyController: {fileID: 1141858691}
+  tileDataBase: {fileID: 11400000, guid: dd6387843ef7a4660851c052cf652111, type: 2}
   customRaiseEvents: {fileID: 1166433588}
 --- !u!1 &237293165
 GameObject:
