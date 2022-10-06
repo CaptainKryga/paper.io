@@ -39,6 +39,11 @@ namespace Model.Entity
 			body.transform.position = Vector3.up * 1000;
 			
 			isMove = false;
+			
+			Hashtable hash = new Hashtable();
+			hash.Add("isBattle", false);
+			hash.Add("isReady", false);
+			PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
 		}
 
 		public void Init(PlayerSync playerSync)
