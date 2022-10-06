@@ -14,8 +14,8 @@ namespace Model.Entity
 
         private TileDataBase tileDataBase;
 
-        [SerializeField] private string playerName;
-        [SerializeField] private int playerId;
+        private string playerName;
+        private int playerId;
 
         private string PlayerName
         {
@@ -29,7 +29,8 @@ namespace Model.Entity
         {
             set
             {
-                if (value > 0 && value < tileDataBase.sprites.Length)
+                
+                if (value < 0 || value > tileDataBase.sprites.Length)
                     return;
                 
                 playerId = value;
