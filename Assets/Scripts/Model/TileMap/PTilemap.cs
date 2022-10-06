@@ -1,3 +1,4 @@
+using Model.Photon;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -8,5 +9,7 @@ namespace Model.TileMap
 		[SerializeField] protected Tilemap local;
 		[SerializeField] protected Tilemap remote;
 		[SerializeField] protected TileBase localTile;
+		
+		[SerializeField] protected CustomRaiseEvents customRaiseEvents;
 	}
 }

@@ -21,8 +21,8 @@ namespace Model.Photon
 		public Action<bool> ReadyUpdateAllPlayers_Action;
 		public Action EndBattle_Action;
 		
-		public Action<Vector3Int> UpdateTileMapGhost_Action;
-		public Action<Vector3Int[]> UpdateTileMapCapture_Action;
+		public Action<Vector3Int, int> UpdateTileMapGhost_Action;
+		public Action<Vector3Int[], int> UpdateTileMapCapture_Action;
 
 		//menu 0 - 100
 		//send data from player
@@ -117,7 +117,7 @@ namespace Model.Photon
 				SendOptions.SendReliable);
 		}
 
-		public void Request_UpdateTileMapGhost(Vector3Int vector)
+		public void Request_UpdateTileMapGhost(Vector3Int vector, int playerId)
 		{
 			object[] content = { vector };
 			RaiseEventOptions raiseEventOptions = new RaiseEventOptions {Receivers = ReceiverGroup.Others };
@@ -125,7 +125,7 @@ namespace Model.Photon
 				SendOptions.SendReliable);
 		}
 		
-		public void Request_UpdateTileMapCapture(Vector3Int[] vectors)
+		public void Request_UpdateTileMapCapture(Vector3Int[] vectors, int playerId)
 		{
 			object[] content = { vectors };
 			RaiseEventOptions raiseEventOptions = new RaiseEventOptions {Receivers = ReceiverGroup.Others };
@@ -212,14 +212,14 @@ namespace Model.Photon
 			{
 				object[] data = (object[])photonEvent.CustomData;
 				
-				UpdateTileMapGhost_Action?.Invoke((Vector3Int) data[0]);
+				UpdateTileMapGhost_Action?.Invoke((Vector3Int) data[0], (int) data[1]);
 			}
 			//remote update capture
 			else if (eventCode == code_UpdateTileMapCapture)
 			{
 				object[] data = (object[])photonEvent.CustomData;
 				
-				UpdateTileMapCapture_Action?.Invoke((Vector3Int[]) data[0]);
+				UpdateTileMapCapture_Action?.Invoke((Vector3Int[]) data[0], (int) data[1]);
 			}
 		}
 	}

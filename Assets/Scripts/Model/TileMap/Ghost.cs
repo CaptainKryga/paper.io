@@ -9,7 +9,6 @@ namespace Model.TileMap
 	public class Ghost : PTilemap
 	{
 		[SerializeField] private TilemapInstance tilemapInstance;
-		[SerializeField] private CustomRaiseEvents customRaiseEvents;
 
 		private bool isCapture;
 		private List<Vector3Int> list = new List<Vector3Int>();
@@ -28,7 +27,7 @@ namespace Model.TileMap
 				local.SetTileFlags(pos, TileFlags.None);
 				local.SetColor(pos, Color.yellow);
 				
-				customRaiseEvents.Request_UpdateTileMapGhost(pos);
+				customRaiseEvents.Request_UpdateTileMapGhost(pos, tilemapInstance.GetTileId(localTile));
 				
 				isCapture = true;
 				return null;
@@ -51,7 +50,7 @@ namespace Model.TileMap
 				local.SetTileFlags(pos, TileFlags.None);
 				local.SetColor(pos, Color.yellow);
 				
-				customRaiseEvents.Request_UpdateTileMapGhost(pos);
+				customRaiseEvents.Request_UpdateTileMapGhost(pos, tilemapInstance.GetTileId(localTile));
 			}
 
 			return null;

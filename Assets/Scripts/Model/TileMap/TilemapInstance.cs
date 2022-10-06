@@ -45,5 +45,17 @@ namespace Model.TileMap
 				return tbCollider;
 			return tbClear;
 		}
+
+
+		public int GetTileId(TileBase tile)
+		{
+			for (int x = 0; x < tileDataBase.tiles.Length; x++)
+			{
+				if (tileDataBase.tiles[x] == tile)
+					return x;
+			}
+
+			return 0;
+		}
 	}
 }

@@ -43,6 +43,8 @@ namespace Model.TileMap
 				cells[captured[x].x][captured[x].y].type = Lemin.ECaptured.capture;
 			}
 			
+			customRaiseEvents.Request_UpdateTileMapCapture(path, tilemapInstance.GetTileId(localTile));
+			customRaiseEvents.Request_UpdateTileMapCapture(captured, tilemapInstance.GetTileId(localTile));
 		}
 
 		public void Init(Vector3Int pos, TileBase tile)
@@ -56,9 +58,10 @@ namespace Model.TileMap
 		private void InitCell(Vector3Int pos)
 		{
 			local.SetTile(pos, localTile);
-			// local.SetTileFlags(pos, TileFlags.None);
-			// local.SetColor(pos, this.colorCapture);
+			local.SetTileFlags(pos, TileFlags.None);
+			local.SetColor(pos, Color.white);
 			cells[pos.x][pos.y].type = Lemin.ECaptured.capture;
+			customRaiseEvents.Request_UpdateTileMapCapture(new Vector3Int[] { pos }, tilemapInstance.GetTileId(localTile));
 		}
 
 	}
