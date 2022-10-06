@@ -24,6 +24,7 @@ namespace Model.Entity
 		[SerializeField] private LayerMask layerCollider;
 		
 		public int PlayerId => playerId;
+		public Transform Body => body;
 
 		private void OnEnable()
 		{
