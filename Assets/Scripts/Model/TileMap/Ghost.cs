@@ -23,9 +23,9 @@ namespace Model.TileMap
 				list.Add(pos);
 				cells[pos.x][pos.y].type = Lemin.ECaptured.start;
 				
-				local.SetTile(pos, localTile);
-				local.SetTileFlags(pos, TileFlags.None);
-				local.SetColor(pos, Color.yellow);
+				tilemap.SetTile(pos, localTile);
+				tilemap.SetTileFlags(pos, TileFlags.None);
+				tilemap.SetColor(pos, Color.yellow);
 				
 				customRaiseEvents.Request_UpdateTileMapGhost(pos, tilemapInstance.GetTileId(localTile));
 				
@@ -40,15 +40,23 @@ namespace Model.TileMap
 					cells[list[^1].x][list[^1].y].type = Lemin.ECaptured.end;
 					isCapture = false;
 					Vector3Int[] temp = list.ToArray();
-					list.Clear();
+
+					for (int x = 0; x < list.Count; x++)
+					{
+						tilemap.SetTile(list[x], null);
+						tilemap.SetTileFlags(list[x], TileFlags.None);
+						tilemap.SetColor(list[x], Color.white);
+					}
+					
+					list.Clear(); 
 					return temp;
 				}
 				list.Add(pos);
 				cells[pos.x][pos.y].type = Lemin.ECaptured.ghost;
 
-				local.SetTile(pos, localTile);
-				local.SetTileFlags(pos, TileFlags.None);
-				local.SetColor(pos, Color.yellow);
+				tilemap.SetTile(pos, localTile);
+				tilemap.SetTileFlags(pos, TileFlags.None);
+				tilemap.SetColor(pos, Color.yellow);
 				
 				customRaiseEvents.Request_UpdateTileMapGhost(pos, tilemapInstance.GetTileId(localTile));
 			}

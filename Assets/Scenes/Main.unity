@@ -1378,6 +1378,7 @@ MonoBehaviour:
   customRaiseEvents: {fileID: 1166433588}
   tileDataBase: {fileID: 11400000, guid: dd6387843ef7a4660851c052cf652111, type: 2}
   remote: {fileID: 75757693}
+  local: {fileID: 1189043968}
 --- !u!1 &513441541
 GameObject:
   m_ObjectHideFlags: 0
@@ -5740,12 +5741,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4904102ff95fc4b27949586c97fd0ce3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  local: {fileID: 1189043968}
-  remote: {fileID: 75757693}
-  localTile: {fileID: 0}
+  tilemap: {fileID: 1189043968}
   customRaiseEvents: {fileID: 1166433588}
   tilemapInstance: {fileID: 1952528004}
   leminLogic: {fileID: 1339425096}
+  ghost: {fileID: 75757693}
 --- !u!114 &1861846711
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5758,9 +5758,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da16dcb741c954a47ab5e42c83cad86d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  local: {fileID: 1189043968}
-  remote: {fileID: 75757693}
-  localTile: {fileID: 0}
+  tilemap: {fileID: 75757693}
   customRaiseEvents: {fileID: 1166433588}
   tilemapInstance: {fileID: 1952528004}
 --- !u!1 &1866730981

@@ -9,7 +9,7 @@ namespace Model.TileMap
         [SerializeField] private CustomRaiseEvents customRaiseEvents;
         [SerializeField] private TileDataBase tileDataBase;
 
-        [SerializeField] private Tilemap remote;
+        [SerializeField] private Tilemap remote, local;
 
         private void OnEnable()
         {
@@ -34,9 +34,9 @@ namespace Model.TileMap
         {
             for (int x = 0; x < vectors.Length; x++)
             {
-                remote.SetTile(vectors[x], tileDataBase.tiles[playerId]);
-                remote.SetTileFlags(vectors[x], TileFlags.None);
-                remote.SetColor(vectors[x], Color.white);
+                local.SetTile(vectors[x], tileDataBase.tiles[playerId]);
+                local.SetTileFlags(vectors[x], TileFlags.None);
+                local.SetColor(vectors[x], Color.white);
             }
         }
     }

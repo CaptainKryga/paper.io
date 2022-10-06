@@ -6,9 +6,8 @@ namespace Model.TileMap
 {
 	public class PTilemap : MonoBehaviour
 	{
-		[SerializeField] protected Tilemap local;
-		[SerializeField] protected Tilemap remote;
-		[SerializeField] protected TileBase localTile;
+		[SerializeField] protected Tilemap tilemap;
+		protected TileBase localTile;
 		
 		[SerializeField] protected CustomRaiseEvents customRaiseEvents;
 	}
