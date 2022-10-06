@@ -13,6 +13,7 @@ namespace Model.Entity
         private LeminCell[][] cells;
 
         private TilemapInstance tilemapInstance;
+        private PlayerSync[] players;
 
         public void InitPlayer(Transform body)
         {
@@ -30,6 +31,8 @@ namespace Model.Entity
             customRaiseEvents.UpdateTileMapGhost_Action += UpdateGhost;
             customRaiseEvents.UpdateTileMapCapture_Action += UpdateCapture;
             customRaiseEvents.AttackPlayer_Action += PlayerAttack;
+
+            players = FindObjectsOfType<PlayerSync>();
         }
 
         public void EndBattle()
@@ -68,6 +71,16 @@ namespace Model.Entity
                 Debug.Log(enemyId);
                 if (player.PlayerId != enemyId)
                     customRaiseEvents.Request_AttackPlayer(enemyId);
+                return;
+            }
+
+            for (int x = 0; x < players.Length; x++)
+            {
+                if (Vector3.Distance(players[x].transform.position, playerBody.position) < .5f)
+                {
+                    if (players[x].PlayerId != player.PlayerId)
+                        customRaiseEvents.Request_AttackPlayer(players[x].PlayerId);
+                }
             }
         }
 

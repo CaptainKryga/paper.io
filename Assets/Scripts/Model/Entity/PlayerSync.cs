@@ -25,8 +25,9 @@ namespace Model.Entity
                 info.text = playerName;
             }
         }
-        private int PlayerId
+        public int PlayerId
         {
+            get => playerId;
             set
             {
                 if (value < 0 || value > tileDataBase.sprites.Length)
