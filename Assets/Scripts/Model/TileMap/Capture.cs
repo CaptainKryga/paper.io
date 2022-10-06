@@ -10,9 +10,6 @@ namespace Model.TileMap
 
 		[SerializeField] private LeminLogic leminLogic;
 
-		[SerializeField] private GameObject prefabDebug;
-		[SerializeField] private Transform parentDebug;
-
 		private int[][] test;
 
 		private LeminCell[][] cells;

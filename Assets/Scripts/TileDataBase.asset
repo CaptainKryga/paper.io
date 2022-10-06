@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c1b8dc0b4764d0482f0874e372c8284, type: 3}
   m_Name: TileDataBase
   m_EditorClassIdentifier: 
+  sizeMap: 25
   tiles:
   - {fileID: 11400000, guid: 24c088893a881475ca67224b9e4a3d44, type: 2}
   - {fileID: 11400000, guid: fa327c087d3ff433b8e58b17e555d2cc, type: 2}
@@ -46,3 +47,5 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 747bf6f989922491aac858629080b6f1, type: 3}
   - {fileID: 21300000, guid: be95a0eef6b0d4276be3dc2713dd7ffa, type: 3}
   - {fileID: 21300000, guid: e414b183a25fa47fd918db2bcedb425c, type: 3}
+  koofGhost: {r: 0, g: 0, b: 0, a: 0}
+  koofCapture: {r: 0, g: 0, b: 0, a: 0}

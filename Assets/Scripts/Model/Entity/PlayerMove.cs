@@ -20,8 +20,7 @@ namespace Model.Entity
 		[SerializeField] private Transform movePoint;
 		private Vector3 newVec;
 		private bool isMove;
-		
-		[SerializeField] private LayerMask layerCollider;
+		private int sizeMap;
 		
 		public int PlayerId => playerId;
 		public Transform Body => body;
@@ -50,11 +49,13 @@ namespace Model.Entity
 			PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
 		}
 
-		public void Init(PlayerSync playerSync)
+		public void Init(PlayerSync playerSync, int sizeMap)
 		{
 			movePoint.parent = null;
 			this.playerSync = playerSync;
 			playerSync.Init(body);
+
+			this.sizeMap = sizeMap;
 		}
 
 		public void UpdatePlayer(string playerName, int playerId)
@@ -77,8 +78,13 @@ namespace Model.Entity
 			else if (Mathf.Abs(Input.GetAxisRaw("Vertical")) == 1f)
 				newVec = new Vector3(0f, Input.GetAxisRaw("Vertical"), 0f);
 
-			if (Physics2D.OverlapCircle(movePoint.position + newVec, .2f, layerCollider))
+			if (movePoint.position.x >= sizeMap || movePoint.position.x < 0 ||
+			    movePoint.position.y >= sizeMap || movePoint.position.y < 0)
+			{
+				Debug.Log("movePoint: " + movePoint.position);
 				GameOver(false);
+				return;
+			}
 			
 			if (movePoint.position == body.transform.position && newVec != Vector3.zero)
 			{

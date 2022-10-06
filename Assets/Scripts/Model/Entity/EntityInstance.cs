@@ -31,7 +31,7 @@ namespace Model
 
 		public void InitPlayer()
 		{
-			player.Init(photonConnectRoom.CreatePlayer("player"));
+			player.Init(photonConnectRoom.CreatePlayer("player"), tileDataBase.sizeMap);
 			entityController.InitPlayer(player);
 		}
 		

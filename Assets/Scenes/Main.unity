@@ -5872,6 +5872,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82492f3f4502478f98dc595e482b9643, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tileDataBase: {fileID: 11400000, guid: dd6387843ef7a4660851c052cf652111, type: 2}
   back: {fileID: 1839126761}
   collider: {fileID: 2071437796}
   edgeCollider: {fileID: 2071437800}
@@ -5879,9 +5880,6 @@ MonoBehaviour:
   tbCapture: {fileID: 11400000, guid: 3eacf21fe1cb74e668b6a3d0b6b3159e, type: 2}
   tbGhost: {fileID: 11400000, guid: 984c40e9e1bfe412faf515c721d4e874, type: 2}
   tbCollider: {fileID: 11400000, guid: 3da3c5be865ff4fd488aafd19712e49c, type: 2}
-  parent: {fileID: 1487111582}
-  prefabDebug: {fileID: 2024817092372776914, guid: 04110bf4a7afd4b1c8820a896d361fdc, type: 3}
-  size: 25
 --- !u!1 &1985901675
 GameObject:
   m_ObjectHideFlags: 0
