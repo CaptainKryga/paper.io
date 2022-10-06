@@ -41,7 +41,7 @@ namespace Model.Entity
 
         private void UpdateGhost(Vector3Int vector, int playerId)
         {
-            if (Vector3.Distance(vector, playerBody.position) < 1)
+            if (Vector3.Distance(vector, playerBody.position) < .5f)
             {
                 player.GameOver(false);
             }
@@ -51,7 +51,7 @@ namespace Model.Entity
         {
             for (int x = 0; x < vectors.Length; x++)
             {
-                if (Vector3.Distance(vectors[x], playerBody.position) < 1)
+                if (Vector3.Distance(vectors[x], playerBody.position) < .5f)
                 {
                     player.GameOver(false);
                 }

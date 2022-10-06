@@ -3374,6 +3374,7 @@ MonoBehaviour:
   playerRenderer: {fileID: 1336357321}
   playerChecker: {fileID: 1336357323}
   customRaiseEvents: {fileID: 1166433588}
+  playerId: 0
   body: {fileID: 8880404512193191544}
   moveSpeed: 5
   movePoint: {fileID: 8880404512098630697}
@@ -3646,7 +3647,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 519420031}
   player: {fileID: 1336357322}
-  body: {fileID: 0}
 --- !u!1 &1487111581
 GameObject:
   m_ObjectHideFlags: 0
