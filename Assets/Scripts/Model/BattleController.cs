@@ -93,7 +93,7 @@ namespace Model
 			{
 				if ((bool) player.CustomProperties["isReady"])
 				{
-					customRaiseEvents.Request_StartBattle(player.ActorNumber, new Vector3Int(5, 5, 0));
+					customRaiseEvents.Request_StartBattle(player.ActorNumber, new Vector3(5, 5, 0));
 				}
 			}
 

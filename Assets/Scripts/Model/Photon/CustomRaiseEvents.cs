@@ -62,7 +62,7 @@ namespace Model.Photon
 				SendOptions.SendReliable);
 		}
 		
-		public void Request_StartBattle(int actorId, Vector3Int position)
+		public void Request_StartBattle(int actorId, Vector3 position)
 		{
 			object[] content = { actorId, position };
 			RaiseEventOptions raiseEventOptions = new RaiseEventOptions {Receivers = ReceiverGroup.All };
@@ -163,7 +163,7 @@ namespace Model.Photon
 				SendReadyUpdatePlayer_Action?.Invoke(actorId, isReady);
 			}
 			//update ready all player's
-			else if (eventCode == code_ReadyUpdatePlayer)
+			else if (eventCode == code_ReadyUpdateAllPlayers)
 			{
 				object[] data = (object[])photonEvent.CustomData;
 				bool isReady = (bool) data[0];
