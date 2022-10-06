@@ -16,6 +16,7 @@ namespace Model
 
 		private int countPlayersBattle;
 		private bool isBattle;
+		private int minPlayers = 1;
 
 		private void OnEnable()
 		{
@@ -51,8 +52,8 @@ namespace Model
 			if (isBattle)
 				return;
 			
-			ReadyUpdateAllPlayers(countPlayersReady > 1);
-			customRaiseEvents.Request_ReadyUpdateAllPlayers(countPlayersReady > 1);
+			ReadyUpdateAllPlayers(countPlayersReady >= minPlayers);
+			customRaiseEvents.Request_ReadyUpdateAllPlayers(countPlayersReady >= minPlayers);
 		}
 
 		public void PlayerUpdateBattle(int playerActor, bool isBattle)
@@ -67,7 +68,7 @@ namespace Model
 				}
 			}
 
-			if (countPlayerBattle <= 1)
+			if (countPlayerBattle < minPlayers)
 			{
 				//Game Over All Battle
 				foreach (var player in players)
