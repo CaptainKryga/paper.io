@@ -43,6 +43,10 @@ namespace Model
 				vController.ReceiveStartBattle(false);
 				return;
 			}
+			else
+			{
+				
+			}
 			entityInstance.UpdatePlayer(playerName, playerId);
 		}
 

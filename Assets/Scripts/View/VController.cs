@@ -49,7 +49,9 @@ namespace View
 			if (!readyUI.IsReady)
 				controller.UpdatePlayer(playerName, playerId);
 			
-			readyUI.SetVisiblePanelBlock(!readyUI.IsReady);
+			//refactor => ready controller
+			if (playerName != null && playerName.Length > 2 && playerId > 0)
+				readyUI.SetVisiblePanelBlock(!readyUI.IsReady);
 
 			controller.Ready(readyUI.IsReady);
 		}
