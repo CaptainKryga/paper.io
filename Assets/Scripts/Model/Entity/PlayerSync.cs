@@ -14,8 +14,8 @@ namespace Model.Entity
 
         private TileDataBase tileDataBase;
 
-        private string playerName;
-        private int playerId;
+        [SerializeField] private string playerName;
+        [SerializeField] private int playerId;
 
         private string PlayerName
         {
