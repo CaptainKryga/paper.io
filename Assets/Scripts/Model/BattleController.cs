@@ -65,7 +65,7 @@ namespace Model
 					if ((bool) player.CustomProperties["isBattle"])
 					{
 						//gameover or win?
-						customRaiseEvents.Send_GameOverLastPlayer(player.ActorNumber);
+						customRaiseEvents.Request_GameOverLastPlayer(player.ActorNumber);
 					}
 				}
 
@@ -80,7 +80,7 @@ namespace Model
 			{
 				if ((bool) player.CustomProperties["isReady"])
 				{
-					customRaiseEvents.Send_StartBattle(player.ActorNumber, new Vector3Int(5, 5, 0));
+					customRaiseEvents.Request_StartBattle(player.ActorNumber, new Vector3Int(5, 5, 0));
 				}
 			}
 

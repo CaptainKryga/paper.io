@@ -10,7 +10,7 @@ namespace Model.Entity
 	{
 		[SerializeField] private EntityController entityController;
 		[SerializeField] private PlayerRenderer playerRenderer;
-		[SerializeField] private PlayerSync playerSync;
+		private PlayerSync playerSync;
 
 		[SerializeField] private CustomRaiseEvents customRaiseEvents;
 
@@ -38,8 +38,7 @@ namespace Model.Entity
 		{
 			body.transform.position = Vector3.up * 1000;
 			
-			//test mode
-			isMove = true;
+			isMove = false;
 		}
 
 		public void Init(PlayerSync playerSync)
@@ -101,7 +100,7 @@ namespace Model.Entity
 			isMove = false;
 			entityController.GameOver();
 
-			customRaiseEvents.Send_BattleUpdatePlayer(PhotonNetwork.LocalPlayer.ActorNumber, false);
+			customRaiseEvents.Request_BattleUpdatePlayer(PhotonNetwork.LocalPlayer.ActorNumber, false);
 		}
 	}
 }

@@ -20,19 +20,19 @@ namespace Model.Photon
 		
 		//menu 0 - 100
 		//send data from player
-		private const byte send_DataGame = 0;
+		private const byte code_ReceiveDataGame = 0;
 		//getData from master
-		private const byte receive_DataGame = 1;
+		private const byte code_GetDataGame = 1;
 		
 		//send other player's
-		private const byte send_LocalUpdateFlagPlayer = 2;
+		private const byte code_LocalUpdateFlagPlayer = 2;
 		
 		//game 100 - 255
 		private const byte send_StartBattle = 100;
-		private const byte receive_GameOverLastPlayer = 101;
+		private const byte code_GameOverLastPlayer = 101;
 		
-		private const byte send_BattleUpdatePlayer = 102;
-		private const byte send_ReadyUpdatePlayer = 103;
+		private const byte code_BattleUpdatePlayer = 102;
+		private const byte code_ReadyUpdatePlayer = 103;
 
 		private void OnEnable()
 		{
@@ -44,22 +44,22 @@ namespace Model.Photon
 			PhotonNetwork.NetworkingClient.EventReceived -= OnEvent;
 		}
 
-		public void Receive_DataGame()
+		public void Request_GetDataGame()
 		{
 			RaiseEventOptions raiseEventOptions = new RaiseEventOptions {Receivers = ReceiverGroup.MasterClient };
-			PhotonNetwork.RaiseEvent(receive_DataGame, 0, raiseEventOptions,
+			PhotonNetwork.RaiseEvent(code_GetDataGame, 0, raiseEventOptions,
 				SendOptions.SendReliable);
 		}
 
-		public void Send_LocalFlagPlayer(int old, int now)
+		public void Request_LocalFlagPlayer(int old, int now)
 		{
 			object[] content = { old, now };
 			RaiseEventOptions raiseEventOptions = new RaiseEventOptions {Receivers = ReceiverGroup.Others };
-			PhotonNetwork.RaiseEvent(send_LocalUpdateFlagPlayer, content, raiseEventOptions,
+			PhotonNetwork.RaiseEvent(code_LocalUpdateFlagPlayer, content, raiseEventOptions,
 				SendOptions.SendReliable);
 		}
 		
-		public void Send_StartBattle(int actorId, Vector3Int position)
+		public void Request_StartBattle(int actorId, Vector3Int position)
 		{
 			object[] content = { actorId, position };
 			RaiseEventOptions raiseEventOptions = new RaiseEventOptions {Receivers = ReceiverGroup.All };
@@ -67,27 +67,27 @@ namespace Model.Photon
 				SendOptions.SendReliable);
 		}
 		
-		public void Send_GameOverLastPlayer(int actorId)
+		public void Request_GameOverLastPlayer(int actorId)
 		{
 			object[] content = { actorId };
 			RaiseEventOptions raiseEventOptions = new RaiseEventOptions {Receivers = ReceiverGroup.All };
-			PhotonNetwork.RaiseEvent(send_LocalUpdateFlagPlayer, content, raiseEventOptions,
+			PhotonNetwork.RaiseEvent(code_GameOverLastPlayer, content, raiseEventOptions,
 				SendOptions.SendReliable);
 		}
 		
-		public void Send_BattleUpdatePlayer(int actorId, bool isBattle)
+		public void Request_BattleUpdatePlayer(int actorId, bool isBattle)
 		{
 			object[] content = { actorId, isBattle };
 			RaiseEventOptions raiseEventOptions = new RaiseEventOptions {Receivers = ReceiverGroup.MasterClient };
-			PhotonNetwork.RaiseEvent(send_LocalUpdateFlagPlayer, content, raiseEventOptions,
+			PhotonNetwork.RaiseEvent(code_BattleUpdatePlayer, content, raiseEventOptions,
 				SendOptions.SendReliable);
 		}
 		
-		public void Send_ReadyUpdatePlayer(int actorId, bool isReady)
+		public void Request_ReadyUpdatePlayer(int actorId, bool isReady)
 		{
 			object[] content = { actorId, isReady };
 			RaiseEventOptions raiseEventOptions = new RaiseEventOptions {Receivers = ReceiverGroup.MasterClient };
-			PhotonNetwork.RaiseEvent(send_LocalUpdateFlagPlayer, content, raiseEventOptions,
+			PhotonNetwork.RaiseEvent(code_ReadyUpdatePlayer, content, raiseEventOptions,
 				SendOptions.SendReliable);
 		}
 
@@ -96,19 +96,19 @@ namespace Model.Photon
 			byte eventCode = photonEvent.Code;
 
 			//send old data
-			if (eventCode == send_DataGame)
+			if (eventCode == code_ReceiveDataGame)
 			{
 				SendDataGame_Action?.Invoke();
 			}
 			//get old data
-			else if (eventCode == receive_DataGame)
+			else if (eventCode == code_GetDataGame)
 			{
 				object[] data = (object[])photonEvent.CustomData;
 				
 				ReceiveDataGame_Action?.Invoke();
 			}
 			//update player change flag in game
-			else if (eventCode == send_LocalUpdateFlagPlayer)
+			else if (eventCode == code_LocalUpdateFlagPlayer)
 			{
 				object[] data = (object[])photonEvent.CustomData;
 				
@@ -125,7 +125,7 @@ namespace Model.Photon
 					ReceiveStartBattle_Action?.Invoke(pos);
 			}
 			//last player on battle map
-			else if (eventCode == receive_GameOverLastPlayer)
+			else if (eventCode == code_GameOverLastPlayer)
 			{
 				object[] data = (object[])photonEvent.CustomData;
 				int actorId = (int) data[0];
@@ -134,21 +134,21 @@ namespace Model.Photon
 					ReceiveGameOverLastPlayer_Action?.Invoke();
 			}
 			//update battle count player's
-			else if (eventCode == send_BattleUpdatePlayer)
+			else if (eventCode == code_BattleUpdatePlayer)
 			{
 				object[] data = (object[])photonEvent.CustomData;
 				int actorId = (int) data[0];
-				bool isBattle = (bool) data[0];
+				bool isBattle = (bool) data[1];
 
 				if (PhotonNetwork.LocalPlayer.ActorNumber == actorId)
 					SendBattleUpdatePlayer_Action?.Invoke(actorId, isBattle);
 			}
 			//update ready count player's
-			else if (eventCode == send_ReadyUpdatePlayer)
+			else if (eventCode == code_ReadyUpdatePlayer)
 			{
 				object[] data = (object[])photonEvent.CustomData;
 				int actorId = (int) data[0];
-				bool isReady = (bool) data[0];
+				bool isReady = (bool) data[1];
 				
 				if (PhotonNetwork.LocalPlayer.ActorNumber == actorId)
 					SendReadyUpdatePlayer_Action?.Invoke(actorId, isReady);

@@ -51,7 +51,7 @@ namespace Model
 			Hashtable hash = new Hashtable();
 			hash.Add("isReady", isReady);
 			PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
-			customRaiseEvents.Send_ReadyUpdatePlayer(PhotonNetwork.LocalPlayer.ActorNumber, isReady);
+			customRaiseEvents.Request_ReadyUpdatePlayer(PhotonNetwork.LocalPlayer.ActorNumber, isReady);
 		}
 
 		public void StartBattle()

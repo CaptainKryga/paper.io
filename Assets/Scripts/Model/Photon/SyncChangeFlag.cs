@@ -27,7 +27,7 @@ namespace Model.Photon
 				buttons[now].interactable = true;
 				buttons[now].image.color = Color.green;
 
-				customRaiseEvents.Send_LocalFlagPlayer(localId, now);
+				customRaiseEvents.Request_LocalFlagPlayer(localId, now);
 				localId = now;
 			}
 		}

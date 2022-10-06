@@ -607,6 +607,52 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &168699009
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 168699010}
+  - component: {fileID: 168699011}
+  m_Layer: 0
+  m_Name: BattleController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &168699010
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 168699009}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 261391375}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &168699011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 168699009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52032c0c05a0420f877ff8bf43b4201d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  readyController: {fileID: 1141858691}
+  customRaiseEvents: {fileID: 1166433588}
 --- !u!1 &237293165
 GameObject:
   m_ObjectHideFlags: 0
@@ -774,6 +820,7 @@ Transform:
   - {fileID: 31534520}
   - {fileID: 1339425097}
   - {fileID: 1141858690}
+  - {fileID: 168699010}
   m_Father: {fileID: 1368445762}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2051,8 +2098,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 400
-  m_fontSizeBase: 400
+  m_fontSize: 300
+  m_fontSizeBase: 300
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3300,7 +3347,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entityController: {fileID: 31534521}
   playerRenderer: {fileID: 1336357321}
-  playerSync: {fileID: 0}
+  customRaiseEvents: {fileID: 1166433588}
   body: {fileID: 8880404512193191544}
   moveSpeed: 5
   movePoint: {fileID: 8880404512098630697}
@@ -4872,9 +4919,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   photonConnectRoom: {fileID: 2005673085}
+  customRaiseEvents: {fileID: 1166433588}
   vController: {fileID: 972578828}
   tilemapInstance: {fileID: 1952528004}
   entityInstance: {fileID: 31534522}
+  battleController: {fileID: 168699011}
   syncChangeFlag: {fileID: 928713741}
 --- !u!1 &1839126758
 GameObject:
