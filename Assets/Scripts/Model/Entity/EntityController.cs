@@ -32,6 +32,8 @@ namespace Model
 		public void GameOver(bool isWin)
 		{
 			entityInstance.GameOver(_player, isWin);
+			ghost.GameOver();
+			capture.GameOver();
 		}
 	}
 }

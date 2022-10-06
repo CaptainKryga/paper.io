@@ -9,8 +9,23 @@ namespace Model.TileMap
 		[SerializeField] private TilemapInstance tilemapInstance;
 		[SerializeField] private LeminLogic leminLogic;
 
-		private LeminCell[][] cells;
+		public void Init(Vector3Int pos, TileBase tile)
+		{
+			this.localTile = tile;
+			this.cells = tilemapInstance.GetCells;
 
+			InitCell(pos);
+		}
+
+		private void InitCell(Vector3Int pos)
+		{
+			tilemap.SetTile(pos, localTile);
+			tilemap.SetTileFlags(pos, TileFlags.None);
+			tilemap.SetColor(pos, Color.white);
+			cells[pos.x][pos.y].type = Lemin.ECaptured.capture;
+			customRaiseEvents.Request_UpdateTileMapCapture(new Vector3Int[] { pos }, tilemapInstance.GetTileId(localTile));
+		}
+		
 		public void UpdateCapture(Vector3Int[] path)
 		{
 			if (path == null)
@@ -46,23 +61,5 @@ namespace Model.TileMap
 			customRaiseEvents.Request_UpdateTileMapCapture(path, tilemapInstance.GetTileId(localTile));
 			customRaiseEvents.Request_UpdateTileMapCapture(captured, tilemapInstance.GetTileId(localTile));
 		}
-
-		public void Init(Vector3Int pos, TileBase tile)
-		{
-			this.localTile = tile;
-			this.cells = tilemapInstance.GetCells;
-
-			InitCell(pos);
-		}
-
-		private void InitCell(Vector3Int pos)
-		{
-			tilemap.SetTile(pos, localTile);
-			tilemap.SetTileFlags(pos, TileFlags.None);
-			tilemap.SetColor(pos, Color.white);
-			cells[pos.x][pos.y].type = Lemin.ECaptured.capture;
-			customRaiseEvents.Request_UpdateTileMapCapture(new Vector3Int[] { pos }, tilemapInstance.GetTileId(localTile));
-		}
-
 	}
 }

@@ -13,8 +13,12 @@ namespace Model.TileMap
 		private bool isCapture;
 		private List<Vector3Int> list = new List<Vector3Int>();
 		
-		private LeminCell[][] cells;
-
+		public void Init(TileBase tile)
+		{
+			this.localTile = tile;
+			this.cells = tilemapInstance.GetCells;
+		}
+		
 		public Vector3Int[] UpdateTile(Vector3Int pos)
 		{
 			//if start captured
@@ -62,12 +66,6 @@ namespace Model.TileMap
 			}
 
 			return null;
-		}
-
-		public void Init(TileBase tile)
-		{
-			this.localTile = tile;
-			this.cells = tilemapInstance.GetCells;
 		}
 	}
 }
