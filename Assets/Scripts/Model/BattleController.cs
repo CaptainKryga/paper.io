@@ -20,7 +20,7 @@ namespace Model
 
 		private int countPlayersBattle;
 		private bool isBattle;
-		private int minPlayers = 1;
+		private int minPlayers = 2;
 
 		private void OnEnable()
 		{

@@ -37,6 +37,10 @@ namespace Model.TileMap
                 local.SetTile(vectors[x], tileDataBase.tiles[playerId]);
                 local.SetTileFlags(vectors[x], TileFlags.None);
                 local.SetColor(vectors[x], Color.white);
+                
+                remote.SetTile(vectors[x], null);
+                remote.SetTileFlags(vectors[x], TileFlags.None);
+                remote.SetColor(vectors[x], Color.white);
             }
         }
     }

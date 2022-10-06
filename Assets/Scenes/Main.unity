@@ -336,7 +336,7 @@ MonoBehaviour:
   m_CharacterValidation: 0
   m_RegexValue: 
   m_GlobalPointSize: 66
-  m_CharacterLimit: 0
+  m_CharacterLimit: 20
   m_OnEndEdit:
     m_PersistentCalls:
       m_Calls: []
@@ -5745,7 +5745,6 @@ MonoBehaviour:
   customRaiseEvents: {fileID: 1166433588}
   tilemapInstance: {fileID: 1952528004}
   leminLogic: {fileID: 1339425096}
-  ghost: {fileID: 75757693}
 --- !u!114 &1861846711
 MonoBehaviour:
   m_ObjectHideFlags: 0
