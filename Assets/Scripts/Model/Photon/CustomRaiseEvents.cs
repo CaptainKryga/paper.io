@@ -128,7 +128,7 @@ namespace Model.Photon
 		public void Request_UpdateTileMapCapture(Vector3Int[] vectors, int playerId)
 		{
 			object[] content = new object[vectors.Length + 1];
-			for (int x = 0; x < vectors.Length - 1; x++)
+			for (int x = 0; x < vectors.Length; x++)
 				content[x] = (Vector3)vectors[x];
 			content[^1] = playerId;
 
@@ -223,7 +223,7 @@ namespace Model.Photon
 			{
 				object[] data = (object[])photonEvent.CustomData;
 				Vector3Int[] vectors = new Vector3Int[data.Length - 1];
-				for (int x = 0; x < data.Length - 1; x++)
+				for (int x = 0; x < vectors.Length; x++)
 					vectors[x] = Vector3Int.FloorToInt((Vector3)data[x]);
 				int playerId = (int) data[^1];
 	
