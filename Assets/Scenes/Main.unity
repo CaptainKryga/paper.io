@@ -3354,7 +3354,7 @@ MonoBehaviour:
   movePoint: {fileID: 8880404512098630697}
   layerCollider:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 192
 --- !u!1 &1339425095
 GameObject:
   m_ObjectHideFlags: 0
