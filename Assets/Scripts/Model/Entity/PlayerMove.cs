@@ -1,3 +1,6 @@
+using System;
+using ExitGames.Client.Photon;
+using Model.Photon;
 using Photon.Pun;
 using UnityEngine;
 
@@ -5,8 +8,11 @@ namespace Model.Entity
 {
 	public class PlayerMove : MonoBehaviour
 	{
+		[SerializeField] private EntityController entityController;
 		[SerializeField] private PlayerRenderer playerRenderer;
 		[SerializeField] private PlayerSync playerSync;
+
+		[SerializeField] private CustomRaiseEvents customRaiseEvents;
 
 		[SerializeField] private Transform body;
 		[SerializeField] private float moveSpeed = 5;
@@ -16,8 +22,17 @@ namespace Model.Entity
 
 		[SerializeField] private LayerMask layerCollider;
 
-		private EntityController entityController;
-		[SerializeField] private PhotonView pView;
+		private void OnEnable()
+		{
+			customRaiseEvents.ReceiveStartBattle_Action += StartBattle;
+			customRaiseEvents.ReceiveGameOverLastPlayer_Action += GameOver;
+		}
+
+		private void OnDisable()
+		{
+			customRaiseEvents.ReceiveStartBattle_Action -= StartBattle;
+			customRaiseEvents.ReceiveGameOverLastPlayer_Action -= GameOver;
+		}
 
 		private void Start()
 		{
@@ -27,10 +42,9 @@ namespace Model.Entity
 			isMove = true;
 		}
 
-		public void Init(EntityController entityController, PlayerSync playerSync)
+		public void Init(PlayerSync playerSync)
 		{
 			movePoint.parent = null;
-			this.entityController = entityController;
 			this.playerSync = playerSync;
 		}
 
@@ -40,20 +54,9 @@ namespace Model.Entity
 			playerSync.UpdatePlayer(playerName, playerId);
 		}
 
-		public void UpdateAccessMove(bool isMove)
-		{
-			this.isMove = isMove;
-		}
-
-		// private Vector3 GetRandomStartVector()
-		// {
-		// 	int rnd = Random.Range(0, 4);
-		// 	return rnd == 0 ? Vector3.right : rnd == 1 ? Vector3.left : rnd == 2 ? Vector3.up : Vector3.down;
-		// }
-		
 		private void Update()
 		{
-			if (!isMove || !pView.IsMine)
+			if (!isMove)
 				return;
 			
 			body.transform.position = Vector3.MoveTowards(body.transform.position, movePoint.position,
@@ -65,7 +68,7 @@ namespace Model.Entity
 				newVec = new Vector3(0f, Input.GetAxisRaw("Vertical"), 0f);
 
 			if (Physics2D.OverlapCircle(movePoint.position + newVec, .2f, layerCollider))
-				entityController.GameOver();
+				GameOver();
 			
 			if (movePoint.position == body.transform.position && newVec != Vector3.zero)
 			{
@@ -73,6 +76,32 @@ namespace Model.Entity
 				movePoint.position += newVec;
 				playerRenderer.Rotate(newVec);
 			}
+		}
+
+		public void StartBattle(Vector3Int position)
+		{
+			Hashtable hash = new Hashtable();
+			hash.Add("isBattle", true);
+			hash.Add("isReady", false);
+			PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
+
+			body.position = position;
+			isMove = true;
+			
+			// customRaiseEvents.Send_BattleUpdatePlayer(PhotonNetwork.LocalPlayer.ActorNumber, false);
+		}
+		
+		private void GameOver()
+		{
+			Hashtable hash = new Hashtable();
+			hash.Add("isBattle", false);
+			PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
+
+			body.position = Vector3.down * 100;			
+			isMove = false;
+			entityController.GameOver();
+
+			customRaiseEvents.Send_BattleUpdatePlayer(PhotonNetwork.LocalPlayer.ActorNumber, false);
 		}
 	}
 }

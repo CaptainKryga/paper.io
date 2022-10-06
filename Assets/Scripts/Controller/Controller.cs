@@ -22,5 +22,10 @@ namespace Controller
 		{
 			mController.Restart(playerName, playerId);
 		}
+
+		public void Ready(bool isReady)
+		{
+			mController.Ready(isReady);
+		}
 	}
 }

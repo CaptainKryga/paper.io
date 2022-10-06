@@ -19,7 +19,7 @@ namespace Model
 
 		public void InitPlayer()
 		{
-			player.Init(entityController, photonConnectRoom.CreatePlayer("player"));
+			player.Init(photonConnectRoom.CreatePlayer("player"));
 			entityController.InitPlayer(player);
 		}
 		
@@ -28,7 +28,11 @@ namespace Model
 		{
 			photonConnectRoom.UpdatePlayer(playerName);
 			player.UpdatePlayer(playerName, playerId);
-			entityController.Restart(position, tileDataBase, playerId);
+		}
+		
+		public void StartBattle(Vector3Int position, int playerId)
+		{
+			entityController.StartBattle(position, tileDataBase, playerId);
 		}
 
 		public void GameOver(PlayerMove player)

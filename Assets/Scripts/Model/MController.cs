@@ -1,5 +1,7 @@
+using ExitGames.Client.Photon;
 using Model.Photon;
 using Model.TileMap;
+using Photon.Pun;
 using UnityEngine;
 using View;
 
@@ -8,10 +10,12 @@ namespace Model
 	public class MController : MonoBehaviour
 	{
 		[SerializeField] private PhotonConnectRoom photonConnectRoom;
+		[SerializeField] private CustomRaiseEvents customRaiseEvents;
 		[SerializeField] private VController vController;
 
 		[SerializeField] private TilemapInstance tilemapInstance;
 		[SerializeField] private EntityInstance entityInstance;
+		[SerializeField] private BattleController battleController;
 
 		[SerializeField] private SyncChangeFlag syncChangeFlag;
 
@@ -39,10 +43,25 @@ namespace Model
 				vController.ReceiveStartBattle(false);
 				return;
 			}
-			
 			entityInstance.Restart(Vector3Int.zero, playerName, playerId);
+		}
+
+		public void Ready(bool isReady)
+		{
+			Hashtable hash = new Hashtable();
+			hash.Add("isReady", isReady);
+			PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
+			customRaiseEvents.Send_ReadyUpdatePlayer(PhotonNetwork.LocalPlayer.ActorNumber, isReady);
+		}
+
+		public void StartBattle()
+		{
 			//if all it's okey true
 			vController.ReceiveStartBattle(true);
+			
+			if (PhotonNetwork.IsMasterClient)
+				battleController.StartBattle();
+			// battleController.
 		}
 
 		public void GameOver()

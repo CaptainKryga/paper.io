@@ -1,16 +1,14 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace View
 {
 	public class VController : MonoBehaviour
 	{
 		[SerializeField] private Controller.Controller controller;
+		[SerializeField] private ReadyUI readyUI;
 
 		[SerializeField] private GameObject panelPlayerInit;
-
-		[SerializeField] private Button btnStartBattle;
 		[SerializeField] private TMP_InputField inputFieldPlayerName;
 
 		private string playerName;
@@ -36,9 +34,14 @@ namespace View
 			panelPlayerInit.SetActive(true);
 		}
 
-		public void OnClick_StartBattle()
+		public void OnClick_Ready()
 		{
-			controller.Restart(playerName, playerId);
+			if (!readyUI.IsReady)
+				controller.Restart(playerName, playerId);
+			
+			readyUI.SetVisiblePanelBlock(!readyUI.IsReady);
+
+			controller.Ready(readyUI.IsReady);
 		}
 
 		public void ReceiveStartBattle(bool isFlag)

@@ -18,7 +18,7 @@ namespace Model
 			_player = playerMove;
 		}
 		
-		public void Restart(Vector3Int pos, TileDataBase tileDataBase, int playerId)
+		public void StartBattle(Vector3Int pos, TileDataBase tileDataBase, int playerId)
 		{
 			ghost.Init(tileDataBase.tiles[playerId], tileDataBase.koofGhost, tileDataBase.koofCapture);
 			capture.Init(pos, tileDataBase.tiles[playerId], tileDataBase.koofGhost, tileDataBase.koofCapture);
