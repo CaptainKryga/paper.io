@@ -218,8 +218,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   entityInstance: {fileID: 31534522}
-  ghost: {fileID: 0}
-  capture: {fileID: 0}
+  ghost: {fileID: 1861846711}
+  capture: {fileID: 1861846710}
 --- !u!114 &31534522
 MonoBehaviour:
   m_ObjectHideFlags: 0
