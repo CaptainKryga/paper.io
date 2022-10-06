@@ -1,3 +1,4 @@
+using System;
 using Model.Entity;
 using Model.Photon;
 using Model.TileMap;
@@ -9,6 +10,7 @@ namespace Model
 	{
 		[SerializeField] private MController mController;
 		[SerializeField] private PhotonConnectRoom photonConnectRoom;
+		[SerializeField] private CustomRaiseEvents customRaiseEvents;  
 
 		[SerializeField] private TileDataBase tileDataBase;
 
@@ -17,6 +19,16 @@ namespace Model
 
 		public TileDataBase TileDataBase => tileDataBase;
 
+		private void OnEnable()
+		{
+			customRaiseEvents.ReceiveStartBattle_Action += StartBattle;
+		}
+
+		private void OnDisable()
+		{
+			customRaiseEvents.ReceiveStartBattle_Action -= StartBattle;
+		}
+
 		public void InitPlayer()
 		{
 			player.Init(photonConnectRoom.CreatePlayer("player"));
@@ -24,15 +36,15 @@ namespace Model
 		}
 		
 		//restart game after death or win
-		public void Restart(Vector3Int position, string playerName, int playerId)
+		public void UpdatePlayer(string playerName, int playerId)
 		{
 			photonConnectRoom.UpdatePlayer(playerName);
 			player.UpdatePlayer(playerName, playerId);
 		}
 		
-		public void StartBattle(Vector3Int position, int playerId)
+		public void StartBattle(Vector3Int position)
 		{
-			entityController.StartBattle(position, tileDataBase, playerId);
+			entityController.StartBattle(position, tileDataBase, player.PlayerId);
 		}
 
 		public void GameOver(PlayerMove player)

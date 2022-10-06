@@ -37,7 +37,7 @@ namespace View
 		public void OnClick_Ready()
 		{
 			if (!readyUI.IsReady)
-				controller.Restart(playerName, playerId);
+				controller.UpdatePlayer(playerName, playerId);
 			
 			readyUI.SetVisiblePanelBlock(!readyUI.IsReady);
 
@@ -60,7 +60,7 @@ namespace View
 		public void OnClick_SetPlayerFlag(int id)
 		{
 			playerId = id;
-			controller.Restart("", playerId);
+			controller.UpdatePlayer("", playerId);
 		}
 
 		public void OnInputField_SetName()

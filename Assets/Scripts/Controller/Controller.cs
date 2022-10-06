@@ -18,9 +18,9 @@ namespace Controller
 			
 		}
 
-		public void Restart(string playerName, int playerId)
+		public void UpdatePlayer(string playerName, int playerId)
 		{
-			mController.Restart(playerName, playerId);
+			mController.UpdatePlayer(playerName, playerId);
 		}
 
 		public void Ready(bool isReady)

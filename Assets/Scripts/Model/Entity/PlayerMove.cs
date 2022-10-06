@@ -13,14 +13,17 @@ namespace Model.Entity
 		private PlayerSync playerSync;
 
 		[SerializeField] private CustomRaiseEvents customRaiseEvents;
-
+		
+		private int playerId;
 		[SerializeField] private Transform body;
 		[SerializeField] private float moveSpeed = 5;
 		[SerializeField] private Transform movePoint;
 		private Vector3 newVec;
 		private bool isMove;
-
+		
 		[SerializeField] private LayerMask layerCollider;
+		
+		public int PlayerId => playerId;
 
 		private void OnEnable()
 		{
@@ -56,6 +59,7 @@ namespace Model.Entity
 		{
 			playerRenderer.UpdatePlayer(playerName, playerId);
 			playerSync.UpdatePlayer(playerName, playerId);
+			this.playerId = playerId;
 		}
 
 		private void Update()

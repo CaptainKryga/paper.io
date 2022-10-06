@@ -35,7 +35,7 @@ namespace Model
 		}
 
 		//restart game after death or win
-		public void Restart(string playerName, int playerId)
+		public void UpdatePlayer(string playerName, int playerId)
 		{
 			if (playerName == null || playerName.Length < 3 || playerId < 1 || playerId > 15)
 			{
@@ -43,7 +43,7 @@ namespace Model
 				vController.ReceiveStartBattle(false);
 				return;
 			}
-			entityInstance.Restart(Vector3Int.zero, playerName, playerId);
+			entityInstance.UpdatePlayer(playerName, playerId);
 		}
 
 		public void Ready(bool isReady)
