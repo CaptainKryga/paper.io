@@ -7,10 +7,7 @@ namespace Model.TileMap
 	public class Capture : PTilemap
 	{
 		[SerializeField] private TilemapInstance tilemapInstance;
-
 		[SerializeField] private LeminLogic leminLogic;
-
-		private int[][] test;
 
 		private LeminCell[][] cells;
 
@@ -18,7 +15,6 @@ namespace Model.TileMap
 		{
 			if (path == null)
 				return;
-			
 			
 			for (int x = 0; x < cells.Length; x++)
 			{
@@ -34,27 +30,24 @@ namespace Model.TileMap
 			for (int x = 0; x < path.Length; x++)
 			{
 				local.SetTile(path[x], localTile);
-				// local.SetTileFlags(path[x], TileFlags.None);
-				// local.SetColor(path[x], colorCapture);
+				local.SetTileFlags(path[x], TileFlags.None);
+				local.SetColor(path[x], Color.white);
 				cells[path[x].x][path[x].y].type = Lemin.ECaptured.capture;
 			}
 			
 			for (int x = 0; x < captured.Length; x++)
 			{
 				local.SetTile(captured[x], localTile);
-				// local.SetTileFlags(captured[x], TileFlags.None);
-				// local.SetColor(captured[x], colorCapture);
+				local.SetTileFlags(captured[x], TileFlags.None);
+				local.SetColor(captured[x], Color.white);
 				cells[captured[x].x][captured[x].y].type = Lemin.ECaptured.capture;
 			}
 			
 		}
 
-		public void Init(Vector3Int pos, TileBase tile, Color colorGhost, Color colorCapture)
+		public void Init(Vector3Int pos, TileBase tile)
 		{
 			this.localTile = tile;
-			this.colorCapture = colorCapture;
-			this.colorGhost = colorGhost;
-
 			this.cells = tilemapInstance.GetCells;
 
 			InitCell(pos);

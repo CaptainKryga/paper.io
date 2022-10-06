@@ -115,9 +115,11 @@ namespace Test
 					if (cells[vec.x][vec.y].type == Lemin.ECaptured.clear && !captured.Contains(vec))
 					{
 						deep = 0;
+						crash = false;
 						RecursiveFindEmptySlots(temp, vec);
 						Debug.Log("DEEEEEEEP:" + deep);
-						captured.AddRange(temp);
+						if (!crash)
+							captured.AddRange(temp);
 						temp.Clear();
 					}
 				}
@@ -244,8 +246,15 @@ namespace Test
 
 
 		private int deep;
+		private bool crash;
 		private void RecursiveFindEmptySlots(List<Vector3Int> captured, Vector3Int pos)
 		{
+			if (pos.x + 1 >= cells.Length || pos.x - 1 < 0 || pos.y + 1 >= cells.Length || pos.y - 1 < 0)
+			{
+				crash = true;
+				Debug.LogError("Problem in lemin. Please help!!!");
+				return;
+			}
 			deep++;
 			captured.Add(pos);
 			if (!captured.Contains(pos + Vector3Int.right) &&
@@ -255,13 +264,13 @@ namespace Test
 			}
 
 			if (!captured.Contains(pos - Vector3Int.right) &&
-				cells[pos.x - 1][pos.y].type == Lemin.ECaptured.clear)
+			    cells[pos.x - 1][pos.y].type == Lemin.ECaptured.clear)
 			{
 				RecursiveFindEmptySlots(captured, pos - Vector3Int.right);
 			}
 
 			if (!captured.Contains(pos + Vector3Int.up) &&
-				cells[pos.x][pos.y + 1].type == Lemin.ECaptured.clear)
+			    cells[pos.x][pos.y + 1].type == Lemin.ECaptured.clear)
 			{
 				RecursiveFindEmptySlots(captured, pos + Vector3Int.up);
 			}

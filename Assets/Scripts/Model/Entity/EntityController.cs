@@ -20,8 +20,8 @@ namespace Model
 		
 		public void StartBattle(Vector3Int pos, TileDataBase tileDataBase, int playerId)
 		{
-			ghost.Init(tileDataBase.tiles[playerId], tileDataBase.koofGhost, tileDataBase.koofCapture);
-			capture.Init(pos, tileDataBase.tiles[playerId], tileDataBase.koofGhost, tileDataBase.koofCapture);
+			ghost.Init(tileDataBase.tiles[playerId]);
+			capture.Init(pos, tileDataBase.tiles[playerId]);
 		}
 		
 		public void UpdatePosition(Vector3Int pos)

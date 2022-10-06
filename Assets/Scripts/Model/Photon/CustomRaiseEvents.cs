@@ -21,6 +21,9 @@ namespace Model.Photon
 		public Action<bool> ReadyUpdateAllPlayers_Action;
 		public Action EndBattle_Action;
 		
+		public Action<Vector3Int> UpdateTileMapGhost_Action;
+		public Action<Vector3Int[]> UpdateTileMapCapture_Action;
+
 		//menu 0 - 100
 		//send data from player
 		private const byte code_ReceiveDataGame = 0;
@@ -38,6 +41,9 @@ namespace Model.Photon
 		private const byte code_ReadyUpdatePlayer = 103;
 		private const byte code_ReadyUpdateAllPlayers = 104;
 		private const byte code_EndBattle = 105;
+		
+		private const byte code_UpdateTileMapGhost = 106;
+		private const byte code_UpdateTileMapCapture = 107;
 
 		private void OnEnable()
 		{
@@ -108,6 +114,22 @@ namespace Model.Photon
 		{
 			RaiseEventOptions raiseEventOptions = new RaiseEventOptions {Receivers = ReceiverGroup.All };
 			PhotonNetwork.RaiseEvent(code_EndBattle, 0, raiseEventOptions,
+				SendOptions.SendReliable);
+		}
+
+		public void Request_UpdateTileMapGhost(Vector3Int vector)
+		{
+			object[] content = { vector };
+			RaiseEventOptions raiseEventOptions = new RaiseEventOptions {Receivers = ReceiverGroup.Others };
+			PhotonNetwork.RaiseEvent(code_UpdateTileMapGhost, content, raiseEventOptions,
+				SendOptions.SendReliable);
+		}
+		
+		public void Request_UpdateTileMapCapture(Vector3Int[] vectors)
+		{
+			object[] content = { vectors };
+			RaiseEventOptions raiseEventOptions = new RaiseEventOptions {Receivers = ReceiverGroup.Others };
+			PhotonNetwork.RaiseEvent(code_UpdateTileMapCapture, content, raiseEventOptions,
 				SendOptions.SendReliable);
 		}
 
@@ -184,6 +206,20 @@ namespace Model.Photon
 			else if (eventCode == code_EndBattle)
 			{
 				EndBattle_Action?.Invoke();
+			}
+			//remote update ghost
+			else if (eventCode == code_UpdateTileMapGhost)
+			{
+				object[] data = (object[])photonEvent.CustomData;
+				
+				UpdateTileMapGhost_Action?.Invoke((Vector3Int) data[0]);
+			}
+			//remote update capture
+			else if (eventCode == code_UpdateTileMapCapture)
+			{
+				object[] data = (object[])photonEvent.CustomData;
+				
+				UpdateTileMapCapture_Action?.Invoke((Vector3Int[]) data[0]);
 			}
 		}
 	}

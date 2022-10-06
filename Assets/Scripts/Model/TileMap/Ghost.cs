@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Model.Photon;
 using Test;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -8,7 +9,7 @@ namespace Model.TileMap
 	public class Ghost : PTilemap
 	{
 		[SerializeField] private TilemapInstance tilemapInstance;
-		private Color colorCapture;
+		[SerializeField] private CustomRaiseEvents customRaiseEvents;
 
 		private bool isCapture;
 		private List<Vector3Int> list = new List<Vector3Int>();
@@ -24,8 +25,11 @@ namespace Model.TileMap
 				cells[pos.x][pos.y].type = Lemin.ECaptured.start;
 				
 				local.SetTile(pos, localTile);
-				// remote.SetTileFlags(pos, TileFlags.None);
-				// remote.SetColor(pos, colorGhost);
+				local.SetTileFlags(pos, TileFlags.None);
+				local.SetColor(pos, Color.yellow);
+				
+				customRaiseEvents.Request_UpdateTileMapGhost(pos);
+				
 				isCapture = true;
 				return null;
 			}
@@ -43,19 +47,19 @@ namespace Model.TileMap
 				list.Add(pos);
 				cells[pos.x][pos.y].type = Lemin.ECaptured.ghost;
 
-				remote.SetTile(pos, localTile);
-				// remote.SetTileFlags(pos, TileFlags.None);
-				// remote.SetColor(pos, colorGhost);
+				local.SetTile(pos, localTile);
+				local.SetTileFlags(pos, TileFlags.None);
+				local.SetColor(pos, Color.yellow);
+				
+				customRaiseEvents.Request_UpdateTileMapGhost(pos);
 			}
 
 			return null;
 		}
 
-		public void Init(TileBase tile, Color colorGhost, Color colorCapture)
+		public void Init(TileBase tile)
 		{
 			this.localTile = tile;
-			this.colorGhost = colorGhost;
-			this.colorCapture = colorCapture;
 			this.cells = tilemapInstance.GetCells;
 		}
 	}
