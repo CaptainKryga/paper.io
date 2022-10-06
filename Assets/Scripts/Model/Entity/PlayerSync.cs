@@ -95,7 +95,8 @@ namespace Model.Entity
 
         private void Update()
         {
-            transform.position = parent.position;
+            if (photonView.IsMine)
+                transform.position = parent.position;
         }
 
         // private List<SyncPosition> queue = new List<SyncPosition>();
