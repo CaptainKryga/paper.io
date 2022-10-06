@@ -56,8 +56,8 @@ namespace Model.Entity
         {
             if (stream.IsWriting)
             {
+                stream.SendNext(transform.position);
                 stream.SendNext(PhotonNetwork.LocalPlayer.NickName);
-                stream.SendNext(playerName);
                 stream.SendNext(playerId);
             }
             else if (stream.IsReading)
