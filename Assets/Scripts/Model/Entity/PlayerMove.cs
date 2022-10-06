@@ -89,7 +89,9 @@ namespace Model.Entity
 			hash.Add("isReady", false);
 			PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
 
-			body.position = position;
+			movePoint.position = position;
+			body.position = movePoint.position;
+			
 			isMove = true;
 			
 			// customRaiseEvents.Send_BattleUpdatePlayer(PhotonNetwork.LocalPlayer.ActorNumber, false);
@@ -101,7 +103,8 @@ namespace Model.Entity
 			hash.Add("isBattle", false);
 			PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
 
-			body.position = Vector3.down * 100;			
+			movePoint.position = Vector3.down * 100;
+			body.position = movePoint.position;
 			isMove = false;
 			entityController.GameOver();
 
