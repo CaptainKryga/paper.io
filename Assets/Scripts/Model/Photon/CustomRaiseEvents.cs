@@ -18,6 +18,8 @@ namespace Model.Photon
 		public Action<int, bool> SendBattleUpdatePlayer_Action;
 		public Action<int, bool> SendReadyUpdatePlayer_Action;
 		
+		public Action<bool> ReadyUpdateAllPlayers_Action;
+		
 		//menu 0 - 100
 		//send data from player
 		private const byte code_ReceiveDataGame = 0;
@@ -33,6 +35,7 @@ namespace Model.Photon
 		
 		private const byte code_BattleUpdatePlayer = 102;
 		private const byte code_ReadyUpdatePlayer = 103;
+		private const byte code_ReadyUpdateAllPlayers = 104;
 
 		private void OnEnable()
 		{
@@ -90,6 +93,14 @@ namespace Model.Photon
 			PhotonNetwork.RaiseEvent(code_ReadyUpdatePlayer, content, raiseEventOptions,
 				SendOptions.SendReliable);
 		}
+		
+		public void Request_ReadyUpdateAllPlayers(bool isReady)
+		{
+			object[] content = { isReady };
+			RaiseEventOptions raiseEventOptions = new RaiseEventOptions {Receivers = ReceiverGroup.All };
+			PhotonNetwork.RaiseEvent(code_ReadyUpdateAllPlayers, content, raiseEventOptions,
+				SendOptions.SendReliable);
+		}
 
 		public void OnEvent(EventData photonEvent)
 		{
@@ -133,7 +144,7 @@ namespace Model.Photon
 				if (PhotonNetwork.LocalPlayer.ActorNumber == actorId)
 					ReceiveGameOverLastPlayer_Action?.Invoke();
 			}
-			//update battle count player's
+			//update MC battle count player's
 			else if (eventCode == code_BattleUpdatePlayer)
 			{
 				object[] data = (object[])photonEvent.CustomData;
@@ -143,7 +154,7 @@ namespace Model.Photon
 				if (PhotonNetwork.LocalPlayer.ActorNumber == actorId)
 					SendBattleUpdatePlayer_Action?.Invoke(actorId, isBattle);
 			}
-			//update ready count player's
+			//update MC ready count player's
 			else if (eventCode == code_ReadyUpdatePlayer)
 			{
 				object[] data = (object[])photonEvent.CustomData;
@@ -152,6 +163,14 @@ namespace Model.Photon
 				
 				if (PhotonNetwork.LocalPlayer.ActorNumber == actorId)
 					SendReadyUpdatePlayer_Action?.Invoke(actorId, isReady);
+			}
+			//update ready all player's
+			else if (eventCode == code_ReadyUpdatePlayer)
+			{
+				object[] data = (object[])photonEvent.CustomData;
+				bool isReady = (bool) data[0];
+				
+				ReadyUpdateAllPlayers_Action?.Invoke(isReady);
 			}
 		}
 	}

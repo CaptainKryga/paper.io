@@ -20,6 +20,14 @@ namespace Model
 		{
 			customRaiseEvents.SendBattleUpdatePlayer_Action += PlayerUpdateBattle;
 			customRaiseEvents.SendReadyUpdatePlayer_Action += PlayerUpdateReady;
+			customRaiseEvents.ReadyUpdateAllPlayers_Action += ReadyUpdateAllPlayers;
+		}
+
+		private void OnDisable()
+		{
+			customRaiseEvents.SendBattleUpdatePlayer_Action -= PlayerUpdateBattle;
+			customRaiseEvents.SendReadyUpdatePlayer_Action -= PlayerUpdateReady;
+			customRaiseEvents.ReadyUpdateAllPlayers_Action -= ReadyUpdateAllPlayers;
 		}
 
 		public void PlayerUpdateReady(int playerActor, bool isReady)
@@ -37,12 +45,15 @@ namespace Model
 
 			if (countPlayersReady > 1 && !isBattle)
 			{
-				readyController.StartDelay(true);
+				ReadyUpdateAllPlayers(true);
+				customRaiseEvents.Request_ReadyUpdateAllPlayers(true);
 			}
 			else if (countPlayersReady <= 1 && !isBattle)
 			{
-				readyController.StartDelay(false);
+				ReadyUpdateAllPlayers(false);
+				customRaiseEvents.Request_ReadyUpdateAllPlayers(false);
 			}
+			Debug.Log("countPlayersReady: " + countPlayersReady);
 		}
 
 		public void PlayerUpdateBattle(int playerActor, bool isBattle)
@@ -70,6 +81,8 @@ namespace Model
 				}
 
 				isBattle = false;
+				
+				Debug.Log("countPlayerBattle: " + countPlayerBattle);
 			}
 		}
 
@@ -85,6 +98,11 @@ namespace Model
 			}
 
 			isBattle = true;
+		}
+
+		private void ReadyUpdateAllPlayers(bool isReady)
+		{
+			readyController.StartDelay(isReady);
 		}
 	}
 }
