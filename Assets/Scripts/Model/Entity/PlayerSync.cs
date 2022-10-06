@@ -10,7 +10,8 @@ namespace Model.Entity
         [SerializeField] private PhotonView photonView;
         [SerializeField] private SpriteRenderer spriteRenderer;
         [SerializeField] private TMP_Text info;
-        
+        private Transform parent;
+
         private TileDataBase tileDataBase;
 
         private string playerName;
@@ -44,6 +45,11 @@ namespace Model.Entity
                 spriteRenderer.enabled = false;
                 info.enabled = false;
             }
+        }
+
+        public void Init(Transform parent)
+        {
+            this.parent = parent;
         }
 
         public void UpdatePlayer(string playerName, int playerId)

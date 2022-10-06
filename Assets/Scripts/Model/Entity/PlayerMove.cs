@@ -53,6 +53,7 @@ namespace Model.Entity
 		{
 			movePoint.parent = null;
 			this.playerSync = playerSync;
+			playerSync.Init(body);
 		}
 
 		public void UpdatePlayer(string playerName, int playerId)
