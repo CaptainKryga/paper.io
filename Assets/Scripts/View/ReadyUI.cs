@@ -1,3 +1,4 @@
+using Model;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,19 +7,18 @@ namespace View
 {
 	public class ReadyUI : MonoBehaviour
 	{
-		[SerializeField] private Controller.Controller controller;
-
+		[SerializeField] private ReadyController readyController;
+		
 		[SerializeField] private Button btnReady;
 		
 		[SerializeField] private GameObject panelBlock;
 		[SerializeField] private TMP_Text timer;
 
-		private bool isReady;
-		public bool IsReady => isReady;
-		
+		public bool IsReady => readyController.IsReady;
+
 		public void SetVisiblePanelBlock(bool visible)
 		{
-			isReady = visible;
+			readyController.IsReady = visible;
 			panelBlock.SetActive(visible);
 			btnReady.image.color = visible ? Color.green : Color.white;
 		}

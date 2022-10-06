@@ -3,6 +3,7 @@ using Model.Photon;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 namespace Model
 {
@@ -21,6 +22,8 @@ namespace Model
 			customRaiseEvents.SendBattleUpdatePlayer_Action += PlayerUpdateBattle;
 			customRaiseEvents.SendReadyUpdatePlayer_Action += PlayerUpdateReady;
 			customRaiseEvents.ReadyUpdateAllPlayers_Action += ReadyUpdateAllPlayers;
+
+			customRaiseEvents.ReceiveGameOverLastPlayer_Action += GameOver;
 		}
 
 		private void OnDisable()
@@ -28,6 +31,8 @@ namespace Model
 			customRaiseEvents.SendBattleUpdatePlayer_Action -= PlayerUpdateBattle;
 			customRaiseEvents.SendReadyUpdatePlayer_Action -= PlayerUpdateReady;
 			customRaiseEvents.ReadyUpdateAllPlayers_Action -= ReadyUpdateAllPlayers;
+			
+			customRaiseEvents.ReceiveGameOverLastPlayer_Action -= GameOver;
 		}
 
 		public void PlayerUpdateReady(int playerActor, bool isReady)
@@ -41,19 +46,13 @@ namespace Model
 					countPlayersReady++;
 				}
 			}
-			countPlayersBattle = countPlayersReady;
-
-			if (countPlayersReady > 1 && !isBattle)
-			{
-				ReadyUpdateAllPlayers(true);
-				customRaiseEvents.Request_ReadyUpdateAllPlayers(true);
-			}
-			else if (countPlayersReady <= 1 && !isBattle)
-			{
-				ReadyUpdateAllPlayers(false);
-				customRaiseEvents.Request_ReadyUpdateAllPlayers(false);
-			}
 			Debug.Log("countPlayersReady: " + countPlayersReady);
+
+			if (isBattle)
+				return;
+			
+			ReadyUpdateAllPlayers(countPlayersReady > 1);
+			customRaiseEvents.Request_ReadyUpdateAllPlayers(countPlayersReady > 1);
 		}
 
 		public void PlayerUpdateBattle(int playerActor, bool isBattle)
@@ -80,8 +79,6 @@ namespace Model
 					}
 				}
 
-				isBattle = false;
-				
 				Debug.Log("countPlayerBattle: " + countPlayerBattle);
 			}
 		}
@@ -98,6 +95,11 @@ namespace Model
 			}
 
 			isBattle = true;
+		}
+
+		public void GameOver(bool isWin)
+		{
+			isBattle = false;
 		}
 
 		private void ReadyUpdateAllPlayers(bool isReady)

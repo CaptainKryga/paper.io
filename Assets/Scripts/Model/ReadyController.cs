@@ -1,3 +1,5 @@
+using ExitGames.Client.Photon;
+using Photon.Pun;
 using UnityEngine;
 using View;
 
@@ -7,8 +9,22 @@ namespace Model
 	{
 		[SerializeField] private MController mController;
 		[SerializeField] private ReadyUI readyUI;
+		private bool isReady;
 		private float delay;
 		private bool isStart;
+
+		public bool IsReady
+		{
+			get => isReady;
+			set
+			{
+				isReady = value;
+				
+				Hashtable hash = new Hashtable();
+				hash.Add("isReady", isReady);
+				PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
+			}
+		}
 
 		public void StartDelay(bool isStart)
 		{
