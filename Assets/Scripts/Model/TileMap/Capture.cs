@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Test;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -19,11 +20,26 @@ namespace Model.TileMap
 
 		private void InitCell(Vector3Int pos)
 		{
-			tilemap.SetTile(pos, localTile);
-			tilemap.SetTileFlags(pos, TileFlags.None);
-			tilemap.SetColor(pos, Color.white);
-			cells[pos.x][pos.y].type = Lemin.ECaptured.capture;
-			customRaiseEvents.Request_UpdateTileMapCapture(new Vector3Int[] { pos }, tilemapInstance.GetTileId(localTile));
+			List<Vector3Int> list = new List<Vector3Int>();
+			for (int x = 0; x < 3; x++)
+			{
+				for (int y = 0; y < 3; y++)
+				{
+					Vector3Int vec = pos + new Vector3Int(x, y);
+					
+					if (vec.x < 0 || vec.x >= cells.Length || vec.y < 0 || vec.y >= cells.Length)
+						continue;
+					
+					tilemap.SetTile(vec, localTile);
+					tilemap.SetTileFlags(vec, TileFlags.None);
+					tilemap.SetColor(vec, Color.white);
+					cells[vec.x][vec.y].type = Lemin.ECaptured.capture;
+
+					list.Add(vec);
+				}
+			}
+			
+			customRaiseEvents.Request_UpdateTileMapCapture(list.ToArray(), tilemapInstance.GetTileId(localTile));
 		}
 		
 		public void UpdateCapture(Vector3Int[] path)
