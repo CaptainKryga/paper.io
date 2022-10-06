@@ -18,7 +18,7 @@ namespace Model.TileMap
 		public Vector3Int[] UpdateTile(Vector3Int pos)
 		{
 			//if start captured
-			if (!isCapture && local.GetTile(pos) != localTile)
+			if (!isCapture && cells[pos.x][pos.y].type != Lemin.ECaptured.capture)
 			{
 				list.Add(pos);
 				cells[pos.x][pos.y].type = Lemin.ECaptured.start;
@@ -35,7 +35,7 @@ namespace Model.TileMap
 
 			if (isCapture)
 			{
-				if (local.GetTile(pos) == localTile)
+				if (cells[pos.x][pos.y].type == Lemin.ECaptured.capture)
 				{
 					cells[list[^1].x][list[^1].y].type = Lemin.ECaptured.end;
 					isCapture = false;
