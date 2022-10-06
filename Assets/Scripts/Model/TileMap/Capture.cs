@@ -33,17 +33,17 @@ namespace Model.TileMap
 			
 			for (int x = 0; x < path.Length; x++)
 			{
-				capture.SetTile(path[x], tile);
-				capture.SetTileFlags(path[x], TileFlags.None);
-				capture.SetColor(path[x], colorCapture);
+				local.SetTile(path[x], localTile);
+				// local.SetTileFlags(path[x], TileFlags.None);
+				// local.SetColor(path[x], colorCapture);
 				cells[path[x].x][path[x].y].type = Lemin.ECaptured.capture;
 			}
 			
 			for (int x = 0; x < captured.Length; x++)
 			{
-				capture.SetTile(captured[x], tile);
-				capture.SetTileFlags(captured[x], TileFlags.None);
-				capture.SetColor(captured[x], colorCapture);
+				local.SetTile(captured[x], localTile);
+				// local.SetTileFlags(captured[x], TileFlags.None);
+				// local.SetColor(captured[x], colorCapture);
 				cells[captured[x].x][captured[x].y].type = Lemin.ECaptured.capture;
 			}
 			
@@ -51,7 +51,7 @@ namespace Model.TileMap
 
 		public void Init(Vector3Int pos, TileBase tile, Color colorGhost, Color colorCapture)
 		{
-			this.tile = tile;
+			this.localTile = tile;
 			this.colorCapture = colorCapture;
 			this.colorGhost = colorGhost;
 
@@ -62,9 +62,9 @@ namespace Model.TileMap
 
 		private void InitCell(Vector3Int pos)
 		{
-			capture.SetTile(pos, tile);
-			capture.SetTileFlags(pos, TileFlags.None);
-			capture.SetColor(pos, this.colorCapture);
+			local.SetTile(pos, localTile);
+			// local.SetTileFlags(pos, TileFlags.None);
+			// local.SetColor(pos, this.colorCapture);
 			cells[pos.x][pos.y].type = Lemin.ECaptured.capture;
 		}
 

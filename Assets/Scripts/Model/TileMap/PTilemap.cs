@@ -7,8 +7,8 @@ namespace Model.TileMap
 	{
 		protected Color colorCapture;
 		protected Color colorGhost;
-		[SerializeField] protected Tilemap capture;
-		[SerializeField] protected Tilemap ghost;
-		[SerializeField] protected TileBase tile;
+		[SerializeField] protected Tilemap local;
+		[SerializeField] protected Tilemap remote;
+		[SerializeField] protected TileBase localTile;
 	}
 }

@@ -18,21 +18,21 @@ namespace Model.TileMap
 		public Vector3Int[] UpdateTile(Vector3Int pos)
 		{
 			//if start captured
-			if (!isCapture && capture.GetColor(pos) != colorCapture)
+			if (!isCapture && local.GetTile(pos) != localTile)
 			{
 				list.Add(pos);
 				cells[pos.x][pos.y].type = Lemin.ECaptured.start;
 				
-				ghost.SetTile(pos, tile);
-				ghost.SetTileFlags(pos, TileFlags.None);
-				ghost.SetColor(pos, colorGhost);
+				local.SetTile(pos, localTile);
+				// remote.SetTileFlags(pos, TileFlags.None);
+				// remote.SetColor(pos, colorGhost);
 				isCapture = true;
 				return null;
 			}
 
 			if (isCapture)
 			{
-				if (capture.GetColor(pos) == colorCapture)
+				if (local.GetTile(pos) == localTile)
 				{
 					cells[list[^1].x][list[^1].y].type = Lemin.ECaptured.end;
 					isCapture = false;
@@ -43,9 +43,9 @@ namespace Model.TileMap
 				list.Add(pos);
 				cells[pos.x][pos.y].type = Lemin.ECaptured.ghost;
 
-				ghost.SetTile(pos, tile);
-				ghost.SetTileFlags(pos, TileFlags.None);
-				ghost.SetColor(pos, colorGhost);
+				remote.SetTile(pos, localTile);
+				// remote.SetTileFlags(pos, TileFlags.None);
+				// remote.SetColor(pos, colorGhost);
 			}
 
 			return null;
@@ -53,7 +53,7 @@ namespace Model.TileMap
 
 		public void Init(TileBase tile, Color colorGhost, Color colorCapture)
 		{
-			this.tile = tile;
+			this.localTile = tile;
 			this.colorGhost = colorGhost;
 			this.colorCapture = colorCapture;
 			this.cells = tilemapInstance.GetCells;
