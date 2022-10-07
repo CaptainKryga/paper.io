@@ -99,7 +99,7 @@ namespace Model.Entity
 			}
 		}
 
-		public void StartBattle(Vector3Int position)
+		private void StartBattle(Vector3Int position)
 		{
 			movePoint.position = position + new Vector3(.5f, .5f);
 			body.position = movePoint.position;

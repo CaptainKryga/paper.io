@@ -9,7 +9,7 @@ namespace Controller
         public static CustomInput Singleton { get; private set; }
         
         private bool isMobile = false;
-        Vector3Int direction = Vector3Int.zero;
+        Vector3Int direction = Vector3Int.right;
  
         private Vector2 touchStartPosition, touchEndPosition; 
 
