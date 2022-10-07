@@ -1,3 +1,4 @@
+using Controller;
 using ExitGames.Client.Photon;
 using Model.Photon;
 using Photon.Pun;
@@ -27,12 +28,16 @@ namespace Model.Entity
 
 		private void OnEnable()
 		{
+			CustomInput.Singleton.UpdateDirection_Action += UpdateDirection;
+			
 			customRaiseEvents.ReceiveStartBattle_Action += StartBattle;
 			customRaiseEvents.ReceiveGameOverLastPlayer_Action += GameOver;
 		}
 
 		private void OnDisable()
 		{
+			CustomInput.Singleton.UpdateDirection_Action -= UpdateDirection;
+			
 			customRaiseEvents.ReceiveStartBattle_Action -= StartBattle;
 			customRaiseEvents.ReceiveGameOverLastPlayer_Action -= GameOver;
 		}
@@ -67,7 +72,7 @@ namespace Model.Entity
 			this.playerId = playerId;
 		}
 
-		private void Update()
+		private void UpdateDirection(Vector3Int direction)
 		{
 			if (!isMove)
 				return;
@@ -75,10 +80,11 @@ namespace Model.Entity
 			body.transform.position = Vector3.MoveTowards(body.transform.position, movePoint.position,
 				moveSpeed * Time.deltaTime);
 			
-			if (Mathf.Abs(Input.GetAxisRaw("Horizontal")) == 1f)
-				newVec = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, 0f);
-			else if (Mathf.Abs(Input.GetAxisRaw("Vertical")) == 1f)
-				newVec = new Vector3(0f, Input.GetAxisRaw("Vertical"), 0f);
+			// if (Mathf.Abs(Input.GetAxisRaw("Horizontal")) == 1f)
+			// 	newVec = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, 0f);
+			// else if (Mathf.Abs(Input.GetAxisRaw("Vertical")) == 1f)
+			// 	newVec = new Vector3(0f, Input.GetAxisRaw("Vertical"), 0f);
+			newVec = direction;
 
 			if (movePoint.position.x >= sizeMap || movePoint.position.x < 0 ||
 			    movePoint.position.y >= sizeMap || movePoint.position.y < 0)
