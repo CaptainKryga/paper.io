@@ -29,6 +29,8 @@ namespace Model
 			customRaiseEvents.ReadyUpdateAllPlayers_Action += ReadyUpdateAllPlayers;
 
 			customRaiseEvents.EndBattle_Action += GameOver;
+
+			PhotonEvents.Singleton.PlayerLeftRoom_Action += PlayerLeft;
 		}
 
 		private void OnDisable()
@@ -38,6 +40,8 @@ namespace Model
 			customRaiseEvents.ReadyUpdateAllPlayers_Action -= ReadyUpdateAllPlayers;
 			
 			customRaiseEvents.EndBattle_Action -= GameOver;
+			
+			PhotonEvents.Singleton.PlayerLeftRoom_Action -= PlayerLeft;
 		}
 
 		private Vector3Int[] startPoints;
@@ -57,7 +61,13 @@ namespace Model
 			}
 		}
 
-		public void PlayerUpdateReady(int playerActor, bool isReady)
+		private void PlayerLeft()
+		{
+			PlayerUpdateReady();
+			PlayerUpdateBattle();
+		}
+
+		public void PlayerUpdateReady()
 		{
 			Player[] players = PhotonNetwork.PlayerList;
 			int countPlayersReady = 0;
@@ -77,7 +87,7 @@ namespace Model
 			customRaiseEvents.Request_ReadyUpdateAllPlayers(countPlayersReady >= minPlayers);
 		}
 
-		public void PlayerUpdateBattle(int playerActor, bool isBattle)
+		public void PlayerUpdateBattle()
 		{
 			Player[] players = PhotonNetwork.PlayerList;
 			int countPlayerBattle = 0;

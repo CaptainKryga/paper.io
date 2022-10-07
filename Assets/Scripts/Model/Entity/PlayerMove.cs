@@ -126,7 +126,7 @@ namespace Model.Entity
 			Hashtable hash = new Hashtable();
 			hash.Add("isBattle", false);
 			PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
-			customRaiseEvents.Request_BattleUpdatePlayer(PhotonNetwork.LocalPlayer.ActorNumber, false);
+			customRaiseEvents.Request_BattleUpdatePlayer();
 			
 			playerChecker.EndBattle();
 		}
@@ -137,7 +137,7 @@ namespace Model.Entity
 			hash.Add("isBattle", false);
 			hash.Add("isReady", false);
 			PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
-			customRaiseEvents.Request_BattleUpdatePlayer(PhotonNetwork.LocalPlayer.ActorNumber, false);
+			customRaiseEvents.Request_BattleUpdatePlayer();
 		}
 	}
 }

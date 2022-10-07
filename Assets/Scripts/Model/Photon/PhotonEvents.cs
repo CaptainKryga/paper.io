@@ -10,6 +10,8 @@ namespace Model.Photon
     {
         public static PhotonEvents Singleton { private set; get; }
 
+        public Action PlayerLeftRoom_Action;
+
         private void Awake()
         {
             Singleton = this;
@@ -83,6 +85,7 @@ namespace Model.Photon
         public override void  OnPlayerLeftRoom(global::Photon.Realtime.Player otherPlayer)
         {
             Debug.Log("PHOTON: OnPlayerLeftRoom " + otherPlayer.NickName);
+            PlayerLeftRoom_Action?.Invoke();
         }
 
         public override void  OnJoinRandomFailed(short returnCode, string message)

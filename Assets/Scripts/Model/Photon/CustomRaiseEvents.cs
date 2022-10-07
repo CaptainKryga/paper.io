@@ -15,8 +15,8 @@ namespace Model.Photon
 		public Action<Vector3Int> ReceiveStartBattle_Action;
 		public Action<bool> ReceiveGameOverLastPlayer_Action;
 		
-		public Action<int, bool> SendBattleUpdatePlayer_Action;
-		public Action<int, bool> SendReadyUpdatePlayer_Action;
+		public Action SendBattleUpdatePlayer_Action;
+		public Action SendReadyUpdatePlayer_Action;
 		
 		public Action<bool> ReadyUpdateAllPlayers_Action;
 		public Action EndBattle_Action;
@@ -89,19 +89,17 @@ namespace Model.Photon
 				SendOptions.SendReliable);
 		}
 		
-		public void Request_BattleUpdatePlayer(int actorId, bool isBattle)
+		public void Request_BattleUpdatePlayer()
 		{
-			object[] content = { actorId, isBattle };
 			RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.MasterClient };
-			PhotonNetwork.RaiseEvent(code_BattleUpdatePlayer, content, raiseEventOptions,
+			PhotonNetwork.RaiseEvent(code_BattleUpdatePlayer, 0, raiseEventOptions,
 				SendOptions.SendReliable);
 		}
 		
-		public void Request_ReadyUpdatePlayer(int actorId, bool isReady)
+		public void Request_ReadyUpdatePlayer()
 		{
-			object[] content = { actorId, isReady };
 			RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.MasterClient };
-			PhotonNetwork.RaiseEvent(code_ReadyUpdatePlayer, content, raiseEventOptions,
+			PhotonNetwork.RaiseEvent(code_ReadyUpdatePlayer, 0, raiseEventOptions,
 				SendOptions.SendReliable);
 		}
 		
@@ -194,20 +192,12 @@ namespace Model.Photon
 			//update MC battle count player's
 			else if (eventCode == code_BattleUpdatePlayer)
 			{
-				object[] data = (object[])photonEvent.CustomData;
-				int actorId = (int) data[0];
-				bool isBattle = (bool) data[1];
-
-				SendBattleUpdatePlayer_Action?.Invoke(actorId, isBattle);
+				SendBattleUpdatePlayer_Action?.Invoke();
 			}
 			//update MC ready count player's
 			else if (eventCode == code_ReadyUpdatePlayer)
 			{
-				object[] data = (object[])photonEvent.CustomData;
-				int actorId = (int) data[0];
-				bool isReady = (bool) data[1];
-				
-				SendReadyUpdatePlayer_Action?.Invoke(actorId, isReady);
+				SendReadyUpdatePlayer_Action?.Invoke();
 			}
 			//update ready all player's
 			else if (eventCode == code_ReadyUpdateAllPlayers)
