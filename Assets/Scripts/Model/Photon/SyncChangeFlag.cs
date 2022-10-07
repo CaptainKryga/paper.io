@@ -1,3 +1,6 @@
+using ExitGames.Client.Photon;
+using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +15,15 @@ namespace Model.Photon
 		private void OnEnable()
 		{
 			customRaiseEvents.ReceiveLocalUpdateFlagPlayer_Action += ReceiveSelectedPlayerFlag;
+			
+			PhotonEvents.Singleton.PlayerLeftRoom_Action += PlayerLeft;
+		}
+
+		private void OnDisable()
+		{
+			customRaiseEvents.ReceiveLocalUpdateFlagPlayer_Action -= ReceiveSelectedPlayerFlag;
+			
+			PhotonEvents.Singleton.PlayerLeftRoom_Action -= PlayerLeft;
 		}
 
 		public void SelectedPlayerFlag(int now)
@@ -29,6 +41,10 @@ namespace Model.Photon
 
 				customRaiseEvents.Request_LocalFlagPlayer(localId, now);
 				localId = now;
+				
+				Hashtable hash = new Hashtable();
+				hash.Add("playerId", now);
+				PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
 			}
 		}
 
@@ -44,6 +60,30 @@ namespace Model.Photon
 			{
 				buttons[now].interactable = false;
 				buttons[now].image.color = Color.red;
+			}
+		}
+
+		private void PlayerLeft()
+		{
+			Player[] players = PhotonNetwork.PlayerList;
+
+			foreach (var btn in buttons)
+			{
+				btn.interactable = true;
+				btn.image.color = Color.white;
+			}
+			
+			for (int x = 0; x < players.Length; x++)
+			{
+				int id = (int)players[x].CustomProperties["playerId"];
+
+				if (players[x] == PhotonNetwork.LocalPlayer)
+				{
+					buttons[id].interactable = true;
+					buttons[id].image.color = Color.green;
+				}
+				buttons[id].interactable = false;
+				buttons[id].image.color = Color.red;
 			}
 		}
 	}

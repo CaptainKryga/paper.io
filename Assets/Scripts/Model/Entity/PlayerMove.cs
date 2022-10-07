@@ -45,6 +45,7 @@ namespace Model.Entity
 			
 			Hashtable hash = new Hashtable();
 			hash.Add("isBattle", false);
+			hash.Add("playerId", 0);
 			hash.Add("isReady", false);
 			PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
 		}
