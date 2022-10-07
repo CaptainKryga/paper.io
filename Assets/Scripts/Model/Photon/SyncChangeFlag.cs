@@ -85,8 +85,11 @@ namespace Model.Photon
 					buttons[id].interactable = true;
 					buttons[id].image.color = Color.green;
 				}
-				buttons[id].interactable = false;
-				buttons[id].image.color = Color.red;
+				else
+				{
+					buttons[id].interactable = false;
+					buttons[id].image.color = Color.red;
+				}
 			}
 		}
 	}
