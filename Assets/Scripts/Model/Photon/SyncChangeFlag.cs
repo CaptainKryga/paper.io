@@ -67,15 +67,18 @@ namespace Model.Photon
 		{
 			Player[] players = PhotonNetwork.PlayerList;
 
-			foreach (var btn in buttons)
+			for (int x = 1; x < buttons.Length; x++)
 			{
-				btn.interactable = true;
-				btn.image.color = Color.white;
+				buttons[x].interactable = true;
+				buttons[x].image.color = Color.white;
 			}
 			
 			for (int x = 0; x < players.Length; x++)
 			{
 				int id = (int)players[x].CustomProperties["playerId"];
+				
+				if (id == 0)
+					continue;
 
 				if (players[x] == PhotonNetwork.LocalPlayer)
 				{
