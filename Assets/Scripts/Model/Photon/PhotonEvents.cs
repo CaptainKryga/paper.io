@@ -75,6 +75,9 @@ namespace Model.Photon
         public override void  OnJoinedRoom()
         {
             Debug.Log("PHOTON: OnJoinedRoom");
+            
+            //update start data
+            PlayerLeftRoom_Action?.Invoke();
         }
 
         public override void  OnPlayerEnteredRoom(global::Photon.Realtime.Player newPlayer)

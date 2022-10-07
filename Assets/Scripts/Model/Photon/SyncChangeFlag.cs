@@ -1,3 +1,4 @@
+using System;
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
@@ -16,14 +17,14 @@ namespace Model.Photon
 		{
 			customRaiseEvents.ReceiveLocalUpdateFlagPlayer_Action += ReceiveSelectedPlayerFlag;
 			
-			PhotonEvents.Singleton.PlayerLeftRoom_Action += PlayerLeft;
+			PhotonEvents.Singleton.PlayerLeftRoom_Action += UpdatePlayerList;
 		}
 
 		private void OnDisable()
 		{
 			customRaiseEvents.ReceiveLocalUpdateFlagPlayer_Action -= ReceiveSelectedPlayerFlag;
 			
-			PhotonEvents.Singleton.PlayerLeftRoom_Action -= PlayerLeft;
+			PhotonEvents.Singleton.PlayerLeftRoom_Action -= UpdatePlayerList;
 		}
 
 		public void SelectedPlayerFlag(int now)
@@ -63,7 +64,7 @@ namespace Model.Photon
 			}
 		}
 
-		private void PlayerLeft()
+		private void UpdatePlayerList()
 		{
 			Player[] players = PhotonNetwork.PlayerList;
 
