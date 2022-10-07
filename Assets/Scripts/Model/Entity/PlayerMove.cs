@@ -80,10 +80,6 @@ namespace Model.Entity
 			body.transform.position = Vector3.MoveTowards(body.transform.position, movePoint.position,
 				moveSpeed * Time.deltaTime);
 			
-			// if (Mathf.Abs(Input.GetAxisRaw("Horizontal")) == 1f)
-			// 	newVec = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, 0f);
-			// else if (Mathf.Abs(Input.GetAxisRaw("Vertical")) == 1f)
-			// 	newVec = new Vector3(0f, Input.GetAxisRaw("Vertical"), 0f);
 			newVec = direction;
 
 			if (movePoint.position.x >= sizeMap || movePoint.position.x < 0 ||

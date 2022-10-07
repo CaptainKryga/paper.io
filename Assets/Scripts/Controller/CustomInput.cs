@@ -9,7 +9,8 @@ namespace Controller
         public static CustomInput Singleton { get; private set; }
         
         private bool isMobile = false;
-        
+        Vector3Int direction = Vector3Int.zero;
+ 
         private Vector2 touchStartPosition, touchEndPosition; 
 
         [SerializeField] private TMP_Text debug;
@@ -32,8 +33,6 @@ namespace Controller
 
         private void Update()
         {
-            Vector3Int direction = Vector3Int.zero;
-            
             if (!isMobile)
             {
                 if (Mathf.Abs(Input.GetAxisRaw("Horizontal")) == 1f)
@@ -55,10 +54,6 @@ namespace Controller
                         touchEndPosition = theTouch.position;
                         float x = touchEndPosition.x - touchStartPosition.x;
                         float y = touchEndPosition.y - touchStartPosition.y;
-                        // if (Mathf.Abs(x) == 0 && Mathf.Abs(y) == 0)
-                        // {
-                        // }
-                        // else 
                         if (Mathf.Abs(x) > Mathf.Abs(y))
                             direction = x > 0 ? Vector3Int.right : Vector3Int.left;
                         else
